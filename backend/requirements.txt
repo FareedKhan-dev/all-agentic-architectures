@@ -1,0 +1,21 @@
+
+fastapi
+uvicorn[standard]
+python-dotenv
+
+langchain
+langgraph
+langchain-openai
+langchain-google-genai
+
+langchain-community
+faiss-cpu
+unstructured
+pypdf
+
+langchain-tavily
+
+# neo4j
+
+# langsmith
+
