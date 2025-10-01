@@ -1,7 +1,7 @@
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-from fastapi import FastAPI, HTTPException, Body
+from fastapi import FastAPI, HTTPException, Response, Body
 from starlette.staticfiles import StaticFiles
 from starlette.responses import FileResponse
 
@@ -40,6 +40,14 @@ from backend.core.schemas import PatternListOut, PatternMeta, PatternExecIn, Pat
 import time
 
 app = FastAPI(title="All Agentic Architectures API (Local)")
+
+
+@app.middleware("http")
+async def add_headers(request, call_next):
+    resp: Response = await call_next(request)
+    resp.headers["X-LLM-Provider"] = os.getenv("DEFAULT_LLM_PROVIDER","")
+    resp.headers["X-Embeddings-Provider"] = os.getenv("DEFAULT_EMBEDDING_PROVIDER","")
+    return resp
 
 
 def run_graph(build_fn, state: dict):
@@ -83,6 +91,7 @@ def rag_qa(body: RAGQAIn):
 
 @app.get("/healthz")
 def healthz():
+    # NOTE: en PROD, ne renvoyer que {"ok": true, "ts": ...}
     return {"ok": True, "env": {
         "DEFAULT_LLM_PROVIDER": os.getenv("DEFAULT_LLM_PROVIDER", ""),
         "DEFAULT_LLM_MODEL": os.getenv("DEFAULT_LLM_MODEL", ""),
