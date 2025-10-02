@@ -1,0 +1,39 @@
+name: CI
+on: [push, pull_request]
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Venv & deps
+        run: |
+          python -m venv .venv
+          . .venv/bin/activate
+          python -m pip install -U pip
+          pip install -r backend/requirements.txt
+          pip install ruff
+      - name: Lint (ruff)
+        run: |
+          . .venv/bin/activate
+          ruff check backend
+      - name: Node (build frontend)
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: |
+          cd frontend
+          npm ci
+          npm run build
+          cd ..
+      - name: Smoke (local)
+        run: |
+          . .venv/bin/activate
+          python backend/ingestion/build_faiss.py --rebuild
+          nohup uvicorn backend.app:app --host 127.0.0.1 --port 8010 &
+          sleep 3
+          curl -f http://127.0.0.1:8010/healthz
+          curl -f -H 'Content-Type: application/json' -d '{"prompt":"Ping"}' http://127.0.0.1:8010/api/a01/run
