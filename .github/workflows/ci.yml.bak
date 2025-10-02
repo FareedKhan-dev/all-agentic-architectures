@@ -32,7 +32,7 @@ jobs:
       - name: Smoke (local)
         run: |
           . .venv/bin/activate
-          PYTHONPATH="${GITHUB_WORKSPACE}" python -m backend.ingestion.build_faiss --rebuild
+          python backend/ingestion/build_faiss.py --rebuild
           nohup uvicorn backend.app:app --host 127.0.0.1 --port 8010 &
           sleep 3
           curl -f http://127.0.0.1:8010/healthz
