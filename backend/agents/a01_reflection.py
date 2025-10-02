@@ -2,6 +2,7 @@ from typing import TypedDict, List
 from langgraph.graph import StateGraph, END
 from backend.core.llm import make_llm
 
+
 class S(TypedDict):
     prompt: str
     criteria: List[str]
@@ -9,10 +10,14 @@ class S(TypedDict):
     review: str
     answer: str
 
+
 def n_generate(s: S):
     llm = make_llm()
-    draft = llm.invoke(f"Génère un premier brouillon pédagogique:\n\n{s['prompt']}").content
+    draft = llm.invoke(
+        f"Génère un premier brouillon pédagogique:\n\n{s['prompt']}"
+    ).content
     return {"draft": draft}
+
 
 def n_review(s: S):
     llm = make_llm()
@@ -23,6 +28,7 @@ def n_review(s: S):
     ).content
     return {"review": review}
 
+
 def n_rewrite(s: S):
     llm = make_llm()
     ans = llm.invoke(
@@ -30,6 +36,7 @@ def n_rewrite(s: S):
         "Donne une version finale claire et structurée."
     ).content
     return {"answer": ans}
+
 
 def build_app():
     g = StateGraph(S)
@@ -41,4 +48,3 @@ def build_app():
     g.add_edge("review", "rewrite")
     g.add_edge("rewrite", END)
     return g.compile()
-

@@ -1,8 +1,10 @@
 from typing import TypedDict, List, Dict
 from backend.agents import a01_reflection
 
+
 class Out(TypedDict):
     cases: List[Dict[str, str]]
+
 
 def run() -> Out:
     prompts = [

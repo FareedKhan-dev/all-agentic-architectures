@@ -1,4 +1,4 @@
-from typing import TypedDict, List, Any
+from typing import TypedDict, List
 from langgraph.graph import StateGraph, END
 from backend.core.llm import make_llm
 
@@ -19,7 +19,9 @@ def n_world(s: S):
 
 def n_act1(s: S):
     llm = make_llm()
-    a = llm.invoke(f"Dans ce monde:\n{s['world']}\nPropose une première action.").content
+    a = llm.invoke(
+        f"Dans ce monde:\n{s['world']}\nPropose une première action."
+    ).content
     f = llm.invoke(f"Feedback sur l'action:\n{a}").content
     return {"actions": [a], "feedbacks": [f]}
 

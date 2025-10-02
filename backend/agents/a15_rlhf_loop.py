@@ -20,7 +20,9 @@ def n_draft(s: S):
 def n_critique(s: S):
     llm = make_llm()
     c = llm.invoke(f"Critique sévère et propose corrections:\n{s['draft']}").content
-    r = llm.invoke("Note (1..10) la qualité de la réponse précédente (juste le nombre).").content.strip()
+    r = llm.invoke(
+        "Note (1..10) la qualité de la réponse précédente (juste le nombre)."
+    ).content.strip()
     try:
         rw = float(r.replace(",", "."))
     except Exception:

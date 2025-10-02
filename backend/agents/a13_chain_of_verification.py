@@ -20,9 +20,10 @@ def n_draft(s: S):
 def n_checklist(s: S):
     llm = make_llm()
     ck = llm.invoke(
-        "Dresse une checklist de vérification (3-5 points) pour ce brouillon:\n" + s["draft"]
+        "Dresse une checklist de vérification (3-5 points) pour ce brouillon:\n"
+        + s["draft"]
     ).content
-    lines = [l.strip(" -") for l in ck.splitlines() if l.strip()][:5]
+    lines = [line.strip(" -") for line in ck.splitlines() if line.strip()][:5]
     return {"checklist": lines}
 
 

@@ -3,12 +3,14 @@ from langgraph.graph import StateGraph, END
 from backend.core.llm import make_llm
 from backend.core.tools import web_search_tool
 
+
 class S(TypedDict):
     task: str
     trace: List[str]
     obs: Any
     answer: str
     steps: int
+
 
 def n_think(s: S):
     llm = make_llm()
@@ -19,11 +21,13 @@ def n_think(s: S):
     trace = s.get("trace", []) + [out]
     return {"trace": trace}
 
+
 def n_act(s: S):
     tool = web_search_tool(3)
     query = s["trace"][-1]
     hits = tool.run(query)
     return {"obs": hits}
+
 
 def n_answer(s: S):
     llm = make_llm()
@@ -31,6 +35,7 @@ def n_answer(s: S):
         f"Réponds en t'appuyant sur la trace et les observations.\nTRACE:\n{s['trace']}\nOBS:\n{s.get('obs')}"
     ).content
     return {"answer": ans}
+
 
 def build_app():
     g = StateGraph(S)
@@ -43,4 +48,3 @@ def build_app():
     g.add_edge("think", "answer")
     g.add_edge("answer", END)
     return g.compile()
-

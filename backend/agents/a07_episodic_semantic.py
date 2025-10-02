@@ -34,7 +34,7 @@ def n_generate_episodic(s: S):
         "Donne 3 items (une ligne chacun)."
     )
     out = llm.invoke(prompt).content
-    epi = [l.strip() for l in out.splitlines() if l.strip()]
+    epi = [line.strip() for line in out.splitlines() if line.strip()]
     return {"episodic": epi[:3]}
 
 

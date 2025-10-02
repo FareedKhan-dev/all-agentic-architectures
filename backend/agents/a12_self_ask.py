@@ -15,7 +15,7 @@ def n_subs(s: S):
     out = llm.invoke(
         f"Décompose la question en 2-3 sous-questions numérotées:\n{s['query']}"
     ).content
-    subs = [l.strip(" -") for l in out.splitlines() if l.strip()][:3]
+    subs = [line.strip(" -") for line in out.splitlines() if line.strip()][:3]
     return {"subs": subs}
 
 

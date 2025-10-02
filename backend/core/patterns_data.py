@@ -4,6 +4,7 @@ Catalogue des 17 patterns (synthèse pédagogique issue du rapport).
 Les champs 'detail_technique', 'implication_backend', 'compromis_cout_latence'
 acceptent du Markdown (rendu côté frontend).
 """
+
 from .schemas import PatternMeta
 
 PATTERNS: list[PatternMeta] = [
@@ -12,26 +13,32 @@ PATTERNS: list[PatternMeta] = [
         nom_fr="Chain-of-Thought (CoT)",
         categorie="Raisonnement",
         fonctionnement_court="Raisonnement linéaire explicite étape par étape.",
-        utilite_concrets=["Traçabilité de la décision", "Meilleure exactitude logique/maths"],
+        utilite_concrets=[
+            "Traçabilité de la décision",
+            "Meilleure exactitude logique/maths",
+        ],
         detail_technique=(
             "Forcer le modèle à expliciter ses étapes. Prompting dirigé, sortie structurée."
         ),
         implication_backend="Aucun outil requis. Peut utiliser un modèle économique.",
         compromis_cout_latence="Latence ↑ (verbiage), coût ↑ modéré car plus de tokens.",
         has_demo=False,
-        tags=["reasoning","explainability"]
+        tags=["reasoning", "explainability"],
     ),
     PatternMeta(
         id_pattern="tot",
         nom_fr="Tree-of-Thoughts (ToT)",
         categorie="Raisonnement",
         fonctionnement_court="Exploration arborescente (largeur/profondeur) avec scoring/élagage.",
-        utilite_concrets=["Planification stratégique", "Problèmes multi-étapes complexes"],
+        utilite_concrets=[
+            "Planification stratégique",
+            "Problèmes multi-étapes complexes",
+        ],
         detail_technique="Génère plusieurs 'pensées', évalue, explore, backtracking possible.",
         implication_backend="Besoin d’un contrôleur d’arbre et d’un évaluateur (LLM-as-judge).",
         compromis_cout_latence="Coût ↑↑ et latence ↑↑ (multiples générations/évaluations).",
         has_demo=False,
-        tags=["search","planning"]
+        tags=["search", "planning"],
     ),
     PatternMeta(
         id_pattern="got",
@@ -43,7 +50,7 @@ PATTERNS: list[PatternMeta] = [
         implication_backend="Intégration base graphe (ex. Neo4j) recommandée.",
         compromis_cout_latence="Complexité d’implémentation ↑, latence/coût variables.",
         has_demo=False,
-        tags=["graph","knowledge"]
+        tags=["graph", "knowledge"],
     ),
     PatternMeta(
         id_pattern="self_consistency",
@@ -55,7 +62,7 @@ PATTERNS: list[PatternMeta] = [
         implication_backend="Boucle d’échantillonnage + agrégation.",
         compromis_cout_latence="Coût N×; latence N×.",
         has_demo=False,
-        tags=["votes","validation"]
+        tags=["votes", "validation"],
     ),
     PatternMeta(
         id_pattern="tool_use",
@@ -67,7 +74,7 @@ PATTERNS: list[PatternMeta] = [
         implication_backend="Couche outils sécurisée (auth, logs).",
         compromis_cout_latence="Latence dépend réseau/outils; coût externe possible.",
         has_demo=True,
-        tags=["tools","web"]
+        tags=["tools", "web"],
     ),
     PatternMeta(
         id_pattern="react",
@@ -79,7 +86,7 @@ PATTERNS: list[PatternMeta] = [
         implication_backend="Orchestration précise de la boucle; gestion d’état.",
         compromis_cout_latence="Itérations multiples → latence ↑ et coût ↑.",
         has_demo=False,
-        tags=["loop","tools"]
+        tags=["loop", "tools"],
     ),
     PatternMeta(
         id_pattern="simulation",
@@ -91,7 +98,7 @@ PATTERNS: list[PatternMeta] = [
         implication_backend="Moteur de simulation dédié.",
         compromis_cout_latence="Coût/latence selon complexité de la simulation.",
         has_demo=False,
-        tags=["sandbox","what-if"]
+        tags=["sandbox", "what-if"],
     ),
     PatternMeta(
         id_pattern="world_models",
@@ -103,7 +110,7 @@ PATTERNS: list[PatternMeta] = [
         implication_backend="Base de connaissances évolutive + mises à jour.",
         compromis_cout_latence="Coût de maintenance du modèle; gains en efficacité.",
         has_demo=False,
-        tags=["state","planning"]
+        tags=["state", "planning"],
     ),
     PatternMeta(
         id_pattern="reflection",
@@ -115,7 +122,7 @@ PATTERNS: list[PatternMeta] = [
         implication_backend="Tracer erreurs/itérations; conserver historique.",
         compromis_cout_latence="Latence ↑ (deux passages), coût ↑.",
         has_demo=True,
-        tags=["quality","self-improve"]
+        tags=["quality", "self-improve"],
     ),
     PatternMeta(
         id_pattern="critic",
@@ -127,7 +134,7 @@ PATTERNS: list[PatternMeta] = [
         implication_backend="Forcer passage par le critique sur étapes clés.",
         compromis_cout_latence="Coût ↑ (jugement externe).",
         has_demo=False,
-        tags=["governance","review"]
+        tags=["governance", "review"],
     ),
     PatternMeta(
         id_pattern="curriculum",
@@ -139,7 +146,7 @@ PATTERNS: list[PatternMeta] = [
         implication_backend="Notions de niveaux, file d’attente, datasets gradués.",
         compromis_cout_latence="Coût d’ingénierie; latence variable.",
         has_demo=False,
-        tags=["training","pedagogy"]
+        tags=["training", "pedagogy"],
     ),
     PatternMeta(
         id_pattern="pev",
@@ -151,7 +158,7 @@ PATTERNS: list[PatternMeta] = [
         implication_backend="Rôles séparés, rapports d’étape, critères de succès.",
         compromis_cout_latence="Plusieurs passes → coût/latence ↑ mais robustesse ↑.",
         has_demo=False,
-        tags=["workflow","robust"]
+        tags=["workflow", "robust"],
     ),
     PatternMeta(
         id_pattern="meta_control",
@@ -163,7 +170,7 @@ PATTERNS: list[PatternMeta] = [
         implication_backend="Positionné au niveau Orchestrateur (LangGraph).",
         compromis_cout_latence="Complexité ↑; bénéfices à l’échelle.",
         has_demo=False,
-        tags=["control","manager"]
+        tags=["control", "manager"],
     ),
     PatternMeta(
         id_pattern="delegation",
@@ -175,7 +182,7 @@ PATTERNS: list[PatternMeta] = [
         implication_backend="Transfert d’état complet; payload standardisé.",
         compromis_cout_latence="Overhead de coordination.",
         has_demo=False,
-        tags=["handoff","specialists"]
+        tags=["handoff", "specialists"],
     ),
     PatternMeta(
         id_pattern="ensembling",
@@ -187,7 +194,7 @@ PATTERNS: list[PatternMeta] = [
         implication_backend="Agent ‘Aggregator’ dédié.",
         compromis_cout_latence="Coût ↑ (multiples appels); latence ↑.",
         has_demo=False,
-        tags=["ensemble","consensus"]
+        tags=["ensemble", "consensus"],
     ),
     PatternMeta(
         id_pattern="controlled_flow",
@@ -199,18 +206,18 @@ PATTERNS: list[PatternMeta] = [
         implication_backend="Simple; parfait pour cas bien connus.",
         compromis_cout_latence="Latence prévisible; flexibilité faible.",
         has_demo=False,
-        tags=["workflow","deterministic"]
+        tags=["workflow", "deterministic"],
     ),
     PatternMeta(
         id_pattern="llm_router",
         nom_fr="LLM as Router",
         categorie="Orchestration",
         fonctionnement_court="Le LLM aiguillle dynamiquement vers l’agent pertinent.",
-        utilite_concrets=["Flexibilité temps-réel","Couverture large de requêtes"],
+        utilite_concrets=["Flexibilité temps-réel", "Couverture large de requêtes"],
         detail_technique="Prompt liste agents + compétences; retour id destination.",
         implication_backend="Routeur devant l’orchestrateur; mapping id→exécuteur.",
         compromis_cout_latence="Coût ↑ modéré; gain majeur en adaptabilité.",
         has_demo=False,
-        tags=["router","dynamic"]
+        tags=["router", "dynamic"],
     ),
 ]

@@ -1,22 +1,29 @@
-from typing import TypedDict, List, Dict, Any
+from typing import TypedDict, List, Dict
 from langgraph.graph import StateGraph, END
 from backend.core.llm import make_llm
+
 
 class S(TypedDict):
     prompt: str
     candidates: List[str]
-    votes: Dict[str,int]
+    votes: Dict[str, int]
     best: str
     answer: str
 
-def n_generate(s:S):
+
+def n_generate(s: S):
     llm = make_llm()
     cand: List[str] = []
     for i in range(3):
-        cand.append(llm.invoke(f"Propose une réponse candidate {i+1} pour:\n{s['prompt']}").content)
+        cand.append(
+            llm.invoke(
+                f"Propose une réponse candidate {i + 1} pour:\n{s['prompt']}"
+            ).content
+        )
     return {"candidates": cand}
 
-def n_judge(s:S):
+
+def n_judge(s: S):
     llm = make_llm()
     scores: List[float] = []
     for c in s["candidates"]:
@@ -31,11 +38,12 @@ def n_judge(s:S):
         return {"votes": {}, "best": "", "answer": ""}
     best_idx = max(range(len(scores)), key=lambda i: scores[i])
     best = s["candidates"][best_idx]
-    votes = {f"cand{i+1}": int(scores[i]) for i in range(len(scores))}
+    votes = {f"cand{i + 1}": int(scores[i]) for i in range(len(scores))}
     ans = llm.invoke(
         f"Fusionne/Améliore la meilleure réponse (score {scores[best_idx]}):\n{best}"
     ).content
     return {"votes": votes, "best": best, "answer": ans}
+
 
 def build_app():
     g = StateGraph(S)

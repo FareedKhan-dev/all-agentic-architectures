@@ -2,6 +2,7 @@ from typing import TypedDict
 from langgraph.graph import StateGraph, END
 from backend.core.llm import make_llm
 
+
 class S(TypedDict):
     task: str
     plan: str
@@ -9,27 +10,31 @@ class S(TypedDict):
     verdict: str
     answer: str
 
-def n_plan(s:S):
+
+def n_plan(s: S):
     llm = make_llm()
     plan = llm.invoke(
         f"Élabore un plan numéroté pour réaliser la tâche suivante:\n{s['task']}"
     ).content
     return {"plan": plan}
 
-def n_execute(s:S):
+
+def n_execute(s: S):
     llm = make_llm()
     result = llm.invoke(
         f"En suivant le plan ci-dessous, exécute mentalement la tâche et propose un résultat concis.\nPLAN:\n{s['plan']}"
     ).content
     return {"result": result}
 
-def n_verify(s:S):
+
+def n_verify(s: S):
     llm = make_llm()
     verdict = llm.invoke(
         "Vérifie de façon critique le résultat. Énumère erreurs potentielles et corrige si nécessaire.\n"
         f"PLAN:\n{s['plan']}\n\nRESULTAT:\n{s['result']}"
     ).content
     return {"verdict": verdict, "answer": verdict}
+
 
 def build_app():
     g = StateGraph(S)
