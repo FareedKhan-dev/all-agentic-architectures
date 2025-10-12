@@ -1,0 +1,15 @@
+[Unit]
+Description=All Agentic API (Uvicorn)
+After=network.target
+
+[Service]
+Environment=PYTHONUNBUFFERED=1
+WorkingDirectory=/opt/all-agentic
+EnvironmentFile=/opt/all-agentic/.env
+ExecStart=/opt/all-agentic/.venv/bin/python -m uvicorn backend.app:app --host 127.0.0.1 --port 8010 --workers 2 --log-level info --timeout-keep-alive 15
+User=www-data
+Restart=always
+RestartSec=3
+
+[Install]
+WantedBy=multi-user.target

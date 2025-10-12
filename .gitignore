@@ -1,0 +1,23 @@
+# Python
+.venv/
+__pycache__/
+*.pyc
+
+# Envs & secrets
+.env
+.env.local
+.env.development
+.env.production
+
+# RAG / Index
+data/rag/
+storage/faiss/
+
+# Node / Vite
+frontend/node_modules/
+frontend/.vite/
+frontend/dist/
+
+# Logs
+*.log
+uvicorn_*.log

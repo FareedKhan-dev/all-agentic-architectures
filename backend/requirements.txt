@@ -1,0 +1,20 @@
+fastapi
+uvicorn[standard]
+python-dotenv
+
+langchain
+langgraph
+langchain-openai
+# Google Gemini (SDK moderne, plus "google-ai-generativelanguage")
+google-genai>=0.5.0
+langchain-google-genai>=2.1.12
+
+langchain-community
+faiss-cpu
+unstructured
+pypdf
+
+langchain-tavily
+
+# neo4j
+# langsmith
