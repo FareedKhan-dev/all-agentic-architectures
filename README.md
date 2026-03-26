@@ -116,6 +116,7 @@ This project leverages a modern, powerful stack for building sophisticated AI ap
 | **LangChain** | Provides the foundational building blocks for interacting with LLMs and tools. |
 | **LangGraph** | The key orchestration framework for building complex, stateful, and cyclical agent workflows. |
 | **Nebius AI Models** | High-performance LLMs (e.g., `Mixtral-8x22B-Instruct-v0.1`) that power the agents' reasoning. |
+| **[MiniMax](https://www.minimax.io)** | Cloud LLM provider with `MiniMax-M2.7` and `MiniMax-M2.7-highspeed` models (1M context). |
 | **Jupyter Notebooks** | Used for interactive development, rich explanations, and clear, step-by-step demonstrations. |
 | **Pydantic** | Ensures robust, structured data modeling, which is critical for reliable communication with LLMs. |
 | **Tavily Search** | A powerful search API used as a tool for research-oriented agents. |
@@ -191,6 +192,35 @@ You can now launch Jupyter and explore the notebooks in numerical order.
 ```bash
 jupyter notebook
 ```
+
+### Switching LLM Providers
+
+All notebooks default to Nebius, but you can switch to **MiniMax**, **OpenAI**, or other providers via the `utils/llm_provider` module:
+
+```python
+from utils.llm_provider import get_llm
+
+# Auto-detects from LLM_PROVIDER env var (default: "nebius")
+llm = get_llm()
+
+# Explicit provider selection
+llm = get_llm(provider="minimax")                      # MiniMax M2.7
+llm = get_llm(provider="minimax", model="MiniMax-M2.7-highspeed")
+llm = get_llm(provider="openai", model="gpt-4o")       # OpenAI
+```
+
+Set the provider globally in your `.env` file:
+
+```bash
+LLM_PROVIDER="minimax"
+MINIMAX_API_KEY="your_minimax_api_key"  # Get one at https://www.minimax.io
+```
+
+| Provider | Models | API Key Env Var |
+|---|---|---|
+| `nebius` (default) | `Meta-Llama-3.1-8B-Instruct`, `Mixtral-8x22B-Instruct-v0.1` | `NEBIUS_API_KEY` |
+| `minimax` | `MiniMax-M2.7`, `MiniMax-M2.7-highspeed` (1M context) | `MINIMAX_API_KEY` |
+| `openai` | `gpt-4o-mini`, `gpt-4o` | `OPENAI_API_KEY` |
 
 ## 🤝 How to Contribute
 

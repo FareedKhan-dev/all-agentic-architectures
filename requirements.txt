@@ -1,6 +1,7 @@
 langchain
 langgraph
 langchain-nebius
+langchain-openai
 rich
 python-dotenv
 langchain-community
