@@ -107,6 +107,21 @@ def mock_llm() -> "StructuredMockLLM":
     return StructuredMockLLM(text_responses=["mock"])
 
 
+@pytest.fixture(autouse=True)
+def _stub_embeddings(monkeypatch: pytest.MonkeyPatch) -> None:
+    """Replace `get_embeddings()` with a deterministic fake so VectorMemory /
+    FAISS constructors do not try to call a real embeddings API. CI has no
+    real keys; locally this keeps unit tests offline regardless of `.env`.
+    """
+    from langchain_core.embeddings.fake import DeterministicFakeEmbedding
+
+    fake = DeterministicFakeEmbedding(size=384)
+    monkeypatch.setattr(
+        "agentic_architectures.llm.factory.get_embeddings",
+        lambda *_, **__: fake,
+    )
+
+
 @pytest.fixture
 def structured_mock() -> Callable[..., StructuredMockLLM]:
     """Factory for StructuredMockLLM. Use:
