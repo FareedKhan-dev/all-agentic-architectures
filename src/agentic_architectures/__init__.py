@@ -6,7 +6,7 @@ from agentic_architectures.config import Settings, settings
 from agentic_architectures.llm.factory import get_embeddings, get_llm
 from agentic_architectures.tracing.langsmith import enable_langsmith
 
-__version__ = "0.2.0"
+__version__ = "0.3.0"
 
 __all__ = [
     "Settings",
