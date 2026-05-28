@@ -1,0 +1,8 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 📚 Documentation
+    url: https://fareedkhan-dev.github.io/all-agentic-architectures/
+    about: Browse the full docs site (35 architectures, tutorials, API reference, benchmarks).
+  - name: 💬 Discussions
+    url: https://github.com/FareedKhan-dev/all-agentic-architectures/discussions
+    about: Questions, ideas, show & tell.

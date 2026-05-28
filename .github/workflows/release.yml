@@ -1,0 +1,40 @@
+name: Release
+
+# release-please monitors commits for Conventional Commit messages, opens an
+# auto-PR that bumps the version + updates CHANGELOG.md. On merge of that PR,
+# it tags + (if configured) publishes to PyPI.
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  release-please:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: googleapis/release-please-action@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          config-file: .github/release-please-config.json
+          manifest-file: .github/.release-please-manifest.json
+
+  publish-pypi:
+    needs: release-please
+    if: ${{ needs.release-please.outputs.release_created }}
+    runs-on: ubuntu-latest
+    environment: pypi             # requires the 'pypi' environment + trusted publisher to be configured
+    permissions:
+      id-token: write             # for OIDC-trusted-publisher
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install build
+      - run: python -m build
+      - uses: pypa/gh-action-pypi-publish@release/v1

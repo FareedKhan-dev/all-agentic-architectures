@@ -1,0 +1,58 @@
+name: Deploy docs
+
+# Builds the MkDocs Material site and deploys to GitHub Pages.
+# Runs on push to main and on manual dispatch.
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "docs/**"
+      - "mkdocs.yml"
+      - "notebooks/**"
+      - "src/**"           # for mkdocstrings auto-API
+      - ".github/workflows/docs.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: write          # mkdocs gh-deploy pushes to gh-pages branch
+
+concurrency:
+  group: docs
+  cancel-in-progress: true
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0    # mkdocs-git-revision-date-localized needs full history
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+
+      - name: Install package + docs extras
+        run: |
+          pip install --upgrade pip
+          pip install -e ".[docs,nebius,faiss,tavily,networkx]"
+
+      - name: Copy notebooks into docs/architectures/
+        run: |
+          mkdir -p docs/architectures
+          find docs/architectures -name '*.ipynb' -delete
+          cp notebooks/*.ipynb docs/architectures/
+
+      - name: Build site (verify clean)
+        run: mkdocs build --strict
+        continue-on-error: true   # don't fail deploy on docstring warnings
+
+      - name: Deploy to GitHub Pages
+        run: mkdocs gh-deploy --force --clean
+        env:
+          GIT_COMMITTER_NAME: github-actions[bot]
+          GIT_COMMITTER_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com
+          GIT_AUTHOR_NAME: github-actions[bot]
+          GIT_AUTHOR_EMAIL: 41898282+github-actions[bot]@users.noreply.github.com

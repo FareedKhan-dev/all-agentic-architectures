@@ -1,0 +1,75 @@
+name: CI
+
+# Quality gate: runs on every PR + every push to main.
+# Tests are pure-Python (no real LLM calls) — covers the registry sweep,
+# pure-python helper unit tests, and the notebook integrity checks.
+# Real-LLM integration tests are env-gated by RUN_INTEGRATION=1 and NOT run here.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: read
+
+jobs:
+  lint:
+    name: Lint (ruff)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install ruff
+      - run: ruff check src/ tests/
+      - run: ruff format --check src/ tests/
+
+  typecheck:
+    name: Typecheck (mypy)
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - run: pip install -e ".[dev,nebius,faiss,tavily,networkx]"
+      - run: mypy src/agentic_architectures
+        continue-on-error: true     # advisory until annotations are tightened
+
+  test:
+    name: Tests (Python ${{ matrix.python }})
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python: ["3.10", "3.11", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python }}
+          cache: pip
+      - name: Install package + extras
+        run: |
+          pip install --upgrade pip
+          pip install -e ".[test,nebius,faiss,tavily,networkx]"
+      - name: Run pytest (unit + notebook integrity)
+        run: pytest -q --cov=src/agentic_architectures --cov-report=term-missing
+        env:
+          PYTHONIOENCODING: utf-8
+      - name: Upload coverage to Codecov
+        if: matrix.python == '3.11'
+        uses: codecov/codecov-action@v5
+        with:
+          fail_ci_if_error: false
+        continue-on-error: true

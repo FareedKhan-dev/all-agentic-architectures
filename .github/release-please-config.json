@@ -1,0 +1,27 @@
+{
+  "$schema": "https://raw.githubusercontent.com/googleapis/release-please/main/schemas/config.json",
+  "release-type": "python",
+  "packages": {
+    ".": {
+      "package-name": "agentic-architectures",
+      "include-component-in-tag": false,
+      "extra-files": [
+        {
+          "type": "toml",
+          "path": "pyproject.toml",
+          "jsonpath": "$.project.version"
+        }
+      ]
+    }
+  },
+  "changelog-sections": [
+    { "type": "feat",     "section": "Features" },
+    { "type": "fix",      "section": "Bug Fixes" },
+    { "type": "perf",     "section": "Performance" },
+    { "type": "refactor", "section": "Refactors" },
+    { "type": "docs",     "section": "Documentation" },
+    { "type": "test",     "section": "Tests" },
+    { "type": "chore",    "section": "Chores", "hidden": false },
+    { "type": "ci",       "section": "CI", "hidden": true }
+  ]
+}

@@ -1,0 +1,63 @@
+name: 🧠 Propose a new architecture
+description: Suggest a new agentic pattern to add to the library.
+labels: [new-architecture, triage]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        See the [Add your own architecture](https://fareedkhan-dev.github.io/all-agentic-architectures/tutorials/adding-your-own/) tutorial for the 5-step recipe before opening this issue.
+
+  - type: input
+    id: name
+    attributes:
+      label: Proposed class name
+      placeholder: "MyNewArchitecture"
+    validations:
+      required: true
+
+  - type: input
+    id: paper
+    attributes:
+      label: Anchoring paper / blog post
+      placeholder: "https://arxiv.org/abs/..."
+    validations:
+      required: true
+
+  - type: textarea
+    id: pattern
+    attributes:
+      label: What pattern does this add that the existing 35 don't?
+      description: Be specific about what's structurally different from the closest existing architecture in the catalogue.
+    validations:
+      required: true
+
+  - type: dropdown
+    id: family
+    attributes:
+      label: Which family does it fit?
+      options:
+        - Reasoning & Reflection
+        - Sampling & Search
+        - Retrieval (RAG)
+        - Memory
+        - Tools & Actions
+        - Multi-Agent
+        - Safety & Routing
+        - Specialty (new family)
+    validations:
+      required: true
+
+  - type: checkboxes
+    id: picker
+    attributes:
+      label: Deterministic-picker discipline
+      description: Does the architecture have an LLM-as-Scorer surface? If yes, you'll need to apply the [deterministic-picker pattern](https://fareedkhan-dev.github.io/all-agentic-architectures/tutorials/deterministic-picker/).
+      options:
+        - label: This architecture has no LLM-as-Scorer step (architecturally immune)
+        - label: This architecture has an LLM-as-Scorer step and I'll apply the deterministic-picker pattern
+
+  - type: textarea
+    id: demo
+    attributes:
+      label: Proposed demo task for §8
+      description: One specific task that exercises the pattern's headline behavior.

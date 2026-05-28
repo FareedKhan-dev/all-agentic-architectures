@@ -1,0 +1,44 @@
+version: 2
+
+updates:
+  # Python dependencies (pyproject.toml)
+  - package-ecosystem: pip
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: "Etc/UTC"
+    open-pull-requests-limit: 5
+    commit-message:
+      prefix: "deps"
+      include: "scope"
+    groups:
+      langchain:
+        patterns:
+          - "langchain*"
+          - "langgraph*"
+          - "langsmith"
+      docs:
+        patterns:
+          - "mkdocs*"
+          - "mkdocstrings*"
+      test-and-lint:
+        patterns:
+          - "pytest*"
+          - "ruff"
+          - "mypy"
+          - "pre-commit"
+
+  # GitHub Actions
+  - package-ecosystem: github-actions
+    directory: "/"
+    schedule:
+      interval: weekly
+      day: monday
+      time: "06:00"
+      timezone: "Etc/UTC"
+    open-pull-requests-limit: 3
+    commit-message:
+      prefix: "ci"
+      include: "scope"

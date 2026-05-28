@@ -1,0 +1,76 @@
+name: 🐛 Bug report
+description: Something doesn't work as expected.
+labels: [bug, triage]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for taking the time to file a bug. Please fill out the sections below — it makes triage much faster.
+
+  - type: input
+    id: arch
+    attributes:
+      label: Architecture
+      description: Which architecture / notebook is affected? (e.g. `Reflexion`, `BrowserAgent`, or `notebook 18`)
+      placeholder: "Reflexion (nb 18)"
+    validations:
+      required: true
+
+  - type: textarea
+    id: repro
+    attributes:
+      label: Minimal reproduction
+      description: The smallest Python snippet that reproduces the issue.
+      render: python
+      placeholder: |
+        from agentic_architectures import get_llm
+        from agentic_architectures.architectures import Reflexion
+        arch = Reflexion(llm=get_llm())
+        r = arch.run("...")
+    validations:
+      required: true
+
+  - type: textarea
+    id: actual
+    attributes:
+      label: What happened
+      description: Paste the traceback or describe the unexpected output.
+    validations:
+      required: true
+
+  - type: textarea
+    id: expected
+    attributes:
+      label: What you expected
+    validations:
+      required: true
+
+  - type: input
+    id: provider
+    attributes:
+      label: LLM provider + model
+      placeholder: "nebius · meta-llama/Llama-3.3-70B-Instruct"
+    validations:
+      required: true
+
+  - type: input
+    id: python
+    attributes:
+      label: Python version
+      placeholder: "3.10.0"
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: agentic-architectures version
+      placeholder: "0.2.0"
+    validations:
+      required: true
+
+  - type: textarea
+    id: notes
+    attributes:
+      label: Anything else?
+      description: OS, extras installed, related issues, etc.
