@@ -1,0 +1,93 @@
+# ---- Secrets ----
+.env
+.env.*
+!.env.example
+my-key-in-this-file.txt
+*.key
+*.pem
+*.p12
+secrets/
+
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+share/python-wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# ---- Virtual environments ----
+.venv/
+venv/
+env/
+ENV/
+.python-version
+
+# ---- Testing / type-checking / linting caches ----
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+.coverage.*
+htmlcov/
+.tox/
+.nox/
+coverage.xml
+*.cover
+.cache
+
+# ---- Jupyter ----
+.ipynb_checkpoints/
+*.ipynb_checkpoints
+profile_default/
+ipython_config.py
+
+# ---- Docs ----
+site/
+docs/_build/
+.mkdocs-cache/
+
+# ---- IDE / OS ----
+.vscode/*
+!.vscode/settings.json
+!.vscode/extensions.json
+.idea/
+*.swp
+*.swo
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ---- Logs / runtime artifacts ----
+*.log
+logs/
+*.pid
+
+# ---- LangChain / agent runtime artifacts ----
+.langgraph_api/
+.langchain/
+chroma_db/
+qdrant_storage/
+faiss_index/
+*.faiss
+*.pkl
+
+# ---- Neo4j (if running locally) ----
+neo4j-data/
+docker/data/
