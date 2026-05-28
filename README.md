@@ -19,16 +19,16 @@ leaderboard that ranks every architecture against every relevant task.
 
 <br>
 
-<a href="https://fareedkhan-dev.github.io/all-agentic-architectures/getting-started/quickstart/">
+<a href="docs/getting-started/quickstart.md">
   <img alt="Quickstart" src="https://img.shields.io/badge/Quickstart-→-0a0a0a?style=for-the-badge&labelColor=0a0a0a" />
 </a>
-<a href="https://fareedkhan-dev.github.io/all-agentic-architectures/">
+<a href="docs/index.md">
   <img alt="Documentation" src="https://img.shields.io/badge/Documentation-→-262626?style=for-the-badge&labelColor=262626" />
 </a>
-<a href="https://fareedkhan-dev.github.io/all-agentic-architectures/architectures/">
+<a href="docs/architectures/index.md">
   <img alt="Architectures" src="https://img.shields.io/badge/Architectures-→-404040?style=for-the-badge&labelColor=404040" />
 </a>
-<a href="https://fareedkhan-dev.github.io/all-agentic-architectures/benchmarks/">
+<a href="docs/benchmarks.md">
   <img alt="Benchmarks" src="https://img.shields.io/badge/Benchmarks-→-525252?style=for-the-badge&labelColor=525252" />
 </a>
 <a href="https://codespaces.new/FareedKhan-dev/all-agentic-architectures">
@@ -180,7 +180,7 @@ Patterns with a unique shape.
 #### Cross-cutting
 Patterns that appear across families.
 <br><br>
-<sub><a href="https://fareedkhan-dev.github.io/all-agentic-architectures/tutorials/deterministic-picker/">Deterministic-picker</a> · <a href="https://fareedkhan-dev.github.io/all-agentic-architectures/tutorials/memory/">Memory variants</a></sub>
+<sub><a href="docs/tutorials/deterministic-picker.md">Deterministic-picker</a> · <a href="docs/tutorials/memory.md">Memory variants</a></sub>
 
 </td>
 </tr>
@@ -329,7 +329,7 @@ A 17-task suite runs every architecture and scores results. Most recent run, rea
 </tr>
 </table>
 
-<sub><b>Full leaderboard</b> with per-task answer excerpts: <a href="https://fareedkhan-dev.github.io/all-agentic-architectures/benchmarks/">fareedkhan-dev.github.io/.../benchmarks/</a></sub>
+<sub><b>Full leaderboard</b> with per-task answer excerpts: <a href="docs/benchmarks.md">docs/benchmarks.md</a></sub>
 
 ---
 
@@ -400,14 +400,14 @@ pytest -q
 
 | | |
 |---|---|
-| [**Full site**](https://fareedkhan-dev.github.io/all-agentic-architectures/) | Dark-mode aesthetic, embedded notebooks, auto-generated API reference |
-| [Quickstart](https://fareedkhan-dev.github.io/all-agentic-architectures/getting-started/quickstart/) | One-command install, 8-line example |
-| [Switching providers](https://fareedkhan-dev.github.io/all-agentic-architectures/getting-started/providers/) | Capability matrix; one env var to swap |
-| [Add your own architecture](https://fareedkhan-dev.github.io/all-agentic-architectures/tutorials/adding-your-own/) | 5-step contributor recipe |
-| [Deterministic-picker pattern](https://fareedkhan-dev.github.io/all-agentic-architectures/tutorials/deterministic-picker/) | The central technical pattern, explained once |
-| [Memory variants](https://fareedkhan-dev.github.io/all-agentic-architectures/tutorials/memory/) | Comparison of all 7 memory shapes |
-| [API reference](https://fareedkhan-dev.github.io/all-agentic-architectures/reference/) | mkdocstrings auto-gen from docstrings |
-| [Benchmarks](https://fareedkhan-dev.github.io/all-agentic-architectures/benchmarks/) | Full per-task leaderboard with answer excerpts |
+| [**Full docs site**](https://fareedkhan-dev.github.io/all-agentic-architectures/) | Dark-mode site with embedded notebooks &nbsp;<sub><i>(live after first deploy)</i></sub> |
+| [Quickstart](docs/getting-started/quickstart.md) | One-command install, 8-line example |
+| [Switching providers](docs/getting-started/providers.md) | Capability matrix; one env var to swap |
+| [Add your own architecture](docs/tutorials/adding-your-own.md) | 5-step contributor recipe |
+| [Deterministic-picker pattern](docs/tutorials/deterministic-picker.md) | The central technical pattern, explained once |
+| [Memory variants](docs/tutorials/memory.md) | Comparison of all 7 memory shapes |
+| [API reference](https://fareedkhan-dev.github.io/all-agentic-architectures/reference/) | mkdocstrings auto-gen from docstrings &nbsp;<sub><i>(live after first deploy)</i></sub> |
+| [Benchmarks](docs/benchmarks.md) | Full per-task leaderboard with answer excerpts |
 
 ---
 
@@ -415,7 +415,7 @@ pytest -q
 
 Contributions welcome. Two paths:
 
-1. **Add a new architecture** — follow the [5-step recipe](https://fareedkhan-dev.github.io/all-agentic-architectures/tutorials/adding-your-own/). The PR template includes a deterministic-picker checklist.
+1. **Add a new architecture** — follow the [5-step recipe](docs/tutorials/adding-your-own.md). The PR template includes a deterministic-picker checklist.
 2. **Improve an existing one** — bug fix, prompt tuning, performance, scoring rubric. Open an issue first to discuss scope.
 
 See [**CONTRIBUTING.md**](CONTRIBUTING.md) for the dev setup, code style, and commit-message convention (Conventional Commits — `release-please` auto-generates the CHANGELOG).
