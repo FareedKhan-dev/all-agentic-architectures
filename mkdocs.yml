@@ -1,0 +1,200 @@
+site_name: Agentic Architectures
+site_description: >
+  35 production-grade agentic AI architectures with LangGraph — every one
+  fully runnable end-to-end, multi-provider (Nebius / OpenAI / Anthropic / Groq / Ollama),
+  with real LLM outputs, deterministic-picker discipline, and a comparative benchmark leaderboard.
+site_author: Fareed Khan
+site_url: https://fareedkhan-dev.github.io/all-agentic-architectures/
+
+repo_name: FareedKhan-dev/all-agentic-architectures
+repo_url: https://github.com/FareedKhan-dev/all-agentic-architectures
+edit_uri: edit/main/docs/
+
+# ----------------------------------------------------------------------------
+# Theme — Material
+# ----------------------------------------------------------------------------
+theme:
+  name: material
+  custom_dir: docs/_overrides
+  language: en
+  font:
+    text: Inter
+    code: JetBrains Mono
+  palette:
+    - scheme: slate
+      primary: black
+      accent: blue
+  features:
+    - navigation.tabs
+    - navigation.tabs.sticky
+    - navigation.sections
+    - navigation.expand
+    - navigation.indexes
+    - navigation.top
+    - navigation.tracking
+    - navigation.footer
+    - search.suggest
+    - search.highlight
+    - search.share
+    - content.code.copy
+    - content.code.annotate
+    - content.tabs.link
+    - content.tooltips
+    - toc.follow
+    - announce.dismiss
+  icon:
+    repo: fontawesome/brands/github
+    logo: material/graph-outline
+
+extra_css:
+  - stylesheets/extra.css
+
+# ----------------------------------------------------------------------------
+# Plugins
+# ----------------------------------------------------------------------------
+plugins:
+  - search
+  - mkdocs-jupyter:
+      include_source: true
+      ignore_h1_titles: true
+      execute: false               # notebooks are already executed via papermill
+      allow_errors: false
+      kernel_name: python3
+  - mkdocstrings:
+      handlers:
+        python:
+          paths: [src]
+          options:
+            show_source: true
+            show_root_heading: true
+            show_root_full_path: false
+            show_signature_annotations: true
+            separate_signature: true
+            members_order: source
+            docstring_style: google
+            merge_init_into_class: true
+            heading_level: 2
+
+# ----------------------------------------------------------------------------
+# Markdown extensions
+# ----------------------------------------------------------------------------
+markdown_extensions:
+  - abbr
+  - admonition
+  - attr_list
+  - def_list
+  - footnotes
+  - md_in_html
+  - tables
+  - toc:
+      permalink: true
+      toc_depth: 3
+  - pymdownx.arithmatex:
+      generic: true
+  - pymdownx.betterem
+  - pymdownx.caret
+  - pymdownx.details
+  - pymdownx.emoji:
+      emoji_index: !!python/name:material.extensions.emoji.twemoji
+      emoji_generator: !!python/name:material.extensions.emoji.to_svg
+  - pymdownx.highlight:
+      anchor_linenums: true
+      line_spans: __span
+      pygments_lang_class: true
+  - pymdownx.inlinehilite
+  - pymdownx.keys
+  - pymdownx.mark
+  - pymdownx.smartsymbols
+  - pymdownx.snippets
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+  - pymdownx.tabbed:
+      alternate_style: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.tilde
+
+# ----------------------------------------------------------------------------
+# Navigation
+# ----------------------------------------------------------------------------
+nav:
+  - Home: index.md
+  - Getting Started:
+      - getting-started/index.md
+      - Installation: getting-started/installation.md
+      - Quickstart: getting-started/quickstart.md
+      - Switching providers: getting-started/providers.md
+  - Architectures:
+      - architectures/index.md
+      - "Reasoning & Reflection":
+          - architectures/01_reflection.ipynb
+          - architectures/18_reflexion.ipynb
+          - architectures/20_chain_of_verification.ipynb
+          - architectures/19_self_discover.ipynb
+          - architectures/32_constitutional_ai.ipynb
+      - "Sampling & Search":
+          - architectures/21_self_consistency.ipynb
+          - architectures/09_tree_of_thoughts.ipynb
+          - architectures/22_lats.ipynb
+          - architectures/10_mental_loop.ipynb
+          - architectures/13_ensemble.ipynb
+      - "Retrieval (RAG)":
+          - architectures/23_agentic_rag.ipynb
+          - architectures/24_corrective_rag.ipynb
+          - architectures/25_self_rag.ipynb
+          - architectures/26_adaptive_rag.ipynb
+          - architectures/27_graph_rag.ipynb
+      - "Memory":
+          - architectures/08_episodic_semantic_memory.ipynb
+          - architectures/12_graph_memory.ipynb
+          - architectures/31_memgpt.ipynb
+          - architectures/29_voyager.ipynb
+          - architectures/35_agent_workflow_memory.ipynb
+      - "Tools & Actions":
+          - architectures/02_tool_use.ipynb
+          - architectures/03_react.ipynb
+          - architectures/04_planning.ipynb
+          - architectures/06_pev.ipynb
+          - architectures/33_swe_agent.ipynb
+          - architectures/34_computer_use.ipynb
+      - "Multi-Agent":
+          - architectures/05_multi_agent.ipynb
+          - architectures/07_blackboard.ipynb
+          - architectures/28_debate.ipynb
+          - architectures/30_storm.ipynb
+          - architectures/11_meta_controller.ipynb
+      - "Safety & Routing":
+          - architectures/14_dry_run.ipynb
+          - architectures/17_reflexive_metacognitive.ipynb
+      - "Specialty":
+          - architectures/15_rlhf_self_improvement.ipynb
+          - architectures/16_cellular_automata.ipynb
+  - Tutorials:
+      - tutorials/index.md
+      - "Add your own architecture": tutorials/adding-your-own.md
+      - "The deterministic-picker pattern": tutorials/deterministic-picker.md
+      - "Memory in agents": tutorials/memory.md
+  - Benchmarks: benchmarks.md
+  - API Reference:
+      - reference/index.md
+      - Base: reference/base.md
+      - Architectures: reference/architectures.md
+      - Memory: reference/memory.md
+      - Tools: reference/tools.md
+      - Evaluators: reference/evaluators.md
+
+# ----------------------------------------------------------------------------
+# Extra
+# ----------------------------------------------------------------------------
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/FareedKhan-dev/all-agentic-architectures
+  generator: false   # remove "Made with Material for MkDocs" footer line
+
+copyright: >
+  © 2026 Fareed Khan — MIT licensed.
+  Built with <a href="https://squidfunk.github.io/mkdocs-material/">Material for MkDocs</a>.

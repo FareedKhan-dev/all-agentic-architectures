@@ -1,0 +1,704 @@
+/* ============================================================================
+ *  Agentic Architectures — dark-only modern aesthetic
+ *
+ *  Single signature gradient (cyan → indigo → violet → magenta).
+ *  Variable typography (Inter + JetBrains Mono).
+ *  Bento via auto-fit minmax — bulletproof at any container width.
+ * ========================================================================== */
+
+@import url("https://rsms.me/inter/inter.css");
+@import url("https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&display=swap");
+
+:root,
+[data-md-color-scheme="slate"],
+[data-md-color-scheme="default"] {
+  --md-text-font: "Inter var", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  --md-code-font: "JetBrains Mono", "SF Mono", Menlo, Consolas, monospace;
+
+  /* Signature gradient */
+  --aa-gradient:
+    linear-gradient(135deg,
+      #06b6d4 0%,
+      #6366f1 35%,
+      #a855f7 65%,
+      #ec4899 100%);
+
+  --aa-gradient-soft:
+    linear-gradient(135deg,
+      rgba(6, 182, 212, 0.10) 0%,
+      rgba(99, 102, 241, 0.10) 35%,
+      rgba(168, 85, 247, 0.10) 65%,
+      rgba(236, 72, 153, 0.10) 100%);
+
+  --aa-glow:
+    radial-gradient(ellipse 70% 50% at 50% 0%,
+      rgba(99, 102, 241, 0.25),
+      transparent 70%);
+
+  --aa-radius: 14px;
+  --aa-radius-sm: 8px;
+
+  /* Force dark palette tokens regardless of scheme */
+  --md-default-bg-color:                #07070d;
+  --md-default-bg-color--light:         #0e0e16;
+  --md-default-bg-color--lighter:       #14141d;
+  --md-default-fg-color:                #fafafa;
+  --md-default-fg-color--light:         #d4d4d8;
+  --md-default-fg-color--lighter:       #a1a1aa;
+  --md-default-fg-color--lightest:      #3f3f46;
+
+  --md-primary-fg-color:                #fafafa;
+  --md-primary-bg-color:                #07070d;
+
+  --md-accent-fg-color:                 #a78bfa;
+  --md-accent-fg-color--transparent:    rgba(167, 139, 250, 0.14);
+
+  --md-typeset-a-color:                 #a78bfa;
+  --md-code-bg-color:                   #14141d;
+  --md-code-fg-color:                   #ededed;
+
+  --md-footer-bg-color:                 #07070d;
+  --md-footer-bg-color--dark:           #050509;
+  --md-footer-fg-color:                 #a1a1aa;
+  --md-footer-fg-color--light:          #d4d4d8;
+
+  --aa-border:                          rgba(255, 255, 255, 0.08);
+  --aa-border-strong:                   rgba(255, 255, 255, 0.18);
+  --aa-card-bg:                         rgba(255, 255, 255, 0.025);
+  --aa-card-border:                     rgba(255, 255, 255, 0.08);
+  --aa-headline:                        #ffffff;
+}
+
+body, html {
+  background: var(--md-default-bg-color);
+  color: var(--md-default-fg-color);
+}
+
+/* ============================================================================
+ *  Typography
+ * ========================================================================== */
+.md-typeset {
+  font-size: 0.875rem;
+  line-height: 1.7;
+  font-feature-settings: "cv11", "ss01", "ss03", "cv05";
+  letter-spacing: -0.005em;
+}
+
+.md-typeset h1,
+.md-typeset h2,
+.md-typeset h3,
+.md-typeset h4 {
+  font-weight: 600;
+  letter-spacing: -0.022em;
+  color: var(--md-default-fg-color);
+}
+
+.md-typeset h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  margin: 0 0 1.5rem;
+}
+
+.md-typeset h2 {
+  font-size: 1.375rem;
+  margin: 3.5rem 0 1.25rem;
+  padding-top: 2rem;
+  border-top: 1px solid var(--aa-border);
+}
+
+.md-typeset h3 {
+  font-size: 1.0625rem;
+  margin: 2rem 0 0.75rem;
+}
+
+.md-typeset p {
+  color: var(--md-default-fg-color--light);
+  margin: 0 0 1rem;
+}
+
+.md-typeset a {
+  font-weight: 500;
+  text-decoration: none;
+  border-bottom: 1px solid transparent;
+  transition: border-color 160ms ease, color 160ms ease;
+}
+
+.md-typeset a:hover { border-bottom-color: currentColor; }
+
+/* ============================================================================
+ *  Header / nav — glass dark
+ * ========================================================================== */
+.md-header {
+  background: rgba(7, 7, 13, 0.78);
+  backdrop-filter: saturate(180%) blur(16px);
+  -webkit-backdrop-filter: saturate(180%) blur(16px);
+  border-bottom: 1px solid var(--aa-border);
+  box-shadow: none;
+  min-height: 56px;
+  height: auto;
+  color: var(--md-default-fg-color);
+}
+
+.md-header__inner { padding: 0 1.5rem; }
+
+.md-header__title {
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  font-size: 0.95rem;
+}
+
+.md-header__source {
+  max-width: 12rem;
+  white-space: nowrap;
+  overflow: hidden;
+}
+.md-source__repository {
+  font-size: 0.75rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+}
+.md-source__facts { font-size: 0.7rem; }
+
+.md-tabs {
+  background: transparent;
+  border-bottom: 1px solid var(--aa-border);
+  color: var(--md-default-fg-color);
+}
+
+.md-tabs__link {
+  font-size: 0.8125rem;
+  font-weight: 500;
+  opacity: 0.6;
+  margin-top: 0;
+  padding: 0.85rem 0;
+  transition: opacity 120ms ease;
+}
+
+.md-tabs__link:hover,
+.md-tabs__link--active {
+  opacity: 1;
+}
+
+.md-tabs__link--active { font-weight: 600; }
+
+.md-search__form {
+  background: var(--md-code-bg-color);
+  border-radius: var(--aa-radius-sm);
+  height: 34px;
+  border: 1px solid var(--aa-border);
+}
+
+.md-search__input { font-size: 0.8125rem; color: var(--md-default-fg-color); }
+
+/* ============================================================================
+ *  Sidebars
+ * ========================================================================== */
+.md-nav__title {
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--md-default-fg-color--lighter);
+}
+
+.md-nav__link {
+  font-size: 0.8125rem;
+  padding: 0.3rem 0;
+  margin: 0.1rem 0;
+  color: var(--md-default-fg-color--light);
+  transition: color 120ms ease;
+}
+
+.md-nav__link:hover { color: var(--md-accent-fg-color); }
+
+.md-nav__link--active {
+  color: var(--md-default-fg-color);
+  font-weight: 600;
+}
+
+/* ============================================================================
+ *  Content
+ * ========================================================================== */
+.md-main { background: var(--md-default-bg-color); }
+
+.md-content { max-width: 820px; margin: 0 auto; }
+.md-content__inner { padding-top: 2rem; padding-bottom: 6rem; }
+
+/* Landing pages with the hero get full width */
+.md-content:has(.aa-hero),
+body[data-md-color-scheme] .md-content:has(.aa-hero) {
+  max-width: 1240px;
+}
+.md-content:has(.aa-hero) .md-content__inner {
+  padding-left: 2rem;
+  padding-right: 2rem;
+}
+
+/* ============================================================================
+ *  Code
+ * ========================================================================== */
+.md-typeset code {
+  background: var(--md-code-bg-color);
+  border: none;
+  border-radius: 5px;
+  padding: 0.12rem 0.4rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+}
+
+.md-typeset pre > code {
+  font-size: 0.8125rem;
+  padding: 1.25rem 1.5rem;
+  border-radius: var(--aa-radius-sm);
+  background: var(--md-code-bg-color);
+  line-height: 1.65;
+}
+
+.md-typeset .highlight {
+  border-radius: var(--aa-radius-sm);
+  overflow: hidden;
+  border: 1px solid var(--aa-border);
+}
+
+/* ============================================================================
+ *  Tables
+ * ========================================================================== */
+.md-typeset table:not([class]) {
+  border: 1px solid var(--aa-border);
+  border-radius: var(--aa-radius-sm);
+  border-collapse: separate;
+  border-spacing: 0;
+  font-size: 0.8125rem;
+  overflow: hidden;
+  box-shadow: none;
+}
+
+.md-typeset table:not([class]) th {
+  background: var(--md-code-bg-color);
+  font-weight: 600;
+  text-transform: uppercase;
+  font-size: 0.6875rem;
+  letter-spacing: 0.06em;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--aa-border);
+}
+
+.md-typeset table:not([class]) td {
+  background: transparent;
+  padding: 0.65rem 1rem;
+  border-bottom: 1px solid var(--aa-border);
+}
+
+.md-typeset table:not([class]) tr:last-child td { border-bottom: none; }
+
+/* ============================================================================
+ *  Buttons
+ * ========================================================================== */
+.md-typeset .md-button {
+  font-weight: 500;
+  font-size: 0.8125rem;
+  border-radius: var(--aa-radius-sm);
+  padding: 0.6rem 1.1rem;
+  border: 1px solid var(--aa-border-strong);
+  background: transparent;
+  color: var(--md-default-fg-color);
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.md-typeset .md-button:hover {
+  border-color: var(--md-default-fg-color);
+  background: var(--aa-card-bg);
+  color: var(--md-default-fg-color);
+  transform: translateY(-1px);
+}
+
+.md-typeset .md-button--primary {
+  background: var(--aa-gradient);
+  background-size: 200% 200%;
+  background-position: 0% 50%;
+  color: #ffffff !important;
+  border-color: transparent;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+}
+
+.md-typeset .md-button--primary:hover {
+  background-position: 100% 50%;
+  color: #ffffff !important;
+  border-color: transparent;
+  transform: translateY(-1px);
+  box-shadow:
+    0 10px 28px -8px rgba(99, 102, 241, 0.55),
+    0 4px 14px -2px rgba(168, 85, 247, 0.30);
+}
+
+/* ============================================================================
+ *  Admonitions
+ * ========================================================================== */
+.md-typeset .admonition,
+.md-typeset details {
+  border-radius: var(--aa-radius-sm);
+  border: 1px solid var(--aa-border);
+  background: var(--aa-card-bg);
+  box-shadow: none;
+  font-size: 0.8125rem;
+}
+
+/* ============================================================================
+ *  Footer
+ * ========================================================================== */
+.md-footer {
+  background: var(--md-default-bg-color);
+  border-top: 1px solid var(--aa-border);
+  font-size: 0.75rem;
+}
+.md-footer-meta { background: var(--md-default-bg-color); }
+.md-footer__title { font-size: 0.8125rem; font-weight: 600; }
+
+/* ============================================================================
+ *  HERO + landing-page elements
+ * ========================================================================== */
+.md-content:has(.aa-hero) { position: relative; }
+.md-content:has(.aa-hero)::before {
+  content: "";
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 1200px;
+  height: 600px;
+  background: var(--aa-glow);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.aa-hero {
+  padding: 5rem 0 3rem;
+  text-align: left;
+  position: relative;
+  z-index: 1;
+}
+
+.aa-hero .aa-eyebrow {
+  display: inline-block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  padding: 0.4rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--aa-border-strong);
+  color: var(--md-default-fg-color--light);
+  background: var(--aa-gradient-soft);
+  backdrop-filter: blur(8px);
+  margin-bottom: 2rem;
+}
+
+.aa-hero h1 {
+  font-size: clamp(2.5rem, 6vw, 4.5rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+  margin: 0 0 1.75rem;
+  border: none;
+  padding: 0;
+  background: var(--aa-gradient);
+  background-size: 200% 200%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: aa-gradient-shift 12s ease-in-out infinite;
+}
+
+@keyframes aa-gradient-shift {
+  0%, 100% { background-position: 0% 50%; }
+  50%      { background-position: 100% 50%; }
+}
+
+.aa-hero .aa-lede {
+  font-size: 1.125rem;
+  line-height: 1.65;
+  color: var(--md-default-fg-color--light);
+  max-width: 660px;
+  margin: 0 0 2.5rem;
+  font-weight: 400;
+}
+
+.aa-hero .aa-cta {
+  display: flex;
+  gap: 0.65rem;
+  flex-wrap: wrap;
+}
+
+/* Stats */
+.aa-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 1.5rem 2.5rem;
+  margin: 0 0 4rem;
+  padding: 2rem 0;
+  border-top: 1px solid var(--aa-border);
+  border-bottom: 1px solid var(--aa-border);
+}
+
+.aa-stat .n {
+  font-size: 2.5rem;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 1;
+  margin-bottom: 0.5rem;
+  font-feature-settings: "tnum";
+  background: var(--aa-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.aa-stat .lbl {
+  font-size: 0.7rem;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  color: var(--md-default-fg-color--lighter);
+}
+
+/* Pillars — auto-fit so it adapts to any width */
+.aa-pillars {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+  margin: 0 0 4rem;
+}
+
+.aa-pillar {
+  position: relative;
+  padding: 1.5rem;
+  background: var(--aa-card-bg);
+  border: 1px solid var(--aa-card-border);
+  border-radius: var(--aa-radius);
+  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+}
+
+.aa-pillar::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: var(--aa-radius);
+  padding: 1px;
+  background: var(--aa-gradient);
+  -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  opacity: 0;
+  transition: opacity 250ms ease;
+  pointer-events: none;
+}
+
+.aa-pillar:hover { transform: translateY(-2px); }
+.aa-pillar:hover::before { opacity: 1; }
+
+.aa-pillar h3 {
+  font-size: 0.85rem;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  margin: 0 0 0.5rem;
+  padding: 0;
+  border: none;
+}
+
+.aa-pillar p {
+  font-size: 0.8125rem;
+  line-height: 1.6;
+  color: var(--md-default-fg-color--light);
+  margin: 0;
+}
+
+/* Bento — bulletproof auto-fit; no 12-col span game */
+.aa-bento {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0 4rem;
+}
+
+.aa-bento-card {
+  position: relative;
+  padding: 1.75rem;
+  background: var(--aa-card-bg);
+  border: 1px solid var(--aa-card-border);
+  border-radius: var(--aa-radius);
+  display: flex;
+  flex-direction: column;
+  gap: 0.6rem;
+  transition: all 250ms cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  min-height: 180px;
+  color: var(--md-default-fg-color);
+}
+
+.aa-bento-card::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 2px;
+  background: var(--aa-gradient);
+  opacity: 0.6;
+  transition: opacity 250ms ease;
+}
+
+.aa-bento-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--aa-border-strong);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+.aa-bento-card:hover::before { opacity: 1; }
+
+.aa-bento-card .cat {
+  display: block;
+  font-size: 0.7rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--md-default-fg-color--lighter);
+}
+
+.aa-bento-card h3 {
+  font-size: 1.125rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  margin: 0;
+  padding: 0;
+  border: none;
+  color: var(--md-default-fg-color);
+}
+
+.aa-bento-card .desc {
+  display: block;
+  font-size: 0.8125rem;
+  color: var(--md-default-fg-color--light);
+  line-height: 1.55;
+  margin: 0;
+}
+
+.aa-bento-card .members {
+  display: block;
+  margin-top: auto;
+  font-size: 0.7rem;
+  font-weight: 500;
+  color: var(--md-default-fg-color--lighter);
+  letter-spacing: 0.02em;
+  padding-top: 0.75rem;
+  border-top: 1px dashed var(--aa-border);
+  line-height: 1.5;
+}
+
+/* Full-card click target — invisible <a> covers the entire card */
+.aa-bento-card .aa-card-link {
+  position: absolute;
+  inset: 0;
+  border: none;
+  z-index: 2;
+  background: transparent;
+  font-size: 0;
+  text-decoration: none;
+}
+.aa-bento-card .aa-card-link:hover { border: none; }
+
+/* Footer CTA */
+.aa-cta-card {
+  background: var(--aa-gradient-soft);
+  border: 1px solid var(--aa-border);
+  border-radius: var(--aa-radius);
+  padding: 3rem 2rem;
+  margin: 4rem 0 0;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.aa-cta-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--aa-glow);
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.aa-cta-card h2 {
+  position: relative;
+  font-size: 1.875rem;
+  font-weight: 700;
+  letter-spacing: -0.025em;
+  margin: 0 0 0.5rem;
+  padding: 0;
+  border: none;
+  color: var(--md-default-fg-color);
+}
+
+.aa-cta-card p {
+  position: relative;
+  color: var(--md-default-fg-color--light);
+  font-size: 0.95rem;
+  margin: 0 0 1.5rem;
+}
+
+.aa-cta-card .aa-cta {
+  position: relative;
+  justify-content: center;
+}
+
+/* Subtle fade-up on load */
+@keyframes aa-fade-up {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.aa-hero > *,
+.aa-stats,
+.aa-pillars,
+.aa-bento,
+.aa-cta-card {
+  animation: aa-fade-up 600ms cubic-bezier(0.4, 0, 0.2, 1) both;
+}
+
+.aa-stats     { animation-delay: 80ms; }
+.aa-pillars   { animation-delay: 160ms; }
+.aa-bento     { animation-delay: 240ms; }
+
+/* ============================================================================
+ *  Mermaid container
+ * ========================================================================== */
+.md-typeset .mermaid {
+  background: var(--aa-card-bg);
+  border: 1px solid var(--aa-card-border);
+  border-radius: var(--aa-radius);
+  padding: 1.5rem;
+  margin: 1.5rem 0;
+}
+
+/* ============================================================================
+ *  Mkdocs-Jupyter polish
+ * ========================================================================== */
+.jp-Notebook { background: transparent !important; }
+.jp-Cell { padding: 0.5rem 0 !important; }
+.jp-CodeMirrorEditor { font-size: 0.8125rem !important; }
+.jp-OutputArea-output pre { font-size: 0.75rem; line-height: 1.55; }
+
+html { scroll-behavior: smooth; }
+
+/* Hide the palette toggle since we're dark-only */
+.md-header__option { display: none; }
