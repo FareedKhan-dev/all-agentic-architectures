@@ -1,23 +1,53 @@
 <div align="center">
 
+<br>
+
 # Agentic Architectures
 
-**Thirty-five production-grade agentic AI patterns, end to end.**
+### Thirty-five production-grade agentic AI patterns. End to end.
 
-*A library and a living textbook. Real LLM outputs, provider-agnostic, deterministic-picker discipline, and a comparative benchmark leaderboard.*
+A library *and* a living textbook — real LLM outputs, provider-agnostic,
+deterministic-picker discipline throughout, and a comparative benchmark
+leaderboard that ranks every architecture against every relevant task.
 
-[![CI](https://img.shields.io/github/actions/workflow/status/FareedKhan-dev/all-agentic-architectures/ci.yml?branch=main&label=CI&logo=github&style=flat-square)](https://github.com/FareedKhan-dev/all-agentic-architectures/actions/workflows/ci.yml)
-[![Docs](https://img.shields.io/github/actions/workflow/status/FareedKhan-dev/all-agentic-architectures/docs.yml?branch=main&label=docs&logo=materialformkdocs&style=flat-square)](https://fareedkhan-dev.github.io/all-agentic-architectures/)
-[![PyPI](https://img.shields.io/pypi/v/agentic-architectures?style=flat-square&logo=pypi&logoColor=white)](https://pypi.org/project/agentic-architectures/)
-[![Python](https://img.shields.io/pypi/pyversions/agentic-architectures?style=flat-square&logo=python&logoColor=white)](https://pypi.org/project/agentic-architectures/)
-[![License: MIT](https://img.shields.io/badge/license-MIT-blue.svg?style=flat-square)](LICENSE)
-[![Stars](https://img.shields.io/github/stars/FareedKhan-dev/all-agentic-architectures?style=flat-square&logo=github)](https://github.com/FareedKhan-dev/all-agentic-architectures/stargazers)
+<br>
 
-[**Documentation**](https://fareedkhan-dev.github.io/all-agentic-architectures/) &nbsp;·&nbsp;
-[**Quickstart**](https://fareedkhan-dev.github.io/all-agentic-architectures/getting-started/quickstart/) &nbsp;·&nbsp;
-[**Architectures**](https://fareedkhan-dev.github.io/all-agentic-architectures/architectures/) &nbsp;·&nbsp;
-[**Benchmarks**](https://fareedkhan-dev.github.io/all-agentic-architectures/benchmarks/) &nbsp;·&nbsp;
-[**Open in Codespaces**](https://codespaces.new/FareedKhan-dev/all-agentic-architectures)
+[![CI](https://img.shields.io/github/actions/workflow/status/FareedKhan-dev/all-agentic-architectures/ci.yml?branch=main&label=CI&logo=githubactions&logoColor=white&style=for-the-badge&color=0a0a0a)](https://github.com/FareedKhan-dev/all-agentic-architectures/actions/workflows/ci.yml)
+[![Docs](https://img.shields.io/github/actions/workflow/status/FareedKhan-dev/all-agentic-architectures/docs.yml?branch=main&label=DOCS&logo=materialformkdocs&logoColor=white&style=for-the-badge&color=6366f1)](https://fareedkhan-dev.github.io/all-agentic-architectures/)
+[![PyPI](https://img.shields.io/pypi/v/agentic-architectures?style=for-the-badge&logo=pypi&logoColor=white&label=PyPI&color=a855f7)](https://pypi.org/project/agentic-architectures/)
+[![License](https://img.shields.io/badge/license-MIT-ec4899?style=for-the-badge&logo=opensourceinitiative&logoColor=white)](LICENSE)
+
+<br>
+
+<a href="https://fareedkhan-dev.github.io/all-agentic-architectures/getting-started/quickstart/">
+  <img alt="Quickstart" src="https://img.shields.io/badge/Quickstart-→-0a0a0a?style=for-the-badge&labelColor=0a0a0a" />
+</a>
+<a href="https://fareedkhan-dev.github.io/all-agentic-architectures/">
+  <img alt="Documentation" src="https://img.shields.io/badge/Documentation-→-262626?style=for-the-badge&labelColor=262626" />
+</a>
+<a href="https://fareedkhan-dev.github.io/all-agentic-architectures/architectures/">
+  <img alt="Architectures" src="https://img.shields.io/badge/Architectures-→-404040?style=for-the-badge&labelColor=404040" />
+</a>
+<a href="https://fareedkhan-dev.github.io/all-agentic-architectures/benchmarks/">
+  <img alt="Benchmarks" src="https://img.shields.io/badge/Benchmarks-→-525252?style=for-the-badge&labelColor=525252" />
+</a>
+<a href="https://codespaces.new/FareedKhan-dev/all-agentic-architectures">
+  <img alt="Open in Codespaces" src="https://img.shields.io/badge/Open_in_Codespaces-→-737373?style=for-the-badge&labelColor=737373" />
+</a>
+
+<br><br>
+
+<table>
+<tr>
+<td align="center" width="140"><h2><kbd>&nbsp; 35 &nbsp;</kbd></h2><sub>ARCHITECTURES</sub></td>
+<td align="center" width="140"><h2><kbd>&nbsp; 283 &nbsp;</kbd></h2><sub>PASSING TESTS</sub></td>
+<td align="center" width="140"><h2><kbd>&nbsp; 17 &nbsp;</kbd></h2><sub>BENCHMARK TASKS</sub></td>
+<td align="center" width="140"><h2><kbd>&nbsp; 9 &nbsp;</kbd></h2><sub>LLM PROVIDERS</sub></td>
+<td align="center" width="140"><h2><kbd>&nbsp; 0 &nbsp;</kbd></h2><sub>MOCKED RUNS</sub></td>
+</tr>
+</table>
+
+<br>
 
 </div>
 
@@ -27,7 +57,9 @@
 
 A single Python library that packages every major agentic AI pattern from the literature as a runnable `Architecture` class with a uniform contract. Each pattern ships with a fully executed Jupyter notebook whose theory is written *against* the captured run — not synthetic examples. The library is multi-provider (Nebius, OpenAI, Anthropic, Groq, Ollama, Together, Fireworks, Mistral, Google) and built on top of LangGraph state machines.
 
-The central technical discipline of the repository is the **deterministic-picker pattern** — every LLM-as-Scorer surface has the LLM commit to categorical features (booleans, enums) and lets Python compose the deciding signal. This is the universal escape from the LLM-as-Scorer flat-band pathology and is applied in 13 of 35 architectures; 9 more are architecturally immune by design.
+The central technical discipline of the repository is the **deterministic-picker pattern** — every LLM-as-Scorer surface has the LLM commit to categorical features (booleans, enums) and lets Python compose the deciding signal. This is the universal escape from the LLM-as-Scorer flat-band pathology, applied in 13 of 35 architectures; 9 more are architecturally immune by design.
+
+---
 
 ## Quickstart
 
@@ -51,6 +83,8 @@ Same `.run(task)` interface across all 35 architectures. Same `ArchitectureResul
 <details>
 <summary><b>Set up a virtualenv from a fresh clone</b></summary>
 
+<br>
+
 ```bash
 git clone https://github.com/FareedKhan-dev/all-agentic-architectures
 cd all-agentic-architectures
@@ -67,44 +101,97 @@ pytest -q                           # 283 tests pass in ~30s
 
 </details>
 
-## Library layout
+---
 
-```mermaid
-flowchart LR
-    subgraph core [Core abstractions]
-        A1[Architecture ABC]
-        A2[ArchitectureResult]
-        A3[get_llm factory]
-        A4[LLMJudge]
-    end
+## Architecture families
 
-    subgraph patterns [35 architectures]
-        P1[Reasoning &amp; Reflection]
-        P2[Sampling &amp; Search]
-        P3[Retrieval RAG]
-        P4[Memory]
-        P5[Tools &amp; Actions]
-        P6[Multi-Agent]
-        P7[Safety &amp; Routing]
-        P8[Specialty]
-    end
+<table>
+<tr>
+<td width="33%" valign="top">
 
-    subgraph infra [Memory + Tools]
-        M1[VectorMemory<br/>FAISS / Chroma / Qdrant]
-        M2[SemanticMemory<br/>NetworkX / Neo4j]
-        M3[EpisodicMemory]
-        T1[web_search_tool<br/>Tavily]
-        T2[python_repl_tool]
-        T3[SimulatorTool]
-    end
+#### Reasoning & Reflection
+Self-critique loops that drive answer quality up through iteration.
+<br><br>
+<sub>Reflection · Reflexion · Chain-of-Verification · Self-Discover · Constitutional AI</sub>
 
-    core --> patterns
-    patterns --> infra
-```
+</td>
+<td width="33%" valign="top">
+
+#### Sampling & Search
+Sample many paths or grow a tree with rewards.
+<br><br>
+<sub>Self-Consistency · Tree of Thoughts · LATS · Mental Loop · Ensemble</sub>
+
+</td>
+<td width="33%" valign="top">
+
+#### Retrieval (RAG)
+Ground every claim — five retrieval shapes.
+<br><br>
+<sub>Agentic RAG · Corrective RAG · Self-RAG · Adaptive RAG · GraphRAG</sub>
+
+</td>
+</tr>
+<tr>
+<td width="33%" valign="top">
+
+#### Memory
+Learn across calls — pick the storage shape.
+<br><br>
+<sub>Episodic + Semantic · Graph Memory · MemGPT · Voyager · Agent Workflow Memory</sub>
+
+</td>
+<td width="33%" valign="top">
+
+#### Tools & Actions
+From one search tool to a real Chromium browser.
+<br><br>
+<sub>Tool Use · ReAct · Planning · PEV · SWE-Agent · BrowserAgent</sub>
+
+</td>
+<td width="33%" valign="top">
+
+#### Multi-Agent
+Specialists, debate, multi-perspective research.
+<br><br>
+<sub>Multi-Agent · Blackboard · Debate · STORM · Meta-Controller</sub>
+
+</td>
+</tr>
+<tr>
+<td width="33%" valign="top">
+
+#### Safety & Routing
+Categorical actions through deterministic Python gates.
+<br><br>
+<sub>Dry-Run · Reflexive Metacognitive · Computer Use</sub>
+
+</td>
+<td width="33%" valign="top">
+
+#### Specialty
+Patterns with a unique shape.
+<br><br>
+<sub>RLHF Self-Improvement · Cellular Automata</sub>
+
+</td>
+<td width="33%" valign="top">
+
+#### Cross-cutting
+Patterns that appear across families.
+<br><br>
+<sub><a href="https://fareedkhan-dev.github.io/all-agentic-architectures/tutorials/deterministic-picker/">Deterministic-picker</a> · <a href="https://fareedkhan-dev.github.io/all-agentic-architectures/tutorials/memory/">Memory variants</a></sub>
+
+</td>
+</tr>
+</table>
+
+---
 
 ## The 35 architectures
 
-### Reasoning & Reflection
+<details open>
+<summary><b>Reasoning &amp; Reflection</b></summary>
 
 | Architecture | Pattern | Reference |
 |---|---|---|
@@ -114,7 +201,10 @@ flowchart LR
 | **Self-Discover** | SELECT → ADAPT → IMPLEMENT → SOLVE | Zhou 2024 |
 | **Constitutional AI** | Per-rule pass/fail → revise | Bai 2022 |
 
-### Sampling & Search
+</details>
+
+<details>
+<summary><b>Sampling &amp; Search</b></summary>
 
 | Architecture | Pattern | Reference |
 |---|---|---|
@@ -124,7 +214,10 @@ flowchart LR
 | **Mental Loop** | Simulate → score (deterministic-picker) | this repo |
 | **Ensemble** | N voters, weighted aggregation | this repo |
 
-### Retrieval (RAG)
+</details>
+
+<details>
+<summary><b>Retrieval (RAG)</b></summary>
 
 | Architecture | Pattern | Reference |
 |---|---|---|
@@ -134,7 +227,10 @@ flowchart LR
 | **Adaptive RAG** | Pre-route by query complexity | Jeong 2024 |
 | **GraphRAG** | KG + community summaries | Microsoft 2024 |
 
-### Memory
+</details>
+
+<details>
+<summary><b>Memory</b></summary>
 
 | Architecture | Stored unit | Reference |
 |---|---|---|
@@ -144,7 +240,10 @@ flowchart LR
 | **Voyager** | Reusable Python skills (real subprocess) | Wang 2023 |
 | **Agent Workflow Memory** | High-level workflow recipes | Wang 2024 |
 
-### Tools & Actions
+</details>
+
+<details>
+<summary><b>Tools &amp; Actions</b></summary>
 
 | Architecture | Pattern | Reference |
 |---|---|---|
@@ -153,9 +252,12 @@ flowchart LR
 | **Planning** | Decompose → execute → replan | Wei 2022 |
 | **Plan-Execute-Verify (PEV)** | Post-execution verification per step | this repo |
 | **SWE-Agent** | Sandboxed file-system agent | Yang 2024 |
-| **BrowserAgent** | Real Playwright + safety gate | Anthropic Computer-Use 2024 |
+| **BrowserAgent** | **Real Playwright** + safety gate | Anthropic Computer-Use 2024 |
 
-### Multi-Agent
+</details>
+
+<details>
+<summary><b>Multi-Agent</b></summary>
 
 | Architecture | Pattern | Reference |
 |---|---|---|
@@ -165,81 +267,149 @@ flowchart LR
 | **STORM** | Multi-perspective research → article | Shao 2024 |
 | **Meta-Controller** | Router over architectures | this repo |
 
-### Safety & Routing
+</details>
+
+<details>
+<summary><b>Safety, Routing &amp; Specialty</b></summary>
 
 | Architecture | Pattern | Reference |
 |---|---|---|
 | **Dry-Run** | Propose → simulate → approval gate | this repo |
 | **Reflexive Metacognitive** | Self-aware capability routing | this repo |
-
-### Specialty
-
-| Architecture | Pattern | Reference |
-|---|---|---|
 | **RLHF Self-Improvement** | Multi-dim deterministic scoring + archive | this repo |
 | **Cellular Automata** | LLM rules over a grid | this repo |
 
+</details>
+
+---
+
 ## Provider compatibility
 
-| Provider | Install extra | Default model used in this repo |
-|---|---|---|
-| **Nebius** (default) | `[nebius]` | `meta-llama/Llama-3.3-70B-Instruct` + `Qwen/Qwen3-235B-A22B-Thinking-2507-fast` |
-| OpenAI | `[openai]` | any `gpt-*` |
-| Anthropic | `[anthropic]` | any `claude-*` |
-| Groq | `[groq]` | any of their hosted models |
-| Ollama (local) | `[ollama]` | `llama3.3:70b` recommended |
-| Together | `[together]` | any of their hosted models |
-| Fireworks | `[fireworks]` | function-calling models |
-| Mistral | `[mistral]` | EU-hosted option |
-| Google | `[google]` | Gemini 2.x via Generative AI API |
+<table>
+<tr><th>Provider</th><th>Install extra</th><th>Notes</th></tr>
+<tr><td><b>Nebius</b> &nbsp;<sub><i>(default)</i></sub></td><td><code>[nebius]</code></td><td>Llama-3.3-70B + Qwen3-Thinking; cheapest for the included demos</td></tr>
+<tr><td>OpenAI</td><td><code>[openai]</code></td><td>All architectures work; highest quality for reasoning patterns</td></tr>
+<tr><td>Anthropic</td><td><code>[anthropic]</code></td><td>Strong on long context; required for production Computer-Use</td></tr>
+<tr><td>Groq</td><td><code>[groq]</code></td><td>Fast inference; great for high-volume Self-Consistency</td></tr>
+<tr><td>Ollama &nbsp;<sub><i>(local)</i></sub></td><td><code>[ollama]</code></td><td>No API key; tool calling depends on the model</td></tr>
+<tr><td>Together</td><td><code>[together]</code></td><td>Wide model catalogue</td></tr>
+<tr><td>Fireworks</td><td><code>[fireworks]</code></td><td>Function-calling first-class</td></tr>
+<tr><td>Mistral</td><td><code>[mistral]</code></td><td>EU-hosted option</td></tr>
+<tr><td>Google</td><td><code>[google]</code></td><td>Gemini 2.x via Generative AI API</td></tr>
+</table>
 
 Switch via `LLM_PROVIDER` + the corresponding key in `.env`. No code changes.
 
+---
+
 ## Benchmarks
 
-A 17-task benchmark suite runs every architecture and scores results. Most recent run, real Nebius Llama-3.3-70B (~25 min, ~$1.50 in tokens):
+A 17-task suite runs every architecture and scores results. Most recent run, real Nebius Llama-3.3-70B, ~25 min, ~$1.50 in tokens:
 
-| Score band | Architectures |
-|---|---|
-| **Strong** | Reflection (3/3), SelfConsistency (2/2), SelfDiscover (2/2), BrowserAgent (2/2), and 21 more 1/1 |
-| **Pattern-fit failures** | LATS on math (search-shaped pattern, not arithmetic), Debate + Ensemble on trick logic (group-think), Reflexion + AWM on stateful recall (wrong memory shape) |
-| **Total** | **33 / 42 correct (78%)** |
+<table>
+<tr>
+<th width="180">Outcome</th>
+<th>Architectures</th>
+</tr>
+<tr>
+<td><b>Strong</b> &nbsp;<sub>2/2 or 3/3</sub></td>
+<td><sub><code>Reflection</code> &nbsp;<code>SelfConsistency</code> &nbsp;<code>SelfDiscover</code> &nbsp;<code>BrowserAgent</code></sub></td>
+</tr>
+<tr>
+<td><b>Perfect on attempted</b> &nbsp;<sub>1/1</sub></td>
+<td><sub>21 more — see leaderboard</sub></td>
+</tr>
+<tr>
+<td><b>Pattern-fit failures</b></td>
+<td><sub>LATS on arithmetic (wrong shape) · Debate + Ensemble on Sally trick (group-think) · Reflexion + AWM on raw-fact recall (wrong memory shape)</sub></td>
+</tr>
+<tr>
+<td><b>Overall</b></td>
+<td><b>33 / 42 correct</b> &nbsp;<sub>78%</sub></td>
+</tr>
+</table>
 
-Full leaderboard with per-task answer excerpts: [docs.../benchmarks/](https://fareedkhan-dev.github.io/all-agentic-architectures/benchmarks/)
+<sub><b>Full leaderboard</b> with per-task answer excerpts: <a href="https://fareedkhan-dev.github.io/all-agentic-architectures/benchmarks/">fareedkhan-dev.github.io/.../benchmarks/</a></sub>
+
+---
 
 ## Learning paths
 
-Four curated reading orders, depending on what you're trying to do:
+Four curated reading orders, depending on what you're trying to do.
 
-| Path | For | Notebooks in order |
-|---|---|---|
-| **Beginner** | Mental model of how an agent is structured | Reflection → Tool Use → ReAct → Planning → Self-Consistency |
-| **RAG-focused** | Production retrieval pipelines | Agentic RAG → CRAG → Self-RAG → Adaptive RAG → GraphRAG |
-| **Multi-agent** | Coordinating multiple specialists | Multi-Agent → Blackboard → Debate → STORM → Meta-Controller |
-| **Safety** | Pre/post-execution guardrails | Dry-Run → Constitutional AI → Reflexive Metacognitive → BrowserAgent (safety gate) |
+<table>
+<tr><th width="180">Path</th><th>For</th><th>Order</th></tr>
+<tr>
+<td><b>Beginner</b></td>
+<td>Mental model</td>
+<td><sub>Reflection → Tool Use → ReAct → Planning → Self-Consistency</sub></td>
+</tr>
+<tr>
+<td><b>RAG-focused</b></td>
+<td>Production retrieval</td>
+<td><sub>Agentic RAG → CRAG → Self-RAG → Adaptive RAG → GraphRAG</sub></td>
+</tr>
+<tr>
+<td><b>Multi-agent</b></td>
+<td>Coordination</td>
+<td><sub>Multi-Agent → Blackboard → Debate → STORM → Meta-Controller</sub></td>
+</tr>
+<tr>
+<td><b>Safety</b></td>
+<td>Guardrails</td>
+<td><sub>Dry-Run → Constitutional AI → Reflexive Metacognitive → BrowserAgent (safety gate)</sub></td>
+</tr>
+</table>
 
-## Documentation
+---
 
-- **Full site**: [fareedkhan-dev.github.io/all-agentic-architectures](https://fareedkhan-dev.github.io/all-agentic-architectures/)
-- **Quickstart**: [getting-started/quickstart](https://fareedkhan-dev.github.io/all-agentic-architectures/getting-started/quickstart/)
-- **Add your own architecture** (5-step recipe): [tutorials/adding-your-own](https://fareedkhan-dev.github.io/all-agentic-architectures/tutorials/adding-your-own/)
-- **The deterministic-picker pattern** (the central technical pattern): [tutorials/deterministic-picker](https://fareedkhan-dev.github.io/all-agentic-architectures/tutorials/deterministic-picker/)
-- **Memory comparison** (all 7 variants): [tutorials/memory](https://fareedkhan-dev.github.io/all-agentic-architectures/tutorials/memory/)
-- **Auto-generated API reference**: [reference/](https://fareedkhan-dev.github.io/all-agentic-architectures/reference/)
+## Star history
 
-## What's tested
+<div align="center">
+
+<a href="https://www.star-history.com/#FareedKhan-dev/all-agentic-architectures&Date">
+  <picture>
+    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=FareedKhan-dev/all-agentic-architectures&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=FareedKhan-dev/all-agentic-architectures&type=Date" />
+    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=FareedKhan-dev/all-agentic-architectures&type=Date" width="720" />
+  </picture>
+</a>
+
+</div>
+
+---
+
+## Tested
 
 ```
 pytest -q
 283 passed, 37 skipped (env-gated integration), 1 warning in ~30s
 ```
 
-| Suite | Coverage |
+<table>
+<tr><th width="280">Suite</th><th>Coverage</th></tr>
+<tr><td><b>Registry sweep</b></td><td>All 35 architectures (metadata + instantiate + build)</td></tr>
+<tr><td><b>Pure-Python helpers</b></td><td>Haiku checker, composite scorers, subprocess executor, safety gate, sandbox path</td></tr>
+<tr><td><b>Notebook integrity</b></td><td>All 35 notebooks executed, no error outputs, §9 commentary tailored from real captured runs</td></tr>
+<tr><td><b>Integration</b> &nbsp;<sub><i>(env-gated)</i></sub></td><td>One real-LLM happy-path per architecture, gated via <code>RUN_INTEGRATION=1</code></td></tr>
+</table>
+
+---
+
+## Documentation
+
+| | |
 |---|---|
-| Registry sweep | All 35 architectures (metadata + instantiate + build) |
-| Pure-Python helpers | Haiku checker, composite scorers, subprocess executor, safety gate, sandbox path |
-| Notebook integrity | All 35 notebooks executed, no error outputs, §9 commentary tailored from real captured runs |
-| Integration | One real-LLM happy-path per architecture, env-gated via `RUN_INTEGRATION=1` |
+| [**Full site**](https://fareedkhan-dev.github.io/all-agentic-architectures/) | Dark-mode aesthetic, embedded notebooks, auto-generated API reference |
+| [Quickstart](https://fareedkhan-dev.github.io/all-agentic-architectures/getting-started/quickstart/) | One-command install, 8-line example |
+| [Switching providers](https://fareedkhan-dev.github.io/all-agentic-architectures/getting-started/providers/) | Capability matrix; one env var to swap |
+| [Add your own architecture](https://fareedkhan-dev.github.io/all-agentic-architectures/tutorials/adding-your-own/) | 5-step contributor recipe |
+| [Deterministic-picker pattern](https://fareedkhan-dev.github.io/all-agentic-architectures/tutorials/deterministic-picker/) | The central technical pattern, explained once |
+| [Memory variants](https://fareedkhan-dev.github.io/all-agentic-architectures/tutorials/memory/) | Comparison of all 7 memory shapes |
+| [API reference](https://fareedkhan-dev.github.io/all-agentic-architectures/reference/) | mkdocstrings auto-gen from docstrings |
+| [Benchmarks](https://fareedkhan-dev.github.io/all-agentic-architectures/benchmarks/) | Full per-task leaderboard with answer excerpts |
+
+---
 
 ## Contributing
 
@@ -248,11 +418,11 @@ Contributions welcome. Two paths:
 1. **Add a new architecture** — follow the [5-step recipe](https://fareedkhan-dev.github.io/all-agentic-architectures/tutorials/adding-your-own/). The PR template includes a deterministic-picker checklist.
 2. **Improve an existing one** — bug fix, prompt tuning, performance, scoring rubric. Open an issue first to discuss scope.
 
-See [CONTRIBUTING.md](CONTRIBUTING.md) for the dev setup, code style, and commit-message convention (Conventional Commits — `release-please` auto-generates the CHANGELOG).
+See [**CONTRIBUTING.md**](CONTRIBUTING.md) for the dev setup, code style, and commit-message convention (Conventional Commits — `release-please` auto-generates the CHANGELOG).
+
+---
 
 ## Citation
-
-If you use this work in research or production tooling, please cite:
 
 ```bibtex
 @misc{khan2026agentic,
@@ -264,18 +434,34 @@ If you use this work in research or production tooling, please cite:
 }
 ```
 
+---
+
 ## License
 
 [MIT](LICENSE) — © 2026 Fareed Khan.
 
----
+<br>
 
 <div align="center">
 
 <sub>
-Built on <a href="https://langchain-ai.github.io/langgraph/">LangGraph</a> ·
-Docs powered by <a href="https://squidfunk.github.io/mkdocs-material/">Material for MkDocs</a> ·
+Built on <a href="https://langchain-ai.github.io/langgraph/">LangGraph</a>
+&nbsp;·&nbsp;
+Docs powered by <a href="https://squidfunk.github.io/mkdocs-material/">Material for MkDocs</a>
+&nbsp;·&nbsp;
 Default LLM via <a href="https://nebius.com/">Nebius</a>
+</sub>
+
+<br><br>
+
+<sub>
+<a href="https://github.com/FareedKhan-dev/all-agentic-architectures/stargazers">★ Star</a>
+&nbsp;·&nbsp;
+<a href="https://github.com/FareedKhan-dev/all-agentic-architectures/fork">Fork</a>
+&nbsp;·&nbsp;
+<a href="https://github.com/FareedKhan-dev/all-agentic-architectures/issues/new/choose">Open an issue</a>
+&nbsp;·&nbsp;
+<a href="https://github.com/FareedKhan-dev/all-agentic-architectures/discussions">Discuss</a>
 </sub>
 
 </div>
