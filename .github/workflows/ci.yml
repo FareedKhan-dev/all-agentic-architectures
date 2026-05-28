@@ -74,7 +74,7 @@ jobs:
           TAVILY_API_KEY: ci-dummy-key-no-network-calls
       - name: Upload coverage to Codecov
         if: matrix.python == '3.11'
-        uses: codecov/codecov-action@v5
+        uses: codecov/codecov-action@v6
         with:
           fail_ci_if_error: false
         continue-on-error: true
