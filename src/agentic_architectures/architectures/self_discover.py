@@ -71,36 +71,31 @@ class _SelectedModules(BaseModel):
         min_length=2,
         max_length=8,
     )
-    rationale: str = Field(
-        description="ONE SENTENCE: why these specific modules suit this task type."
-    )
+    rationale: str = Field(description="ONE SENTENCE: why these specific modules suit this task type.")
 
 
 class _AdaptedModule(BaseModel):
     original: str = Field(description="The original module text, copied verbatim.")
     adapted: str = Field(
         description="The module rephrased in task-specific language. "
-                    "Replace generic words with concrete nouns from the task."
+        "Replace generic words with concrete nouns from the task."
     )
 
 
 class _AdaptedModules(BaseModel):
     """Stage 2 output."""
 
-    items: list[_AdaptedModule] = Field(
-        description="One adapted-module entry per selected module, in the same order."
-    )
+    items: list[_AdaptedModule] = Field(description="One adapted-module entry per selected module, in the same order.")
 
 
 class _PlanStep(BaseModel):
     step_number: int = Field(ge=1, description="1-indexed step number.")
     description: str = Field(
-        description="What the solver does in this step. Reference which adapted "
-                    "module(s) this step draws on."
+        description="What the solver does in this step. Reference which adapted module(s) this step draws on."
     )
     expected_output: str = Field(
         description="Format / type of what this step should produce "
-                    "(e.g., 'a Python list of pairs', 'an ordered chain of names')."
+        "(e.g., 'a Python list of pairs', 'an ordered chain of names')."
     )
 
 
@@ -110,7 +105,7 @@ class _ReasoningPlan(BaseModel):
     steps: list[_PlanStep] = Field(min_length=2, max_length=8)
     final_answer_format: str = Field(
         description="Exact format the final answer should take "
-                    "(e.g., 'a single comma-separated list of names from tallest to shortest')."
+        "(e.g., 'a single comma-separated list of names from tallest to shortest')."
     )
 
 
@@ -119,11 +114,10 @@ class _Solution(BaseModel):
 
     step_outputs: list[str] = Field(
         description="One concise string per plan step recording what was produced "
-                    "for that step. Same length as the plan's steps."
+        "for that step. Same length as the plan's steps."
     )
     final_answer: str = Field(
-        description="JUST the final answer in the requested format — no preface, "
-                    "no explanation, no markdown."
+        description="JUST the final answer in the requested format — no preface, no explanation, no markdown."
     )
 
 
@@ -204,12 +198,14 @@ class SelfDiscover(Architecture):
             "selected_ids": ids,
             "selected_modules": selected,
             "selection_rationale": verdict.rationale,
-            "history": [{
-                "stage": "select",
-                "selected_ids": ids,
-                "selected_modules": selected,
-                "rationale": verdict.rationale,
-            }],
+            "history": [
+                {
+                    "stage": "select",
+                    "selected_ids": ids,
+                    "selected_modules": selected,
+                    "rationale": verdict.rationale,
+                }
+            ],
         }
 
     def _adapt(self, state: SelfDiscoverState) -> dict[str, Any]:
@@ -230,9 +226,7 @@ class SelfDiscover(Architecture):
         }
 
     def _implement(self, state: SelfDiscoverState) -> dict[str, Any]:
-        adapted_block = "\n".join(
-            f"{i+1}. {a['adapted']}" for i, a in enumerate(state["adapted_modules"])
-        )
+        adapted_block = "\n".join(f"{i + 1}. {a['adapted']}" for i, a in enumerate(state["adapted_modules"]))
         prompt = (
             "Translate the task-adapted reasoning modules below into a concrete "
             "step-by-step plan. Each plan step references one or more of the "
@@ -255,11 +249,13 @@ class SelfDiscover(Architecture):
         return {
             "plan_steps": steps,
             "final_answer_format": plan.final_answer_format,
-            "history": [{
-                "stage": "implement",
-                "plan_steps": steps,
-                "final_answer_format": plan.final_answer_format,
-            }],
+            "history": [
+                {
+                    "stage": "implement",
+                    "plan_steps": steps,
+                    "final_answer_format": plan.final_answer_format,
+                }
+            ],
         }
 
     def _solve(self, state: SelfDiscoverState) -> dict[str, Any]:
@@ -281,11 +277,13 @@ class SelfDiscover(Architecture):
         return {
             "step_outputs": list(sol.step_outputs),
             "final_answer": sol.final_answer,
-            "history": [{
-                "stage": "solve",
-                "step_outputs": list(sol.step_outputs),
-                "final_answer": sol.final_answer,
-            }],
+            "history": [
+                {
+                    "stage": "solve",
+                    "step_outputs": list(sol.step_outputs),
+                    "final_answer": sol.final_answer,
+                }
+            ],
         }
 
     # ------------------------------------------------------------------ #

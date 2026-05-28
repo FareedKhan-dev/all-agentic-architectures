@@ -53,7 +53,8 @@ class _ThoughtScore(BaseModel):
     """Score for one candidate thought — STRICT rubric to force discrimination."""
 
     score: int = Field(
-        ge=1, le=5,
+        ge=1,
+        le=5,
         description=(
             "STRICT 1-5 scoring. Be discriminating — if you score everything 5, "
             "beam search has no signal to prune on.\n"
@@ -83,7 +84,7 @@ class TreeOfThoughtsState(TypedDict, total=False):
     task: str
     # Full tree as flat list. Each entry: {id, content, score, depth, parent_id}.
     thoughts: Annotated[list[dict[str, Any]], operator.add]
-    frontier: list[int]   # ids in `thoughts` that should be expanded next
+    frontier: list[int]  # ids in `thoughts` that should be expanded next
     depth: int
     max_depth: int
     branching: int
@@ -133,9 +134,7 @@ class TreeOfThoughts(Architecture):
     # ------------------------------------------------------------------ #
 
     @staticmethod
-    def _path_from_root(
-        thoughts: list[dict[str, Any]], thought_id: int
-    ) -> list[dict[str, Any]]:
+    def _path_from_root(thoughts: list[dict[str, Any]], thought_id: int) -> list[dict[str, Any]]:
         """Walk parent pointers up to the root and return ordered path."""
         by_id = {t["id"]: t for t in thoughts}
         path: list[dict[str, Any]] = []
@@ -174,9 +173,9 @@ class TreeOfThoughts(Architecture):
 
         for parent_id in state["frontier"]:
             path = self._path_from_root(thoughts, parent_id)
-            path_text = "\n".join(
-                f"  Step {t['depth']}: {t['content']}" for t in path[1:]
-            ) or "(root — no prior steps yet)"
+            path_text = (
+                "\n".join(f"  Step {t['depth']}: {t['content']}" for t in path[1:]) or "(root — no prior steps yet)"
+            )
 
             gen_prompt = (
                 f"## Task\n{state['task']}\n\n"
@@ -234,10 +233,7 @@ class TreeOfThoughts(Architecture):
         leaves.sort(key=lambda t: t["score"], reverse=True)
         best = leaves[0]
         path = self._path_from_root(thoughts, best["id"])
-        path_md = "\n".join(
-            f"  Step {t['depth']} (score {t['score']}/5): {t['content']}"
-            for t in path[1:]
-        )
+        path_md = "\n".join(f"  Step {t['depth']} (score {t['score']}/5): {t['content']}" for t in path[1:])
 
         prompt = (
             f"## Task\n{state['task']}\n\n"
@@ -273,9 +269,7 @@ class TreeOfThoughts(Architecture):
         g.add_edge(START, "root")
         g.add_edge("root", "expand")
         g.add_edge("expand", "prune")
-        g.add_conditional_edges(
-            "prune", self._route, {"expand": "expand", "finalize": "finalize"}
-        )
+        g.add_conditional_edges("prune", self._route, {"expand": "expand", "finalize": "finalize"})
         g.add_edge("finalize", END)
         return g.compile()
 

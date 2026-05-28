@@ -55,11 +55,10 @@ class _VerificationAnswer(BaseModel):
     question: str = Field(description="The question, copied verbatim.")
     answer: str = Field(
         description="The answer in 1-2 sentences. If you're not confident, say so explicitly "
-                    "('I am not certain whether...') rather than guessing."
+        "('I am not certain whether...') rather than guessing."
     )
     confidence: str = Field(
-        description="One of: 'high', 'medium', 'low'. Use 'low' if the answer "
-                    "depends on facts you don't actually know."
+        description="One of: 'high', 'medium', 'low'. Use 'low' if the answer depends on facts you don't actually know."
     )
 
 
@@ -68,12 +67,12 @@ class _RevisedResponse(BaseModel):
 
     revised_response: str = Field(
         description="The rewritten answer, keeping only claims that the verification "
-                    "questions confirmed (or didn't disconfirm). Drop or correct any "
-                    "claim the verification answers contradicted."
+        "questions confirmed (or didn't disconfirm). Drop or correct any "
+        "claim the verification answers contradicted."
     )
     changes_made: list[str] = Field(
         description="One bullet per change made (claim dropped, claim corrected, "
-                    "claim kept-as-is-because-verified). Empty list = no changes needed."
+        "claim kept-as-is-because-verified). Empty list = no changes needed."
     )
 
 
@@ -153,11 +152,13 @@ class ChainOfVerification(Architecture):
                 f"## Question\n{q}"
             )
             va = self._executor.invoke(prompt)
-            answers.append({
-                "question": va.question,
-                "answer": va.answer,
-                "confidence": va.confidence,
-            })
+            answers.append(
+                {
+                    "question": va.question,
+                    "answer": va.answer,
+                    "confidence": va.confidence,
+                }
+            )
         return {
             "verification_answers": answers,
             "history": [{"stage": "execute", "answers": answers}],
@@ -165,7 +166,7 @@ class ChainOfVerification(Architecture):
 
     def _revise(self, state: CoVeState) -> dict[str, Any]:
         qa_block = "\n\n".join(
-            f"**Q{i+1}.** {a['question']}\n**A.** {a['answer']}  *(confidence: {a['confidence']})*"
+            f"**Q{i + 1}.** {a['question']}\n**A.** {a['answer']}  *(confidence: {a['confidence']})*"
             for i, a in enumerate(state["verification_answers"])
         )
         prompt = (
@@ -181,11 +182,13 @@ class ChainOfVerification(Architecture):
         return {
             "revised_response": rr.revised_response,
             "changes_made": list(rr.changes_made),
-            "history": [{
-                "stage": "revise",
-                "revised_response": rr.revised_response,
-                "changes_made": list(rr.changes_made),
-            }],
+            "history": [
+                {
+                    "stage": "revise",
+                    "revised_response": rr.revised_response,
+                    "changes_made": list(rr.changes_made),
+                }
+            ],
         }
 
     # ------------------------------------------------------------------ #
@@ -221,8 +224,7 @@ class ChainOfVerification(Architecture):
                 "verification_answers": final_state.get("verification_answers", []),
                 "changes_made": final_state.get("changes_made", []),
                 "low_confidence_count": sum(
-                    1 for a in final_state.get("verification_answers", [])
-                    if a.get("confidence") == "low"
+                    1 for a in final_state.get("verification_answers", []) if a.get("confidence") == "low"
                 ),
                 "question_count": len(final_state.get("verification_questions", [])),
             },

@@ -39,7 +39,8 @@ class _MetaDecision(BaseModel):
     """The agent's metacognitive verdict on how to handle the incoming question."""
 
     capability_match: int = Field(
-        ge=1, le=5,
+        ge=1,
+        le=5,
         description=(
             "How well does this question match your STRONG capability area? "
             "5 = squarely in your strong zone; 1 = clearly outside your competence "
@@ -180,7 +181,8 @@ class ReflexiveMetacognitive(Architecture):
         g.add_node("escalate", self._escalate)
         g.add_edge(START, "classify")
         g.add_conditional_edges(
-            "classify", self._route,
+            "classify",
+            self._route,
             {
                 "answer": "answer",
                 "use_tool": "use_tool",

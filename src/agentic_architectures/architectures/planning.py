@@ -51,10 +51,7 @@ class ReplanDecision(BaseModel):
     """Decision after executing all currently-planned steps."""
 
     is_done: bool = Field(
-        description=(
-            "True iff the executed steps' results contain enough information "
-            "to produce the final answer."
-        )
+        description=("True iff the executed steps' results contain enough information to produce the final answer.")
     )
     final_response: str | None = Field(
         default=None,
@@ -63,8 +60,7 @@ class ReplanDecision(BaseModel):
     additional_steps: list[str] | None = Field(
         default=None,
         description=(
-            "Additional steps to extend the plan. Required iff is_done is False. "
-            "Do NOT repeat steps already executed."
+            "Additional steps to extend the plan. Required iff is_done is False. Do NOT repeat steps already executed."
         ),
     )
 
@@ -142,13 +138,15 @@ class Planning(Architecture):
 
         context_block = ""
         if history:
-            context_block = "Previously executed steps and their results:\n" + "\n".join(
-                f"  {i+1}. {s}\n     → {(r or '')[:300]}{'…' if r and len(r) > 300 else ''}"
-                for i, (s, r) in enumerate(history)
-            ) + "\n\n"
-        plan_block = "Full remaining plan:\n" + "\n".join(
-            f"  {i+1}. {s}" for i, s in enumerate(plan_remaining)
-        )
+            context_block = (
+                "Previously executed steps and their results:\n"
+                + "\n".join(
+                    f"  {i + 1}. {s}\n     → {(r or '')[:300]}{'…' if r and len(r) > 300 else ''}"
+                    for i, (s, r) in enumerate(history)
+                )
+                + "\n\n"
+            )
+        plan_block = "Full remaining plan:\n" + "\n".join(f"  {i + 1}. {s}" for i, s in enumerate(plan_remaining))
 
         executor_input = (
             f"You are executing step {len(history) + 1} of a larger plan.\n\n"
@@ -178,7 +176,7 @@ class Planning(Architecture):
         force_finalise = replan_count >= self.max_replans
 
         history_block = "\n".join(
-            f"  {i+1}. {s}\n     → {(r or '')[:400]}{'…' if r and len(r) > 400 else ''}"
+            f"  {i + 1}. {s}\n     → {(r or '')[:400]}{'…' if r and len(r) > 400 else ''}"
             for i, (s, r) in enumerate(history)
         )
         prompt = (
@@ -199,20 +197,13 @@ class Planning(Architecture):
         decision = self._replanner.invoke(prompt)
 
         if decision.is_done or force_finalise:
-            return {
-                "response": (
-                    decision.final_response
-                    or self._synthesize_from_history(state["input"], history)
-                )
-            }
+            return {"response": (decision.final_response or self._synthesize_from_history(state["input"], history))}
 
         # Extend the plan and increment replan count.
         more = list(decision.additional_steps or [])
         return {"plan": more, "replan_count": replan_count + 1}
 
-    def _synthesize_from_history(
-        self, task: str, history: list[tuple[str, str]]
-    ) -> str:
+    def _synthesize_from_history(self, task: str, history: list[tuple[str, str]]) -> str:
         """Fallback synthesis when the replanner forgets to fill final_response."""
         prompt = (
             f"Task: {task}\n\n"
@@ -261,13 +252,9 @@ class Planning(Architecture):
         final_state = graph.invoke({"input": task}, config=config)
 
         history = final_state.get("past_steps", [])
-        trace = [
-            {"type": "plan_step", "step": s, "result": r}
-            for s, r in history
-        ]
+        trace = [{"type": "plan_step", "step": s, "result": r} for s, r in history]
         return ArchitectureResult(
-            output=final_state.get("response", "")
-            or self._synthesize_from_history(task, history),
+            output=final_state.get("response", "") or self._synthesize_from_history(task, history),
             state={"input": task, "remaining_plan": final_state.get("plan", [])},
             trace=trace,
             metadata={

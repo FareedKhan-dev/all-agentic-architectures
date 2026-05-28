@@ -105,12 +105,14 @@ class ConstitutionalAI(Architecture):
                 "rule_verdicts": verdicts,
                 "all_passed": all_passed,
                 "failures": [v["rationale"] for v in failures],
-                "history": [{
-                    "stage": "critique",
-                    "n_pass": sum(1 for v in verdicts if v["verdict"] == "pass"),
-                    "n_fail": len(failures),
-                    "all_passed": all_passed,
-                }],
+                "history": [
+                    {
+                        "stage": "critique",
+                        "n_pass": sum(1 for v in verdicts if v["verdict"] == "pass"),
+                        "n_fail": len(failures),
+                        "all_passed": all_passed,
+                    }
+                ],
             }
         except Exception as e:
             return {
@@ -122,13 +124,15 @@ class ConstitutionalAI(Architecture):
 
     def _revise(self, state: ConstitutionalAIState) -> dict[str, Any]:
         failures_block = "\n".join(f"  - {f}" for f in state.get("failures", []))
-        revised = str(self.llm.invoke(
-            f"# Task\n{state['task']}\n\n"
-            f"# Constitution\n{self._constitution_block()}\n\n"
-            f"# Previous response (violates some rules)\n{state['response']}\n\n"
-            f"# Failed rule rationales\n{failures_block}\n\n"
-            "Rewrite the response addressing every failure while still solving the task."
-        ).content).strip()
+        revised = str(
+            self.llm.invoke(
+                f"# Task\n{state['task']}\n\n"
+                f"# Constitution\n{self._constitution_block()}\n\n"
+                f"# Previous response (violates some rules)\n{state['response']}\n\n"
+                f"# Failed rule rationales\n{failures_block}\n\n"
+                "Rewrite the response addressing every failure while still solving the task."
+            ).content
+        ).strip()
         return {
             "response": revised,
             "iteration": state.get("iteration", 0) + 1,
@@ -154,7 +158,8 @@ class ConstitutionalAI(Architecture):
         g.add_edge(START, "generate")
         g.add_edge("generate", "critique")
         g.add_conditional_edges(
-            "critique", self._should_continue,
+            "critique",
+            self._should_continue,
             {"revise": "revise", "finalize": "finalize"},
         )
         g.add_edge("revise", "critique")

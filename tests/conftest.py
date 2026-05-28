@@ -52,9 +52,7 @@ class _StructuredMockRunnable:
 
     def invoke(self, _: Any, **__: Any) -> Any:
         if not self._canned:
-            raise RuntimeError(
-                f"MockLLM ran out of canned responses for schema {self._schema.__name__}"
-            )
+            raise RuntimeError(f"MockLLM ran out of canned responses for schema {self._schema.__name__}")
         data = self._canned[self._i % len(self._canned)]
         self._i += 1
         return self._schema(**data)
@@ -113,7 +111,7 @@ def mock_llm() -> "StructuredMockLLM":
 def structured_mock() -> Callable[..., StructuredMockLLM]:
     """Factory for StructuredMockLLM. Use:
 
-        def test_x(structured_mock):
-            llm = structured_mock(structured_responses={'_Schema': [{'field': 'value'}]})
+    def test_x(structured_mock):
+        llm = structured_mock(structured_responses={'_Schema': [{'field': 'value'}]})
     """
     return StructuredMockLLM

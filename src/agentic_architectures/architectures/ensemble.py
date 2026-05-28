@@ -79,9 +79,7 @@ class _VoterOpinion(BaseModel):
     the unreliable self-reported `confidence` field.
     """
 
-    bottom_line: str = Field(
-        description="A 1-2 sentence direct answer to the question, from this voter's perspective."
-    )
+    bottom_line: str = Field(description="A 1-2 sentence direct answer to the question, from this voter's perspective.")
     categorical_answer: str | None = Field(
         default=None,
         description=(
@@ -96,7 +94,8 @@ class _VoterOpinion(BaseModel):
         description="2-4 supporting points specific to this voter's perspective.",
     )
     confidence: int = Field(
-        ge=1, le=5,
+        ge=1,
+        le=5,
         description=(
             "Self-reported confidence 1-5. NOTE: instruction-tuned LLMs compress "
             "this to a flat band — do NOT rely on it for argmax selection; use "
@@ -133,9 +132,7 @@ class Ensemble(Architecture):
     def __init__(
         self,
         voters: dict[str, str] | None = None,
-        aggregator_mode: Literal[
-            "llm_synth", "majority_vote", "highest_confidence"
-        ] = "llm_synth",
+        aggregator_mode: Literal["llm_synth", "majority_vote", "highest_confidence"] = "llm_synth",
         **kwargs: Any,
     ) -> None:
         super().__init__(**kwargs)
@@ -210,10 +207,7 @@ class Ensemble(Architecture):
             winner_label, winner_count = tally.most_common(1)[0]
 
             def _label_for(o: dict[str, Any]) -> str:
-                return (
-                    (o.get("categorical_answer") or "").strip().upper()
-                    or o.get("_inferred_categorical", "")
-                )
+                return (o.get("categorical_answer") or "").strip().upper() or o.get("_inferred_categorical", "")
 
             supporting = [o for o in opinions if _label_for(o) == winner_label]
             others = [o for o in opinions if _label_for(o) != winner_label]
@@ -222,16 +216,10 @@ class Ensemble(Architecture):
                 f"**Majority answer: {winner_label}** "
                 f"({winner_count}/{len(opinions)} voters) — tally: {tally_str}.\n\n"
                 "Supporting voters' bottom lines:\n"
-                + "\n".join(
-                    f"- ({o['voter']}) {o['bottom_line']}"
-                    for o in supporting
-                )
+                + "\n".join(f"- ({o['voter']}) {o['bottom_line']}" for o in supporting)
                 + (
                     "\n\nDissenting voter(s):\n"
-                    + "\n".join(
-                        f"- ({o['voter']} -> {_label_for(o) or '?'}) {o['bottom_line']}"
-                        for o in others
-                    )
+                    + "\n".join(f"- ({o['voter']} -> {_label_for(o) or '?'}) {o['bottom_line']}" for o in others)
                     if others
                     else ""
                 )
@@ -256,8 +244,7 @@ class Ensemble(Architecture):
         sections = "\n\n".join(
             f"### {o['voter'].upper()} (confidence {o['confidence']}/5)\n"
             f"**Bottom line:** {o['bottom_line']}\n\n"
-            "Key points:\n"
-            + "\n".join(f"- {p}" for p in o.get("key_points", []))
+            "Key points:\n" + "\n".join(f"- {p}" for p in o.get("key_points", []))
             for o in opinions
         )
         prompt = (
@@ -292,9 +279,7 @@ class Ensemble(Architecture):
         final_state = graph.invoke({"task": task, "aggregator_mode": self.aggregator_mode})
         opinions = final_state.get("voter_opinions", [])
         confidences = [o.get("confidence", 0) for o in opinions]
-        cat_answers = [
-            (o.get("categorical_answer") or "").strip().upper() or None for o in opinions
-        ]
+        cat_answers = [(o.get("categorical_answer") or "").strip().upper() or None for o in opinions]
         return ArchitectureResult(
             output=final_state.get("aggregated_answer", ""),
             state={

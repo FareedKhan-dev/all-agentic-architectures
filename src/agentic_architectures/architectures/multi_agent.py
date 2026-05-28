@@ -171,9 +171,7 @@ class MultiAgent(Architecture):
         # Safety: clamp 'next' if model misbehaves.
         if decision.next in covered:
             # picked a specialist who already acted — fall through to next remaining
-            decision.next = (
-                remaining[0] if remaining else ("writer" if not writer_done else "FINISH")
-            )
+            decision.next = remaining[0] if remaining else ("writer" if not writer_done else "FINISH")
         return {"next": decision.next, "next_reason": decision.reason}
 
     def _make_specialist_node(self, name: str):
@@ -181,28 +179,18 @@ class MultiAgent(Architecture):
 
         def _node(state: MultiAgentState) -> dict[str, Any]:
             sub_task = (
-                f"Research task: {state['task']}\n\n"
-                "Focus only on your specialty (see system prompt). Be concise."
+                f"Research task: {state['task']}\n\nFocus only on your specialty (see system prompt). Be concise."
             )
             result = agent.run(sub_task)
-            return {
-                "specialist_outputs": [
-                    {"specialist": name, "content": result.output}
-                ]
-            }
+            return {"specialist_outputs": [{"specialist": name, "content": result.output}]}
 
         _node.__name__ = f"specialist_{name}"
         return _node
 
     def _writer(self, state: MultiAgentState) -> dict[str, Any]:
         outputs = state.get("specialist_outputs", [])
-        sections = "\n\n".join(
-            f"## {o['specialist'].upper()} findings\n{o['content']}"
-            for o in outputs
-        )
-        heading_examples = ", ".join(
-            f"### {o['specialist'].title()}" for o in outputs
-        )
+        sections = "\n\n".join(f"## {o['specialist'].upper()} findings\n{o['content']}" for o in outputs)
+        heading_examples = ", ".join(f"### {o['specialist'].title()}" for o in outputs)
         prompt = (
             f"You are the team Writer. Synthesise the specialists' findings below "
             f"into a coherent ~250-word report answering this task:\n\n"

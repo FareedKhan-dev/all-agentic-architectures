@@ -64,9 +64,7 @@ class NetworkXGraphMemory(BaseGraphMemory):
         self._g.add_node(obj, label="Entity")
         self._g.add_edge(subject, obj, predicate=predicate)
 
-    def query(
-        self, cypher: str, params: dict[str, Any] | None = None
-    ) -> list[dict[str, Any]]:
+    def query(self, cypher: str, params: dict[str, Any] | None = None) -> list[dict[str, Any]]:
         """Tiny Cypher subset: enough to back the notebooks.
 
         Supports two patterns the architectures actually use:
@@ -105,19 +103,13 @@ class NetworkXGraphMemory(BaseGraphMemory):
             for _ in range(depth):
                 next_frontier: set[str] = set()
                 for n in frontier:
-                    for u, v, data in list(self._g.in_edges(n, data=True)) + list(
-                        self._g.out_edges(n, data=True)
-                    ):
+                    for u, v, data in list(self._g.in_edges(n, data=True)) + list(self._g.out_edges(n, data=True)):
                         if u == n:
-                            triples.append(
-                                {"subject": u, "predicate": data.get("predicate", ""), "object": v}
-                            )
+                            triples.append({"subject": u, "predicate": data.get("predicate", ""), "object": v})
                             if v not in visited:
                                 next_frontier.add(v)
                         else:
-                            triples.append(
-                                {"subject": u, "predicate": data.get("predicate", ""), "object": v}
-                            )
+                            triples.append({"subject": u, "predicate": data.get("predicate", ""), "object": v})
                             if u not in visited:
                                 next_frontier.add(u)
                 visited |= next_frontier
@@ -177,15 +169,11 @@ class Neo4jGraphMemory(BaseGraphMemory):
 
     def add_triple(self, subject: str, predicate: str, obj: str) -> None:
         self._graph.query(
-            "MERGE (s:Entity {name: $s}) "
-            "MERGE (o:Entity {name: $o}) "
-            "MERGE (s)-[r:RELATES {predicate: $p}]->(o)",
+            "MERGE (s:Entity {name: $s}) MERGE (o:Entity {name: $o}) MERGE (s)-[r:RELATES {predicate: $p}]->(o)",
             params={"s": subject, "p": predicate, "o": obj},
         )
 
-    def query(
-        self, cypher: str, params: dict[str, Any] | None = None
-    ) -> list[dict[str, Any]]:
+    def query(self, cypher: str, params: dict[str, Any] | None = None) -> list[dict[str, Any]]:
         return self._graph.query(cypher, params=params or {})
 
     def neighbors(self, entity: str) -> list[str]:
@@ -205,10 +193,7 @@ class Neo4jGraphMemory(BaseGraphMemory):
             "coalesce(r.predicate, type(r)) AS predicate, o.name AS o"
         )
         nodes = [{"data": {"id": r["name"]}} for r in nodes_q if r.get("name")]
-        edges = [
-            {"data": {"source": r["s"], "target": r["o"], "label": r["predicate"]}}
-            for r in edges_q
-        ]
+        edges = [{"data": {"source": r["s"], "target": r["o"], "label": r["predicate"]}} for r in edges_q]
         return {"nodes": nodes, "edges": edges}
 
 
@@ -217,9 +202,7 @@ def _connect_neo4j() -> Neo4jGraph:
     try:
         from langchain_neo4j import Neo4jGraph
     except ImportError as e:
-        raise ImportError(
-            "Neo4j backend requires `pip install agentic-architectures[neo4j]`."
-        ) from e
+        raise ImportError("Neo4j backend requires `pip install agentic-architectures[neo4j]`.") from e
 
     if settings.neo4j_password is None or not settings.neo4j_password.get_secret_value():
         raise RuntimeError(

@@ -16,9 +16,7 @@ def test_architecture_result_defaults() -> None:
 
 
 def test_architecture_result_full() -> None:
-    r = ArchitectureResult(
-        output="x", state={"a": 1}, trace=[{"e": 1}], metadata={"k": 2}
-    )
+    r = ArchitectureResult(output="x", state={"a": 1}, trace=[{"e": 1}], metadata={"k": 2})
     assert r.state == {"a": 1}
     assert r.trace == [{"e": 1}]
     assert r.metadata == {"k": 2}

@@ -90,10 +90,7 @@ class ToolUse(Architecture):
 
     def _agent(self, state: ToolUseState) -> dict[str, Any]:
         # Count tool calls already made in the conversation.
-        tool_call_count = sum(
-            len(getattr(m, "tool_calls", []) or [])
-            for m in state["messages"]
-        )
+        tool_call_count = sum(len(getattr(m, "tool_calls", []) or []) for m in state["messages"])
         # Hard cap: once we exceed max_rounds tool calls, invoke WITHOUT tools.
         # This forces the model to produce a final text answer.
         over_budget = tool_call_count >= self.max_rounds
@@ -106,11 +103,16 @@ class ToolUse(Architecture):
             # Append a stern reminder so the model definitely answers.
             from langchain_core.messages import HumanMessage as _HM
 
-            msgs = [*msgs, _HM(content=(
-                f"You have used your search budget ({self.max_rounds} calls). "
-                "Now answer the user's question using ONLY the information already "
-                "in this conversation. Do NOT request more searches."
-            ))]
+            msgs = [
+                *msgs,
+                _HM(
+                    content=(
+                        f"You have used your search budget ({self.max_rounds} calls). "
+                        "Now answer the user's question using ONLY the information already "
+                        "in this conversation. Do NOT request more searches."
+                    )
+                ),
+            ]
 
         response = llm.invoke(msgs)
         new_messages: list[Any] = []

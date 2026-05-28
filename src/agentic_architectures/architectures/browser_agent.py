@@ -39,8 +39,14 @@ DEFAULT_BLOCKED_DOMAINS: list[str] = [
 ]
 
 DEFAULT_SENSITIVE_PATTERNS: list[str] = [
-    "password", "passwd", "ssn", "social security",
-    "credit card", "cvv", "api_key", "secret_key",
+    "password",
+    "passwd",
+    "ssn",
+    "social security",
+    "credit card",
+    "cvv",
+    "api_key",
+    "secret_key",
 ]
 
 
@@ -48,7 +54,9 @@ class _BrowserAction(BaseModel):
     action: Literal["navigate", "extract_text", "click", "answer"] = Field(
         description="navigate(target=url) | extract_text() | click(target=visible_text) | answer(value=final_answer)"
     )
-    target: str = Field(default="", description="URL for navigate, visible text for click. Empty for extract_text/answer.")
+    target: str = Field(
+        default="", description="URL for navigate, visible text for click. Empty for extract_text/answer."
+    )
     value: str = Field(default="", description="Final answer text for action='answer'. Empty otherwise.")
     rationale: str = Field(description="ONE sentence: why this action.")
 
@@ -272,7 +280,8 @@ class BrowserAgent(Architecture):
         g.add_edge(START, "decide")
         g.add_edge("decide", "execute")
         g.add_conditional_edges(
-            "execute", self._route,
+            "execute",
+            self._route,
             {"decide": "decide", "end": END},
         )
         return g.compile()

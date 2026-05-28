@@ -40,34 +40,31 @@ class _EditorCritique(BaseModel):
     sidesteps the LLM-as-Scorer flatness pathology (same fix as Mental Loop).
     """
 
-    is_on_brief: bool = Field(
-        description="True iff the output satisfies EVERY explicit constraint in the task."
-    )
+    is_on_brief: bool = Field(description="True iff the output satisfies EVERY explicit constraint in the task.")
     word_count: int = Field(
         ge=0,
         description="Total word count of the output. Single point estimate.",
     )
     has_concrete_imagery: bool = Field(
         description="True iff the output uses specific concrete imagery (sensory detail, "
-                    "named entities) rather than vague abstractions ('quality', 'excellence')."
+        "named entities) rather than vague abstractions ('quality', 'excellence')."
     )
     avoids_cliches: bool = Field(
         description="True iff the output AVOIDS hackneyed phrases like 'a journey of discovery', "
-                    "'where dreams come to life', 'unlock your potential', etc."
+        "'where dreams come to life', 'unlock your potential', etc."
     )
     is_engaging: bool = Field(
         description="True iff a reasonable reader would WANT to keep reading / engaging "
-                    "after the first sentence. Boring-but-correct = False."
+        "after the first sentence. Boring-but-correct = False."
     )
     overall_score: int = Field(
-        ge=1, le=10,
+        ge=1,
+        le=10,
         description="Your subjective overall score 1-10. NOTE: this is preserved for "
-                    "comparison but is NOT used as the deciding signal — Python "
-                    "computes the deciding score from the boolean/numeric features above.",
+        "comparison but is NOT used as the deciding signal — Python "
+        "computes the deciding score from the boolean/numeric features above.",
     )
-    critique: str = Field(
-        description="Specific, actionable feedback pointing at concrete gaps."
-    )
+    critique: str = Field(description="Specific, actionable feedback pointing at concrete gaps.")
 
 
 # ---------------------------------------------------------------------------
@@ -156,14 +153,12 @@ class RLHFSelfImprovement(Architecture):
             examples_block = (
                 "\n## Recent high-quality examples from your archive\n"
                 + "\n\n".join(
-                    f"### Past task: {e['task'][:80]}\nOutput: {e['output'][:300]}…"
-                    for e in self.archive[-3:]
+                    f"### Past task: {e['task'][:80]}\nOutput: {e['output'][:300]}…" for e in self.archive[-3:]
                 )
                 + "\n\nMatch or exceed the quality of these archived examples.\n"
             )
         prompt = (
-            f"# Task\n{state['task']}\n{examples_block}\n"
-            "Produce the best response you can. Be concrete and complete."
+            f"# Task\n{state['task']}\n{examples_block}\nProduce the best response you can. Be concrete and complete."
         )
         draft = str(self.llm.invoke(prompt).content)
         return {"draft": draft, "iteration": 0, "history": []}
@@ -224,19 +219,24 @@ class RLHFSelfImprovement(Architecture):
         should_archive = final_score >= self.target_score
         if should_archive:
             latest = state.get("history", [])[-1] if state.get("history") else {}
-            self.archive.append({
-                "task": state["task"],
-                "output": state["draft"],
-                "score": final_score,
-                "iterations": state.get("iteration", 0) + 1,
-                "features": {
-                    k: latest.get(k)
-                    for k in (
-                        "is_on_brief", "word_count", "has_concrete_imagery",
-                        "avoids_cliches", "is_engaging",
-                    )
-                },
-            })
+            self.archive.append(
+                {
+                    "task": state["task"],
+                    "output": state["draft"],
+                    "score": final_score,
+                    "iterations": state.get("iteration", 0) + 1,
+                    "features": {
+                        k: latest.get(k)
+                        for k in (
+                            "is_on_brief",
+                            "word_count",
+                            "has_concrete_imagery",
+                            "avoids_cliches",
+                            "is_engaging",
+                        )
+                    },
+                }
+            )
         return {"final_output": state["draft"], "archived": should_archive}
 
     # ------------------------------------------------------------------ #
@@ -263,7 +263,8 @@ class RLHFSelfImprovement(Architecture):
         g.add_edge(START, "generate")
         g.add_edge("generate", "critique")
         g.add_conditional_edges(
-            "critique", self._should_continue,
+            "critique",
+            self._should_continue,
             {"refine": "refine", "finalize": "finalize"},
         )
         g.add_edge("refine", "critique")

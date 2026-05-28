@@ -49,8 +49,8 @@ class _CellUpdate(BaseModel):
 # State
 # ---------------------------------------------------------------------------
 class CellularAutomataState(TypedDict, total=False):
-    grid: list[list[str]]              # current grid state (HxW strings)
-    history: list[list[list[str]]]     # past grids (for visualisation)
+    grid: list[list[str]]  # current grid state (HxW strings)
+    history: list[list[list[str]]]  # past grids (for visualisation)
     step: int
     max_steps: int
 
@@ -101,8 +101,10 @@ class CellularAutomata(Architecture):
     def _neighbours(grid: list[list[str]], r: int, c: int) -> dict[str, str]:
         """Von Neumann neighbourhood: N, E, S, W. Edges = 'edge'."""
         h, w = len(grid), len(grid[0])
+
         def _g(rr: int, cc: int) -> str:
             return grid[rr][cc] if 0 <= rr < h and 0 <= cc < w else "edge"
+
         return {
             "N": _g(r - 1, c),
             "E": _g(r, c + 1),
@@ -136,11 +138,7 @@ class CellularAutomata(Architecture):
                 )
                 update = self._updater.invoke(prompt)
                 # Deterministic clamp: if LLM returns something outside allowed_states, keep current.
-                next_state = (
-                    update.next_state
-                    if update.next_state in self.allowed_states
-                    else grid[r][c]
-                )
+                next_state = update.next_state if update.next_state in self.allowed_states else grid[r][c]
                 new_grid[r][c] = next_state
 
         history = state.get("history", []) + [grid]
@@ -193,6 +191,7 @@ class CellularAutomata(Architecture):
 
         # Count state-label changes across history
         from collections import Counter
+
         per_step_counts = []
         for step_grid in history:
             counter: Counter[str] = Counter()
@@ -202,10 +201,7 @@ class CellularAutomata(Architecture):
             per_step_counts.append(dict(counter))
 
         return ArchitectureResult(
-            output="\n\n".join(
-                f"Step {i}:\n" + "\n".join("|".join(row) for row in g)
-                for i, g in enumerate(history)
-            ),
+            output="\n\n".join(f"Step {i}:\n" + "\n".join("|".join(row) for row in g) for i, g in enumerate(history)),
             state={
                 "final_grid": final_state["grid"],
                 "history": history,

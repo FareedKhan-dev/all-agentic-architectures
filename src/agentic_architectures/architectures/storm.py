@@ -30,16 +30,17 @@ from agentic_architectures.architectures.base import Architecture, ArchitectureR
 class _Perspectives(BaseModel):
     perspectives: list[str] = Field(
         description="N distinct viewpoints / framings of the topic. "
-                    "Each is 1-2 sentences. Be substantively different — not paraphrases.",
-        min_length=2, max_length=6,
+        "Each is 1-2 sentences. Be substantively different — not paraphrases.",
+        min_length=2,
+        max_length=6,
     )
 
 
 class _Questions(BaseModel):
     questions: list[str] = Field(
-        description="K specific research questions about the topic, "
-                    "framed from this perspective.",
-        min_length=1, max_length=5,
+        description="K specific research questions about the topic, framed from this perspective.",
+        min_length=1,
+        max_length=5,
     )
 
 
@@ -132,15 +133,17 @@ class STORM(Architecture):
                 try:
                     web = self.web_search_fn(q)
                     ctx = "\n".join(f"- {w[:300]}" for w in web[:3]) if web else "(no web results)"
-                    ans = str(self.llm.invoke(
-                        f"Answer concisely (1-2 sentences) using the web snippets.\n\n# Web\n{ctx}\n\n# Q: {q}\nA:"
-                    ).content).strip()
+                    ans = str(
+                        self.llm.invoke(
+                            f"Answer concisely (1-2 sentences) using the web snippets.\n\n# Web\n{ctx}\n\n# Q: {q}\nA:"
+                        ).content
+                    ).strip()
                 except Exception as e:
                     ans = f"(web answer failed: {e})"
             else:
-                ans = str(self.llm.invoke(
-                    f"Answer concisely (1-2 sentences) from your knowledge.\n\n# Q: {q}\nA:"
-                ).content).strip()
+                ans = str(
+                    self.llm.invoke(f"Answer concisely (1-2 sentences) from your knowledge.\n\n# Q: {q}\nA:").content
+                ).strip()
             answers.append({"question": q, "answer": ans})
         return {
             "answers": answers,

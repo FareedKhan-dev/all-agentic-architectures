@@ -49,7 +49,7 @@ class _QuestionScope(BaseModel):
 
     scope: Literal["local", "global"] = Field(
         description="'local' for entity-specific questions ('who founded X?'); "
-                    "'global' for theme/summary questions ('what are the main themes?')."
+        "'global' for theme/summary questions ('what are the main themes?')."
     )
     target_entities: list[str] = Field(
         default_factory=list,
@@ -124,11 +124,7 @@ class GraphRAG(Architecture):
         """Detect entity communities via NetworkX greedy modularity, then summarise."""
         backend = self.semantic.backend
         # Pull the underlying NetworkX graph if backend supports it
-        nx_graph = (
-            getattr(backend, "_g", None)
-            or getattr(backend, "_graph", None)
-            or getattr(backend, "graph", None)
-        )
+        nx_graph = getattr(backend, "_g", None) or getattr(backend, "_graph", None) or getattr(backend, "graph", None)
         if nx_graph is None or len(nx_graph.nodes) == 0:
             return
         # Convert to undirected for community detection
@@ -149,8 +145,7 @@ class GraphRAG(Architecture):
                     facts_lines.append(f"{f.get('subject')} --[{f.get('predicate')}]--> {f.get('object')}")
             prompt = (
                 "Summarise this community of related facts in 2-3 sentences, naming "
-                "the key entities and what links them.\n\n"
-                + "\n".join(facts_lines[:30])
+                "the key entities and what links them.\n\n" + "\n".join(facts_lines[:30])
             )
             try:
                 summary = str(self.llm.invoke(prompt).content).strip()
@@ -183,7 +178,7 @@ class GraphRAG(Architecture):
         if scope == "global":
             # Use community summaries
             block_lines = [
-                f"### Community {i+1} ({len(self.communities[i]) if i < len(self.communities) else '?'} entities)\n{s}"
+                f"### Community {i + 1} ({len(self.communities[i]) if i < len(self.communities) else '?'} entities)\n{s}"
                 for i, s in enumerate(self.community_summaries)
             ]
             ctx = "\n\n".join(block_lines) or "(no community summaries built)"
@@ -207,9 +202,11 @@ class GraphRAG(Architecture):
 
     def _answer(self, state: GraphRAGState) -> dict[str, Any]:
         ctx = state.get("context_block", "")
-        ans = str(self.llm.invoke(
-            f"Use the graph context below to answer.\n\n# Context\n{ctx}\n\n# Question\n{state['task']}\n\nAnswer:"
-        ).content).strip()
+        ans = str(
+            self.llm.invoke(
+                f"Use the graph context below to answer.\n\n# Context\n{ctx}\n\n# Question\n{state['task']}\n\nAnswer:"
+            ).content
+        ).strip()
         return {
             "final_answer": ans,
             "history": [{"stage": "answer"}],

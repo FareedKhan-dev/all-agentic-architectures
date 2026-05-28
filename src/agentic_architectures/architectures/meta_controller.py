@@ -130,8 +130,7 @@ class MetaController(Architecture):
 
     def _route(self, state: MetaControllerState) -> dict[str, Any]:
         descriptions = "\n".join(
-            f"  - **{name}**: {ARCHITECTURE_DESCRIPTIONS.get(name, '(no description)')}"
-            for name in self.roster
+            f"  - **{name}**: {ARCHITECTURE_DESCRIPTIONS.get(name, '(no description)')}" for name in self.roster
         )
         prompt = (
             "You are a Meta-Controller routing an incoming task to the most "

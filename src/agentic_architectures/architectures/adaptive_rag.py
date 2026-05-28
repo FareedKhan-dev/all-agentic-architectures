@@ -90,6 +90,7 @@ class AdaptiveRAG(Architecture):
             self.memory = VectorMemory(collection_name="adaptive_rag_corpus")
             if documents:
                 from langchain_core.documents import Document
+
                 self.memory.add([Document(page_content=d) for d in documents])
         self._classifier = self.llm.with_structured_output(_ComplexityClass)
 
@@ -120,9 +121,11 @@ class AdaptiveRAG(Architecture):
             }
 
     def _no_retrieval_answer(self, state: AdaptiveRAGState) -> dict[str, Any]:
-        ans = str(self.llm.invoke(
-            f"Answer from your knowledge. No external sources available.\n\n# Question\n{state['task']}\n\nAnswer:"
-        ).content).strip()
+        ans = str(
+            self.llm.invoke(
+                f"Answer from your knowledge. No external sources available.\n\n# Question\n{state['task']}\n\nAnswer:"
+            ).content
+        ).strip()
         return {
             "final_answer": ans,
             "history": [{"stage": "no_retrieval_answer"}],
@@ -131,9 +134,11 @@ class AdaptiveRAG(Architecture):
     def _single_step_rag(self, state: AdaptiveRAGState) -> dict[str, Any]:
         docs = self.memory.search(state["task"], k=self.top_k)
         ctx = "\n\n".join(f"- {d.page_content[:400]}" for d in docs)
-        ans = str(self.llm.invoke(
-            f"Answer using the context below.\n\n# Context\n{ctx}\n\n# Question\n{state['task']}\n\nAnswer:"
-        ).content).strip()
+        ans = str(
+            self.llm.invoke(
+                f"Answer using the context below.\n\n# Context\n{ctx}\n\n# Question\n{state['task']}\n\nAnswer:"
+            ).content
+        ).strip()
         return {
             "final_answer": ans,
             "retrievals": [{"query": state["task"], "n_docs": len(docs)}],
@@ -155,19 +160,28 @@ class AdaptiveRAG(Architecture):
         second_docs = self.memory.search(followup_query, k=self.top_k)
         second_ctx = "\n\n".join(f"- {d.page_content[:300]}" for d in second_docs)
 
-        ans = str(self.llm.invoke(
-            f"Answer the question using BOTH context blocks.\n\n"
-            f"# First context (query: {state['task'][:80]})\n{first_ctx}\n\n"
-            f"# Second context (follow-up query: {followup_query[:80]})\n{second_ctx}\n\n"
-            f"# Question\n{state['task']}\n\nAnswer:"
-        ).content).strip()
+        ans = str(
+            self.llm.invoke(
+                f"Answer the question using BOTH context blocks.\n\n"
+                f"# First context (query: {state['task'][:80]})\n{first_ctx}\n\n"
+                f"# Second context (follow-up query: {followup_query[:80]})\n{second_ctx}\n\n"
+                f"# Question\n{state['task']}\n\nAnswer:"
+            ).content
+        ).strip()
         return {
             "final_answer": ans,
             "retrievals": [
                 {"query": state["task"], "n_docs": len(first_docs)},
                 {"query": followup_query, "n_docs": len(second_docs)},
             ],
-            "history": [{"stage": "multi_step_rag", "followup_query": followup_query, "n_first": len(first_docs), "n_second": len(second_docs)}],
+            "history": [
+                {
+                    "stage": "multi_step_rag",
+                    "followup_query": followup_query,
+                    "n_first": len(first_docs),
+                    "n_second": len(second_docs),
+                }
+            ],
         }
 
     # ------------------------------------------------------------------ #
@@ -194,7 +208,8 @@ class AdaptiveRAG(Architecture):
         g.add_node("multi_step", self._multi_step_rag)
         g.add_edge(START, "classify")
         g.add_conditional_edges(
-            "classify", self._route,
+            "classify",
+            self._route,
             {"no_retrieval": "no_retrieval", "single_step": "single_step", "multi_step": "multi_step"},
         )
         g.add_edge("no_retrieval", END)

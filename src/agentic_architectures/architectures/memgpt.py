@@ -29,13 +29,13 @@ from agentic_architectures.memory.vector import VectorMemory
 class _MemAction(BaseModel):
     action: Literal["write_to_archival", "search_archival", "answer"] = Field(
         description="Choose: write_to_archival (save a new fact), "
-                    "search_archival (look up info from disk), or answer (commit final response)."
+        "search_archival (look up info from disk), or answer (commit final response)."
     )
     payload: str = Field(
         default="",
         description="For write_to_archival: the fact text. "
-                    "For search_archival: the search query. "
-                    "For answer: the final answer text.",
+        "For search_archival: the search query. "
+        "For answer: the final answer text.",
     )
     rationale: str = Field(description="ONE sentence.")
 
@@ -87,10 +87,13 @@ class MemGPT(Architecture):
 
     def _decide(self, state: MemGPTState) -> dict[str, Any]:
         ctx_block = "\n".join(f"  - {c}" for c in self.context_tier) or "(empty)"
-        actions_so_far = "\n".join(
-            f"  [{i}] action={a['action']} payload={a['payload'][:80]}"
-            for i, a in enumerate(state.get("actions_taken", []), 1)
-        ) or "(none)"
+        actions_so_far = (
+            "\n".join(
+                f"  [{i}] action={a['action']} payload={a['payload'][:80]}"
+                for i, a in enumerate(state.get("actions_taken", []), 1)
+            )
+            or "(none)"
+        )
         iter_count = state.get("iteration", 0) + 1
         # Force answer on last iteration
         force_answer = iter_count >= state.get("max_iterations", self.max_iterations)
@@ -111,7 +114,9 @@ class MemGPT(Architecture):
                 "iteration": iter_count,
                 "last_action": d.model_dump(),
                 "actions_taken": [d.model_dump()],
-                "history": [{"stage": "decide", "iteration": iter_count, "action": d.action, "payload": d.payload[:80]}],
+                "history": [
+                    {"stage": "decide", "iteration": iter_count, "action": d.action, "payload": d.payload[:80]}
+                ],
             }
         except Exception as e:
             return {
@@ -162,7 +167,8 @@ class MemGPT(Architecture):
         g.add_edge(START, "decide")
         g.add_edge("decide", "execute")
         g.add_conditional_edges(
-            "execute", self._route,
+            "execute",
+            self._route,
             {"decide": "decide", "end": END},
         )
         return g.compile()

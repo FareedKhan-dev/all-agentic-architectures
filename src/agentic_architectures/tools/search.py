@@ -29,8 +29,7 @@ def web_search_tool(
     key = settings.tavily_api_key
     if key is None:
         raise RuntimeError(
-            "TAVILY_API_KEY not set. Sign up free at https://app.tavily.com "
-            "and add the key to your .env file."
+            "TAVILY_API_KEY not set. Sign up free at https://app.tavily.com and add the key to your .env file."
         )
 
     return TavilySearch(

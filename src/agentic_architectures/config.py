@@ -25,6 +25,7 @@ def _locate_env_file() -> str:
     found = find_dotenv(usecwd=True)
     return found
 
+
 Provider = Literal[
     "nebius",
     "openai",

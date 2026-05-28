@@ -51,9 +51,7 @@ def get_vector_store(
             from langchain_chroma import Chroma
         except ImportError as e:
             raise ImportError("pip install agentic-architectures[chroma]") from e
-        store = Chroma(
-            collection_name=collection_name, embedding_function=embeddings, **kwargs
-        )
+        store = Chroma(collection_name=collection_name, embedding_function=embeddings, **kwargs)
         if documents:
             store.add_documents(documents)
         return store
@@ -63,9 +61,7 @@ def get_vector_store(
             from langchain_qdrant import QdrantVectorStore
         except ImportError as e:
             raise ImportError("pip install agentic-architectures[qdrant]") from e
-        api_key = (
-            settings.qdrant_api_key.get_secret_value() if settings.qdrant_api_key else None
-        )
+        api_key = settings.qdrant_api_key.get_secret_value() if settings.qdrant_api_key else None
         if documents:
             return QdrantVectorStore.from_documents(
                 documents,

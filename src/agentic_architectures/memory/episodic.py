@@ -38,9 +38,7 @@ class EpisodicMemory:
         embeddings: Embeddings | None = None,
         collection_name: str = "episodic_memory",
     ) -> None:
-        self._vector = VectorMemory(
-            embeddings=embeddings, collection_name=collection_name
-        )
+        self._vector = VectorMemory(embeddings=embeddings, collection_name=collection_name)
         self._episodes: list[Episode] = []
 
     def record(self, episode: Episode | str, **metadata: Any) -> None:
@@ -49,9 +47,7 @@ class EpisodicMemory:
 
         ep = episode if isinstance(episode, Episode) else Episode(content=episode, metadata=metadata)
         self._episodes.append(ep)
-        self._vector.add(
-            [Document(page_content=ep.content, metadata={**asdict(ep), **ep.metadata})]
-        )
+        self._vector.add([Document(page_content=ep.content, metadata={**asdict(ep), **ep.metadata})])
 
     def recall(self, query: str, k: int = 5) -> list[Episode]:
         """Retrieve the k most semantically similar past episodes."""

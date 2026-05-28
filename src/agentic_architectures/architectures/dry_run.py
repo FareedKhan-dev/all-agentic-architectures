@@ -62,7 +62,8 @@ class _DryRunOutcome(BaseModel):
         description="Estimated number of items affected (rows / files / recipients / etc.). Use a single point estimate.",
     )
     irreversibility: int = Field(
-        ge=1, le=5,
+        ge=1,
+        le=5,
         description=(
             "How irreversible is this action? 1 = trivially undone, 5 = catastrophic / "
             "data lost forever. Use the schema rubric: deleted files = 4-5, "
@@ -257,7 +258,8 @@ class DryRun(Architecture):
         g.add_edge("propose", "dry_run")
         g.add_edge("dry_run", "approve")
         g.add_conditional_edges(
-            "approve", self._route_after_approve,
+            "approve",
+            self._route_after_approve,
             {"execute": "execute", "skip": "skip"},
         )
         g.add_edge("execute", END)
@@ -266,10 +268,12 @@ class DryRun(Architecture):
 
     def run(self, task: str, **kwargs: Any) -> ArchitectureResult:
         graph = self.build()
-        final_state = graph.invoke({
-            "task": task,
-            "irreversibility_threshold": self.irreversibility_threshold,
-        })
+        final_state = graph.invoke(
+            {
+                "task": task,
+                "irreversibility_threshold": self.irreversibility_threshold,
+            }
+        )
 
         proposed = final_state.get("proposed_action", {})
         dry = final_state.get("dry_run", {})

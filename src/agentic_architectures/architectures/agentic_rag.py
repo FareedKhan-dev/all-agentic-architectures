@@ -43,13 +43,11 @@ class _AgentDecision(BaseModel):
     )
     query: str = Field(
         default="",
-        description="If action='retrieve', the search query — focused, specific. "
-                    "Empty string if action='answer'.",
+        description="If action='retrieve', the search query — focused, specific. Empty string if action='answer'.",
     )
     answer: str = Field(
         default="",
-        description="If action='answer', the final answer using retrieved context. "
-                    "Empty string if action='retrieve'.",
+        description="If action='answer', the final answer using retrieved context. Empty string if action='retrieve'.",
     )
     rationale: str = Field(description="ONE sentence: why this action right now.")
 
@@ -105,6 +103,7 @@ class AgenticRAG(Architecture):
             self.memory = VectorMemory(collection_name="agentic_rag_corpus")
             if documents:
                 from langchain_core.documents import Document
+
                 self.memory.add([Document(page_content=d) for d in documents])
         self._decider = self.llm.with_structured_output(_AgentDecision)
 
@@ -141,9 +140,7 @@ class AgenticRAG(Architecture):
         )
         # Force answer on the last iteration to avoid running over budget.
         if iter_count + 1 >= state.get("max_iterations", self.max_iterations):
-            prompt += (
-                "\n\nNOTE: This is the FINAL iteration. You MUST set action='answer'."
-            )
+            prompt += "\n\nNOTE: This is the FINAL iteration. You MUST set action='answer'."
         try:
             decision = self._decider.invoke(prompt)
             dec_dict = decision.model_dump()
@@ -203,7 +200,8 @@ class AgenticRAG(Architecture):
         g.add_node("answer", self._answer)
         g.add_edge(START, "decide")
         g.add_conditional_edges(
-            "decide", self._route_decision,
+            "decide",
+            self._route_decision,
             {"retrieve": "retrieve", "answer": "answer"},
         )
         g.add_edge("retrieve", "decide")

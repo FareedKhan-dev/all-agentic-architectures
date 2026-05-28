@@ -44,17 +44,11 @@ DEFAULT_SENSITIVE_PATTERNS: list[str] = [
 class _ComputerAction(BaseModel):
     action: Literal["screenshot", "click", "type", "navigate", "submit", "answer"] = Field(
         description="Choose ONE action. screenshot = read current screen state; "
-                    "click = click a named element; type = enter text into focused field; "
-                    "navigate = go to a URL; submit = submit the active form; answer = done."
+        "click = click a named element; type = enter text into focused field; "
+        "navigate = go to a URL; submit = submit the active form; answer = done."
     )
-    target: str = Field(
-        default="",
-        description="Element name (for click/submit), URL (for navigate), or empty."
-    )
-    value: str = Field(
-        default="",
-        description="Text to type (for type). For answer: the final answer."
-    )
+    target: str = Field(default="", description="Element name (for click/submit), URL (for navigate), or empty.")
+    value: str = Field(default="", description="Text to type (for type). For answer: the final answer.")
     rationale: str = Field(description="ONE sentence.")
 
 
@@ -90,12 +84,16 @@ class ComputerUse(Architecture):
         **kwargs: Any,
     ) -> None:
         super().__init__(**kwargs)
-        self.initial_screen = dict(initial_screen) if initial_screen else {
-            "url": "about:blank",
-            "elements": [],
-            "fields": {},
-            "submitted": False,
-        }
+        self.initial_screen = (
+            dict(initial_screen)
+            if initial_screen
+            else {
+                "url": "about:blank",
+                "elements": [],
+                "fields": {},
+                "submitted": False,
+            }
+        )
         self.sensitive_patterns = [p.lower() for p in (sensitive_patterns or DEFAULT_SENSITIVE_PATTERNS)]
         self.blocked_domains = blocked_domains or []
         self.max_iterations = max_iterations
@@ -122,10 +120,13 @@ class ComputerUse(Architecture):
         iter_count = state.get("iteration", 0) + 1
         screen = state.get("screen", self.initial_screen)
         history_actions = state.get("actions_attempted", [])
-        history_block = "\n".join(
-            f"  [{i}] action={a['action']} target={a.get('target', '')[:40]} allowed={a.get('allowed')}"
-            for i, a in enumerate(history_actions[-6:])
-        ) or "(none)"
+        history_block = (
+            "\n".join(
+                f"  [{i}] action={a['action']} target={a.get('target', '')[:40]} allowed={a.get('allowed')}"
+                for i, a in enumerate(history_actions[-6:])
+            )
+            or "(none)"
+        )
         force = iter_count >= state.get("max_iterations", self.max_iterations)
         prompt = (
             "You control a web browser via 6 actions: screenshot, click, type, navigate, submit, answer.\n\n"
@@ -160,12 +161,14 @@ class ComputerUse(Architecture):
         return {
             "actions_attempted": [record],
             "blocked_count": blocked,
-            "history": [{
-                "stage": "safety_gate",
-                "action": action["action"],
-                "allowed": allowed,
-                "reason": reason,
-            }],
+            "history": [
+                {
+                    "stage": "safety_gate",
+                    "action": action["action"],
+                    "allowed": allowed,
+                    "reason": reason,
+                }
+            ],
         }
 
     def _execute(self, state: ComputerUseState) -> dict[str, Any]:
@@ -221,7 +224,8 @@ class ComputerUse(Architecture):
         g.add_edge("decide", "safety_gate")
         g.add_edge("safety_gate", "execute")
         g.add_conditional_edges(
-            "execute", self._route,
+            "execute",
+            self._route,
             {"decide": "decide", "end": END},
         )
         return g.compile()

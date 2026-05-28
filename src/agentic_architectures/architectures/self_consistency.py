@@ -37,14 +37,13 @@ class _ReasoningSample(BaseModel):
     """One sampled chain-of-thought."""
 
     reasoning: str = Field(
-        description="The step-by-step reasoning. Be explicit about each arithmetic "
-                    "or logical step. Don't skip steps."
+        description="The step-by-step reasoning. Be explicit about each arithmetic or logical step. Don't skip steps."
     )
     answer: str = Field(
         description="JUST the final answer in the requested format — no units, no "
-                    "explanation, no punctuation beyond what the format requires. "
-                    "If the answer is a number, write it as a bare number (e.g., '179'). "
-                    "If a single word/name, write only that word."
+        "explanation, no punctuation beyond what the format requires. "
+        "If the answer is a number, write it as a bare number (e.g., '179'). "
+        "If a single word/name, write only that word."
     )
 
 
@@ -118,17 +117,21 @@ class SelfConsistency(Architecture):
         for i in range(state["n_samples"]):
             try:
                 s = sampler.invoke(prompt)
-                samples.append({
-                    "sample_index": str(i),
-                    "reasoning": s.reasoning,
-                    "answer": s.answer.strip(),
-                })
+                samples.append(
+                    {
+                        "sample_index": str(i),
+                        "reasoning": s.reasoning,
+                        "answer": s.answer.strip(),
+                    }
+                )
             except Exception as e:  # malformed structured output → skip this sample
-                samples.append({
-                    "sample_index": str(i),
-                    "reasoning": f"(sample failed: {e})",
-                    "answer": "",
-                })
+                samples.append(
+                    {
+                        "sample_index": str(i),
+                        "reasoning": f"(sample failed: {e})",
+                        "answer": "",
+                    }
+                )
         return {
             "samples": samples,
             "history": [{"stage": "sample_all", "n": len(samples)}],
@@ -143,9 +146,11 @@ class SelfConsistency(Architecture):
                 "final_answer": "",
                 "history": [{"stage": "vote", "tally": {}, "final": ""}],
             }
+
         # Normalise for tally: lowercase, strip whitespace, drop trailing periods.
         def _norm(s: str) -> str:
             return s.strip().lower().rstrip(".")
+
         norm_to_raw: dict[str, str] = {}
         for a in answers:
             n = _norm(a)
@@ -159,12 +164,14 @@ class SelfConsistency(Architecture):
         return {
             "tally": dict(tally),
             "final_answer": winner_raw,
-            "history": [{
-                "stage": "vote",
-                "tally": dict(tally),
-                "winner": winner_raw,
-                "n_total_answers": len(answers),
-            }],
+            "history": [
+                {
+                    "stage": "vote",
+                    "tally": dict(tally),
+                    "winner": winner_raw,
+                    "n_total_answers": len(answers),
+                }
+            ],
         }
 
     # ------------------------------------------------------------------ #
@@ -188,9 +195,7 @@ class SelfConsistency(Architecture):
         )
         tally = final_state.get("tally", {})
         n_total = sum(tally.values()) if tally else 0
-        winner_count = tally.get(
-            final_state.get("final_answer", "").strip().lower().rstrip("."), 0
-        )
+        winner_count = tally.get(final_state.get("final_answer", "").strip().lower().rstrip("."), 0)
         # Robust winner-count lookup (final_answer is raw, tally keys are normalised)
         if tally and winner_count == 0:
             # find the count by max (modal answer's count)

@@ -67,6 +67,11 @@ jobs:
         run: pytest -q --cov=src/agentic_architectures --cov-report=term-missing
         env:
           PYTHONIOENCODING: utf-8
+          # Dummy API keys so embedding/LLM constructors that read env at __init__
+          # time don't fail in CI. Unit tests use MockLLM and never make real calls.
+          NEBIUS_API_KEY: ci-dummy-key-no-network-calls
+          OPENAI_API_KEY: ci-dummy-key-no-network-calls
+          TAVILY_API_KEY: ci-dummy-key-no-network-calls
       - name: Upload coverage to Codecov
         if: matrix.python == '3.11'
         uses: codecov/codecov-action@v5

@@ -61,8 +61,7 @@ class _SkillDecision(BaseModel):
     """Per-task decision: reuse existing or write new?"""
 
     action: Literal["reuse", "write_new"] = Field(
-        description="'reuse' if the retrieved skill genuinely solves the task; "
-                    "'write_new' otherwise."
+        description="'reuse' if the retrieved skill genuinely solves the task; 'write_new' otherwise."
     )
     rationale: str = Field(description="ONE sentence.")
 
@@ -72,15 +71,15 @@ class _NewSkillSpec(BaseModel):
 
     function_name: str = Field(
         description="The Python identifier of the function you're defining "
-                    "(snake_case, e.g. 'factorial', 'fibonacci'). NOT a schema or class name."
+        "(snake_case, e.g. 'factorial', 'fibonacci'). NOT a schema or class name."
     )
     description: str = Field(
         description="ONE sentence describing what the skill does. This is what gets "
-                    "embedded for future retrieval — be specific."
+        "embedded for future retrieval — be specific."
     )
     code: str = Field(
         description="Complete Python source of the function, including `def name(...):` "
-                    "and a docstring. No imports outside stdlib. No side effects."
+        "and a docstring. No imports outside stdlib. No side effects."
     )
     example_invocation: str = Field(
         description="Example call site (e.g., 'factorial(5)') showing how to use the skill."
@@ -96,11 +95,11 @@ class _ApplySkill(BaseModel):
 
     invocation: str = Field(
         description="The exact Python expression that, if executed, solves the task "
-                    "(e.g., 'factorial(7)'). Must call the skill's function."
+        "(e.g., 'factorial(7)'). Must call the skill's function."
     )
     predicted_result: str = Field(
         description="What you EXPECT the invocation to produce. Just the value, "
-                    "no preface. (We will actually run the code and check.)"
+        "no preface. (We will actually run the code and check.)"
     )
 
 
@@ -213,7 +212,9 @@ class Voyager(Architecture):
             return {
                 "skill_used": skill,
                 "invocation": new.example_invocation,
-                "history": [{"stage": "write_new", "skill_name": skill["name"], "library_size_after": len(self.skills)}],
+                "history": [
+                    {"stage": "write_new", "skill_name": skill["name"], "library_size_after": len(self.skills)}
+                ],
             }
         except Exception as e:
             return {
@@ -241,15 +242,17 @@ class Voyager(Architecture):
                 "skill_used": skill,
                 "invocation": ap.invocation,
                 "final_answer": final,
-                "history": [{
-                    "stage": "apply_existing",
-                    "skill_name": skill["name"],
-                    "invocation": ap.invocation,
-                    "predicted": ap.predicted_result.strip(),
-                    "executed_stdout": stdout,
-                    "execution_ok": ok,
-                    "execution_error": err,
-                }],
+                "history": [
+                    {
+                        "stage": "apply_existing",
+                        "skill_name": skill["name"],
+                        "invocation": ap.invocation,
+                        "predicted": ap.predicted_result.strip(),
+                        "executed_stdout": stdout,
+                        "execution_ok": ok,
+                        "execution_error": err,
+                    }
+                ],
             }
         except Exception as e:
             return {
@@ -263,18 +266,23 @@ class Voyager(Architecture):
         skill = state.get("skill_used", {})
         invocation = state.get("invocation", "")
         if not invocation or not skill.get("code"):
-            return {"final_answer": "(no skill or invocation to apply)", "history": [{"stage": "apply_new", "skipped": True}]}
+            return {
+                "final_answer": "(no skill or invocation to apply)",
+                "history": [{"stage": "apply_new", "skipped": True}],
+            }
         stdout, ok, err = _exec_skill(skill["code"], invocation)
         final = stdout if ok else f"(execution failed: {err})"
         return {
             "final_answer": final,
-            "history": [{
-                "stage": "apply_new",
-                "invocation": invocation,
-                "executed_stdout": stdout,
-                "execution_ok": ok,
-                "execution_error": err,
-            }],
+            "history": [
+                {
+                    "stage": "apply_new",
+                    "invocation": invocation,
+                    "executed_stdout": stdout,
+                    "execution_ok": ok,
+                    "execution_error": err,
+                }
+            ],
         }
 
     # ------------------------------------------------------------------ #
@@ -298,7 +306,8 @@ class Voyager(Architecture):
         g.add_edge(START, "retrieve_candidate")
         g.add_edge("retrieve_candidate", "decide_reuse")
         g.add_conditional_edges(
-            "decide_reuse", self._route_decision,
+            "decide_reuse",
+            self._route_decision,
             {"apply_existing": "apply_existing", "write_new": "write_new"},
         )
         g.add_edge("write_new", "apply_new")
@@ -312,8 +321,7 @@ class Voyager(Architecture):
         final_state = graph.invoke({"task": task}, config={"recursion_limit": 25})
         # Find the apply-stage event to surface execution truth
         apply_evt = next(
-            (e for e in reversed(final_state.get("history", []))
-             if e.get("stage", "").startswith("apply_")),
+            (e for e in reversed(final_state.get("history", [])) if e.get("stage", "").startswith("apply_")),
             {},
         )
         return ArchitectureResult(

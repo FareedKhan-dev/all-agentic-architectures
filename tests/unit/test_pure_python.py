@@ -78,21 +78,37 @@ class TestRLHFCompositeScore:
         return RLHFSelfImprovement._composite_score(features, (30, 100))
 
     def test_all_true_max_score(self) -> None:
-        assert self._score(
-            is_on_brief=True, word_count=60, has_concrete_imagery=True,
-            avoids_cliches=True, is_engaging=True,
-        ) == 10
+        assert (
+            self._score(
+                is_on_brief=True,
+                word_count=60,
+                has_concrete_imagery=True,
+                avoids_cliches=True,
+                is_engaging=True,
+            )
+            == 10
+        )
 
     def test_all_false_zero(self) -> None:
-        assert self._score(
-            is_on_brief=False, word_count=0, has_concrete_imagery=False,
-            avoids_cliches=False, is_engaging=False,
-        ) == 0
+        assert (
+            self._score(
+                is_on_brief=False,
+                word_count=0,
+                has_concrete_imagery=False,
+                avoids_cliches=False,
+                is_engaging=False,
+            )
+            == 0
+        )
 
     def test_only_on_brief_contributes_4(self) -> None:
-        assert self._score(
-            is_on_brief=True, word_count=0,
-        ) == 4
+        assert (
+            self._score(
+                is_on_brief=True,
+                word_count=0,
+            )
+            == 4
+        )
 
     def test_word_count_out_of_range_zero_contribution(self) -> None:
         # 200 is outside (30, 100) range
@@ -106,23 +122,38 @@ class TestRLHFCompositeScore:
 # ---------------------------------------------------------------------------
 class TestLATSComposite:
     def test_high_confidence_complete_tops_out(self) -> None:
-        v = LATS._composite_value({
-            "is_complete": True, "makes_progress": True,
-            "avoids_loops": True, "confidence": "high",
-        })
+        v = LATS._composite_value(
+            {
+                "is_complete": True,
+                "makes_progress": True,
+                "avoids_loops": True,
+                "confidence": "high",
+            }
+        )
         assert v == 10  # 5 + 2 + 1 + 2
 
     def test_low_confidence_no_progress(self) -> None:
-        assert LATS._composite_value({
-            "is_complete": False, "makes_progress": False,
-            "avoids_loops": False, "confidence": "low",
-        }) == 0
+        assert (
+            LATS._composite_value(
+                {
+                    "is_complete": False,
+                    "makes_progress": False,
+                    "avoids_loops": False,
+                    "confidence": "low",
+                }
+            )
+            == 0
+        )
 
     def test_unknown_confidence_defaults_to_zero(self) -> None:
-        v = LATS._composite_value({
-            "is_complete": False, "makes_progress": True,
-            "avoids_loops": True, "confidence": "weirdvalue",
-        })
+        v = LATS._composite_value(
+            {
+                "is_complete": False,
+                "makes_progress": True,
+                "avoids_loops": True,
+                "confidence": "weirdvalue",
+            }
+        )
         assert v == 3  # 2 (progress) + 1 (no_loops) + 0 (unknown conf)
 
 
@@ -178,34 +209,45 @@ class TestVoyagerExec:
 class TestBrowserSafetyGate:
     def _arch(self, mock_llm):
         from agentic_architectures.architectures import BrowserAgent
+
         return BrowserAgent(llm=mock_llm, blocked_domains=["evil.com"])
 
     def test_navigate_to_blocked_domain_rejected(self, mock_llm) -> None:
         arch = self._arch(mock_llm)
-        allowed, reason = arch._check_safety({"action": "navigate", "target": "https://evil.com/login", "value": "", "answer": ""})
+        allowed, reason = arch._check_safety(
+            {"action": "navigate", "target": "https://evil.com/login", "value": "", "answer": ""}
+        )
         assert allowed is False
         assert "evil.com" in reason
 
     def test_navigate_to_allowed_url_passes(self, mock_llm) -> None:
         arch = self._arch(mock_llm)
-        allowed, _ = arch._check_safety({"action": "navigate", "target": "https://example.com", "value": "", "answer": ""})
+        allowed, _ = arch._check_safety(
+            {"action": "navigate", "target": "https://example.com", "value": "", "answer": ""}
+        )
         assert allowed is True
 
     def test_non_http_url_rejected(self, mock_llm) -> None:
         arch = self._arch(mock_llm)
-        allowed, reason = arch._check_safety({"action": "navigate", "target": "file:///etc/passwd", "value": "", "answer": ""})
+        allowed, reason = arch._check_safety(
+            {"action": "navigate", "target": "file:///etc/passwd", "value": "", "answer": ""}
+        )
         assert allowed is False
         assert "http" in reason.lower()
 
     def test_answer_with_password_pattern_rejected(self, mock_llm) -> None:
         arch = self._arch(mock_llm)
-        allowed, reason = arch._check_safety({"action": "answer", "target": "", "value": "the password is hunter2", "answer": ""})
+        allowed, reason = arch._check_safety(
+            {"action": "answer", "target": "", "value": "the password is hunter2", "answer": ""}
+        )
         assert allowed is False
         assert "password" in reason.lower()
 
     def test_clean_answer_passes(self, mock_llm) -> None:
         arch = self._arch(mock_llm)
-        allowed, _ = arch._check_safety({"action": "answer", "target": "", "value": "The capital is Paris.", "answer": ""})
+        allowed, _ = arch._check_safety(
+            {"action": "answer", "target": "", "value": "The capital is Paris.", "answer": ""}
+        )
         assert allowed is True
 
 
@@ -215,12 +257,14 @@ class TestBrowserSafetyGate:
 class TestSWESandbox:
     def test_sandbox_rejects_path_escape(self, mock_llm, tmp_path) -> None:
         from agentic_architectures.architectures import SWEAgent
+
         arch = SWEAgent(llm=mock_llm, working_dir=tmp_path)
         with pytest.raises(PermissionError):
             arch._safe_path("../../../etc/passwd")
 
     def test_sandbox_allows_relative_path(self, mock_llm, tmp_path) -> None:
         from agentic_architectures.architectures import SWEAgent
+
         arch = SWEAgent(llm=mock_llm, working_dir=tmp_path)
         p = arch._safe_path("foo.txt")
         assert str(p).startswith(str(tmp_path.resolve()))

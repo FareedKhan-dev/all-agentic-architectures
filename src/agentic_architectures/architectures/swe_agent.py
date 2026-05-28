@@ -35,17 +35,10 @@ class _SWEAction(BaseModel):
         description="Choose ONE: list_files, read_file, write_file, run_check, or answer (commit final response)."
     )
     path: str = Field(
-        default="",
-        description="Relative path within the sandbox. Required for read_file/write_file/run_check."
+        default="", description="Relative path within the sandbox. Required for read_file/write_file/run_check."
     )
-    content: str = Field(
-        default="",
-        description="File content. Required for write_file (the full new contents)."
-    )
-    answer: str = Field(
-        default="",
-        description="Final answer text. Required for action='answer'."
-    )
+    content: str = Field(default="", description="File content. Required for write_file (the full new contents).")
+    answer: str = Field(default="", description="Final answer text. Required for action='answer'.")
     rationale: str = Field(description="ONE sentence: why this action.")
 
 
@@ -65,8 +58,7 @@ class SWEAgent(Architecture):
 
     name = "swe_agent"
     description = (
-        "Agent loop with 4 file-system tools constrained to a working_dir. "
-        "Decide → execute → loop until answer."
+        "Agent loop with 4 file-system tools constrained to a working_dir. Decide → execute → loop until answer."
     )
     reference = "https://arxiv.org/abs/2405.15793"
 
@@ -92,7 +84,10 @@ class SWEAgent(Architecture):
         return full
 
     def _decide(self, state: SWEAgentState) -> dict[str, Any]:
-        obs_block = "\n".join(f"  [{i}] {o[:300]}" for i, o in enumerate(state.get("observations", []))) or "(no observations yet)"
+        obs_block = (
+            "\n".join(f"  [{i}] {o[:300]}" for i, o in enumerate(state.get("observations", [])))
+            or "(no observations yet)"
+        )
         iter_count = state.get("iteration", 0) + 1
         force = iter_count >= state.get("max_iterations", self.max_iterations)
         prompt = (
@@ -116,7 +111,13 @@ class SWEAgent(Architecture):
         except Exception as e:
             return {
                 "iteration": iter_count,
-                "last_action": {"action": "answer", "path": "", "content": "", "answer": f"(decider error: {e})", "rationale": ""},
+                "last_action": {
+                    "action": "answer",
+                    "path": "",
+                    "content": "",
+                    "answer": f"(decider error: {e})",
+                    "rationale": "",
+                },
                 "actions": [{"action": "answer"}],
                 "history": [{"stage": "decide", "error": str(e)}],
             }
@@ -173,7 +174,8 @@ class SWEAgent(Architecture):
         g.add_edge(START, "decide")
         g.add_edge("decide", "execute")
         g.add_conditional_edges(
-            "execute", self._route,
+            "execute",
+            self._route,
             {"decide": "decide", "end": END},
         )
         return g.compile()

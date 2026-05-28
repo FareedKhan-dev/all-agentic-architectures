@@ -33,12 +33,12 @@ class _DebateResponse(BaseModel):
 
     answer: str = Field(
         description="JUST the final answer in the requested format — no preface, "
-                    "no critique here. (Critiques go in the other field.)"
+        "no critique here. (Critiques go in the other field.)"
     )
     critique_of_others: str = Field(
         description="2-3 sentences engaging with the other agents' prior answers — "
-                    "identify their strongest argument and your strongest counter, "
-                    "or note where you agree. On round 1, write '(round 1 — no prior answers)'."
+        "identify their strongest argument and your strongest counter, "
+        "or note where you agree. On round 1, write '(round 1 — no prior answers)'."
     )
 
 
@@ -94,8 +94,10 @@ class Debate(Architecture):
         self.personas = list(agent_personas) if agent_personas else list(self.AGENT_PERSONAS[:n_agents])
         if len(self.personas) < n_agents:
             # Pad with generic personas if user supplied too few
-            self.personas += [f"You are Agent {chr(65+i)}: thoughtful, careful, honest."
-                              for i in range(len(self.personas), n_agents)]
+            self.personas += [
+                f"You are Agent {chr(65 + i)}: thoughtful, careful, honest."
+                for i in range(len(self.personas), n_agents)
+            ]
         # Pre-bind structured-output sampler
         self._responder = self.llm.bind(temperature=self.sample_temperature).with_structured_output(_DebateResponse)
 
@@ -110,8 +112,7 @@ class Debate(Architecture):
         if prior:
             last = prior[-1]
             prior_block = "\n## Prior round answers from all agents\n" + "\n".join(
-                f"  - Agent {chr(65+r['agent_id'])}: '{r['answer']}'  — critique: {r['critique'][:200]}"
-                for r in last
+                f"  - Agent {chr(65 + r['agent_id'])}: '{r['answer']}'  — critique: {r['critique'][:200]}" for r in last
             )
 
         responses: list[dict[str, str]] = []
@@ -128,17 +129,21 @@ class Debate(Architecture):
             )
             try:
                 resp = self._responder.invoke(prompt)
-                responses.append({
-                    "agent_id": str(i),
-                    "answer": resp.answer.strip(),
-                    "critique": resp.critique_of_others.strip(),
-                })
+                responses.append(
+                    {
+                        "agent_id": str(i),
+                        "answer": resp.answer.strip(),
+                        "critique": resp.critique_of_others.strip(),
+                    }
+                )
             except Exception as e:
-                responses.append({
-                    "agent_id": str(i),
-                    "answer": "",
-                    "critique": f"(response failed: {e})",
-                })
+                responses.append(
+                    {
+                        "agent_id": str(i),
+                        "answer": "",
+                        "critique": f"(response failed: {e})",
+                    }
+                )
 
         # Normalise agent_id to int for downstream consumers
         for r in responses:
@@ -147,10 +152,12 @@ class Debate(Architecture):
         return {
             "round": round_num,
             "rounds": [responses],
-            "history": [{
-                "stage": f"round_{round_num}",
-                "answers": [r["answer"] for r in responses],
-            }],
+            "history": [
+                {
+                    "stage": f"round_{round_num}",
+                    "answers": [r["answer"] for r in responses],
+                }
+            ],
         }
 
     def _vote(self, state: DebateState) -> dict[str, Any]:
@@ -196,7 +203,8 @@ class Debate(Architecture):
         g.add_node("vote", self._vote)
         g.add_edge(START, "round")
         g.add_conditional_edges(
-            "round", self._should_continue,
+            "round",
+            self._should_continue,
             {"round": "round", "vote": "vote"},
         )
         g.add_edge("vote", END)
@@ -227,8 +235,10 @@ class Debate(Architecture):
                 "round_unique_answer_count": round_unique,
                 "final_tally": tally,
                 "convergence": (
-                    "converged" if len(set([(r["answer"] or "").strip().lower() for r in rounds[-1]] if rounds else [])) <= 1
-                    else "partial" if rounds and round_unique[-1] < self.n_agents
+                    "converged"
+                    if len(set([(r["answer"] or "").strip().lower() for r in rounds[-1]] if rounds else [])) <= 1
+                    else "partial"
+                    if rounds and round_unique[-1] < self.n_agents
                     else "no_convergence"
                 ),
             },

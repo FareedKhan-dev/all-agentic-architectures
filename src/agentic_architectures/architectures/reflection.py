@@ -88,10 +88,7 @@ class Reflection(Architecture):
     # ------------------------------------------------------------------ #
 
     def _generate(self, state: ReflectionState) -> dict[str, Any]:
-        prompt = (
-            f"# Task\n{state['task']}\n\n"
-            f"Produce the best response you can. Be concrete and complete."
-        )
+        prompt = f"# Task\n{state['task']}\n\nProduce the best response you can. Be concrete and complete."
         draft = self.llm.invoke(prompt).content
         return {
             "draft": str(draft),

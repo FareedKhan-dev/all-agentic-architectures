@@ -15,15 +15,15 @@ from agentic_architectures.architectures.base import Architecture
 
 # Architectures that need extra constructor args beyond `llm=` — provide minimal defaults.
 EXTRA_KWARGS: dict[str, dict[str, object]] = {
-    "AgenticRAG":         {"documents": ["fact one", "fact two"]},
-    "CorrectiveRAG":      {"documents": ["fact one", "fact two"]},
-    "SelfRAG":            {"documents": ["fact one", "fact two"]},
-    "AdaptiveRAG":        {"documents": ["fact one", "fact two"]},
-    "GraphRAG":           {"documents": []},  # skip KG build by passing empty docs
-    "SWEAgent":           {"working_dir": "."},   # current dir is fine — we don't .run()
-    "ComputerUse":        {"initial_screen": {"url": "about:blank", "elements": []}},
-    "BrowserAgent":       {"headless": True},
-    "CellularAutomata":   {
+    "AgenticRAG": {"documents": ["fact one", "fact two"]},
+    "CorrectiveRAG": {"documents": ["fact one", "fact two"]},
+    "SelfRAG": {"documents": ["fact one", "fact two"]},
+    "AdaptiveRAG": {"documents": ["fact one", "fact two"]},
+    "GraphRAG": {"documents": []},  # skip KG build by passing empty docs
+    "SWEAgent": {"working_dir": "."},  # current dir is fine — we don't .run()
+    "ComputerUse": {"initial_screen": {"url": "about:blank", "elements": []}},
+    "BrowserAgent": {"headless": True},
+    "CellularAutomata": {
         "rule_prompt": "Update the cell based on its neighbors.",
         "allowed_states": ["empty", "filled"],
     },
@@ -70,7 +70,8 @@ def test_can_build_graph(cls: type[Architecture], mock_llm) -> None:
     kwargs = EXTRA_KWARGS.get(cls.__name__, {})
     arch = cls(llm=mock_llm, **kwargs)
     graph = arch.build()
-    assert hasattr(graph, "get_graph") or hasattr(graph, "invoke"), \
+    assert hasattr(graph, "get_graph") or hasattr(graph, "invoke"), (
         f"{cls.__name__}.build() returned a non-graph object: {type(graph)}"
+    )
     if hasattr(arch, "close"):
         arch.close()

@@ -81,16 +81,15 @@ class _SimulatedOutcome(BaseModel):
         description="Specific things that could go wrong with this action.",
     )
     overall_score: int = Field(
-        ge=1, le=5,
+        ge=1,
+        le=5,
         description=(
             "How good is this action OVERALL — weighing predicted outcome × probability "
             "of that outcome × upside/downside ratio. STRICT 1-5: be discriminating. "
             "1 = clearly bad / high risk. 5 = clearly excellent. Most actions 2-4."
         ),
     )
-    rationale: str = Field(
-        description="One sentence explaining the overall score."
-    )
+    rationale: str = Field(description="One sentence explaining the overall score.")
 
 
 # ---------------------------------------------------------------------------
@@ -178,10 +177,7 @@ class MentalLoop(Architecture):
             outcome = self._simulator.invoke(sim_prompt)
             data = outcome.model_dump()
             data["llm_score"] = data["overall_score"]  # preserve the LLM's original score
-            if (
-                self.scoring_fn is not None
-                and outcome.predicted_metric is not None
-            ):
+            if self.scoring_fn is not None and outcome.predicted_metric is not None:
                 data["overall_score"] = self.scoring_fn(outcome.predicted_metric)
                 data["score_source"] = "deterministic"
             else:
@@ -199,9 +195,7 @@ class MentalLoop(Architecture):
     def _explain(self, state: MentalLoopState) -> dict[str, Any]:
         sims = state.get("simulations", [])
         sims_md = "\n".join(
-            f"- **{s['action']}** — predicted: {s['predicted_outcome']} "
-            f"(score {s['overall_score']}/5)"
-            for s in sims
+            f"- **{s['action']}** — predicted: {s['predicted_outcome']} (score {s['overall_score']}/5)" for s in sims
         )
         prompt = (
             f"## Decision task\n{state['task']}\n\n"

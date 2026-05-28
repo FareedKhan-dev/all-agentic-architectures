@@ -235,10 +235,7 @@ class PEV(Architecture):
 
     def _finalize(self, state: PEVState) -> dict[str, Any]:
         history = state.get("past_steps", [])
-        rows = "\n".join(
-            f"  - [{p['verdict']}] {p['step']}\n     → {(p['result'] or '')[:300]}"
-            for p in history
-        )
+        rows = "\n".join(f"  - [{p['verdict']}] {p['step']}\n     → {(p['result'] or '')[:300]}" for p in history)
         prompt = (
             f"Original task: {state['input']}\n\n"
             f"Verified plan execution log:\n{rows}\n\n"
@@ -297,9 +294,7 @@ class PEV(Architecture):
             metadata={
                 "steps_total": len(history),
                 "steps_passed": sum(1 for p in history if p["verdict"] == "pass"),
-                "steps_fail_accepted": sum(
-                    1 for p in history if p["verdict"] == "fail-accepted"
-                ),
+                "steps_fail_accepted": sum(1 for p in history if p["verdict"] == "fail-accepted"),
                 "total_attempts": sum(p["attempts"] for p in history),
                 "max_retries_per_step": self.max_retries_per_step,
             },

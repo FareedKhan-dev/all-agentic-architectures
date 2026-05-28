@@ -23,15 +23,15 @@ if TYPE_CHECKING:  # avoid hard import at module load time
 # running on a given provider and skip with a clear message if unsupported.
 # ----------------------------------------------------------------------------
 _PROVIDER_CAPABILITIES: dict[str, dict[str, bool]] = {
-    "nebius":      {"tools": True,  "structured_output": True},
-    "openai":      {"tools": True,  "structured_output": True},
-    "anthropic":   {"tools": True,  "structured_output": True},
-    "groq":        {"tools": True,  "structured_output": True},
-    "together":    {"tools": True,  "structured_output": True},
-    "fireworks":   {"tools": True,  "structured_output": True},
-    "mistralai":   {"tools": True,  "structured_output": True},
-    "google":      {"tools": True,  "structured_output": True},
-    "ollama":      {"tools": True,  "structured_output": False},
+    "nebius": {"tools": True, "structured_output": True},
+    "openai": {"tools": True, "structured_output": True},
+    "anthropic": {"tools": True, "structured_output": True},
+    "groq": {"tools": True, "structured_output": True},
+    "together": {"tools": True, "structured_output": True},
+    "fireworks": {"tools": True, "structured_output": True},
+    "mistralai": {"tools": True, "structured_output": True},
+    "google": {"tools": True, "structured_output": True},
+    "ollama": {"tools": True, "structured_output": False},
     "huggingface": {"tools": False, "structured_output": False},
 }
 
@@ -41,9 +41,7 @@ def provider_supports_tools(provider: str | None = None) -> bool:
 
 
 def provider_supports_structured_output(provider: str | None = None) -> bool:
-    return _PROVIDER_CAPABILITIES.get(
-        provider or settings.llm_provider, {}
-    ).get("structured_output", False)
+    return _PROVIDER_CAPABILITIES.get(provider or settings.llm_provider, {}).get("structured_output", False)
 
 
 def get_llm(
@@ -69,9 +67,7 @@ def get_llm(
         try:
             from langchain_nebius import ChatNebius
         except ImportError as e:
-            raise ImportError(
-                "Nebius provider requires `pip install agentic-architectures[nebius]`"
-            ) from e
+            raise ImportError("Nebius provider requires `pip install agentic-architectures[nebius]`") from e
         return ChatNebius(
             model=model,
             temperature=temperature,
@@ -102,13 +98,13 @@ def _ensure_provider_env(provider: str, api_key: str | None) -> None:
     if api_key is None:
         return
     env_var = {
-        "openai":    "OPENAI_API_KEY",
+        "openai": "OPENAI_API_KEY",
         "anthropic": "ANTHROPIC_API_KEY",
-        "groq":      "GROQ_API_KEY",
-        "together":  "TOGETHER_API_KEY",
+        "groq": "GROQ_API_KEY",
+        "together": "TOGETHER_API_KEY",
         "fireworks": "FIREWORKS_API_KEY",
         "mistralai": "MISTRAL_API_KEY",
-        "google":    "GOOGLE_API_KEY",
+        "google": "GOOGLE_API_KEY",
         "huggingface": "HUGGINGFACEHUB_API_TOKEN",
     }.get(provider)
     if env_var and not os.environ.get(env_var):
@@ -120,11 +116,11 @@ def _ensure_provider_env(provider: str, api_key: str | None) -> None:
 # ----------------------------------------------------------------------------
 
 _DEFAULT_EMBEDDINGS_BY_PROVIDER: dict[str, tuple[str, str]] = {
-    "nebius":      ("nebius",      "Qwen/Qwen3-Embedding-8B"),
-    "openai":      ("openai",      "text-embedding-3-small"),
-    "google":      ("google",      "models/text-embedding-004"),
+    "nebius": ("nebius", "Qwen/Qwen3-Embedding-8B"),
+    "openai": ("openai", "text-embedding-3-small"),
+    "google": ("google", "models/text-embedding-004"),
     "huggingface": ("huggingface", "sentence-transformers/all-MiniLM-L6-v2"),
-    "ollama":      ("ollama",      "nomic-embed-text"),
+    "ollama": ("ollama", "nomic-embed-text"),
 }
 
 
@@ -154,6 +150,7 @@ def get_embeddings(
         )
     if provider == "openai":
         from langchain_openai import OpenAIEmbeddings
+
         _ensure_provider_env(
             "openai",
             settings.openai_api_key.get_secret_value() if settings.openai_api_key else None,
@@ -161,9 +158,11 @@ def get_embeddings(
         return OpenAIEmbeddings(model=model, **kwargs)
     if provider == "huggingface":
         from langchain_huggingface import HuggingFaceEmbeddings
+
         return HuggingFaceEmbeddings(model_name=model, **kwargs)
     if provider == "ollama":
         from langchain_ollama import OllamaEmbeddings
+
         return OllamaEmbeddings(
             model=model,
             base_url=settings.ollama_base_url,
@@ -171,6 +170,7 @@ def get_embeddings(
         )
     if provider == "google":
         from langchain_google_genai import GoogleGenerativeAIEmbeddings
+
         _ensure_provider_env(
             "google",
             settings.google_api_key.get_secret_value() if settings.google_api_key else None,

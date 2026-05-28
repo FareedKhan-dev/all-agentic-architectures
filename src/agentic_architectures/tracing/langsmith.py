@@ -1,7 +1,7 @@
 """One-call LangSmith setup. Notebooks just do:
 
-    from agentic_architectures import enable_langsmith
-    enable_langsmith()
+from agentic_architectures import enable_langsmith
+enable_langsmith()
 """
 
 from __future__ import annotations

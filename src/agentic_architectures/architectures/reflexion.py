@@ -55,19 +55,19 @@ class _SelfReflection(BaseModel):
 
     root_cause: str = Field(
         description="ONE SENTENCE: precisely why the previous attempt failed. "
-                    "Reference the specific feature that broke (e.g., 'line 2 had "
-                    "8 syllables instead of 7' — not 'the haiku was off')."
+        "Reference the specific feature that broke (e.g., 'line 2 had "
+        "8 syllables instead of 7' — not 'the haiku was off')."
     )
     correction: str = Field(
         description="ONE SENTENCE: the concrete change to make on the next attempt. "
-                    "Phrase as an imperative (e.g., 'Count syllables of line 2 out loud "
-                    "before submitting and trim if over 7')."
+        "Phrase as an imperative (e.g., 'Count syllables of line 2 out loud "
+        "before submitting and trim if over 7')."
     )
     reflection: str = Field(
         description="2-4 sentences, second person ('You under-counted...'). Combine "
-                    "the root_cause + correction + any generalisable lesson for "
-                    "similar future tasks. THIS text is stored verbatim in episodic "
-                    "memory and recalled when a future task is similar."
+        "the root_cause + correction + any generalisable lesson for "
+        "similar future tasks. THIS text is stored verbatim in episodic "
+        "memory and recalled when a future task is similar."
     )
 
 
@@ -243,8 +243,12 @@ class Reflexion(Architecture):
         self.reflections_to_recall = reflections_to_recall
         self.evaluator = evaluator if evaluator is not None else default_haiku_checker
         # Persistent across run() calls — the whole point of Reflexion.
-        self.episodic = episodic if episodic is not None else EpisodicMemory(
-            collection_name="reflexion_lessons",
+        self.episodic = (
+            episodic
+            if episodic is not None
+            else EpisodicMemory(
+                collection_name="reflexion_lessons",
+            )
         )
         self._reflector = (reflection_llm or self.llm).with_structured_output(_SelfReflection)
 
@@ -308,9 +312,7 @@ class Reflexion(Architecture):
 
     def _reflect(self, state: ReflexionState) -> dict[str, Any]:
         feats = state["evaluator_features"]
-        failure_summary = "\n".join(
-            f"  - {k}: {v}" for k, v in feats.items() if k != "passed"
-        )
+        failure_summary = "\n".join(f"  - {k}: {v}" for k, v in feats.items() if k != "passed")
         prompt = (
             "You attempted a task and the evaluator returned FAIL. Write a verbal "
             "reflection — a self-addressed lesson — so you don't repeat the same "
@@ -402,16 +404,10 @@ class Reflexion(Architecture):
             trace=history,
             metadata={
                 "total_trials": final_state.get("trial", 0),
-                "trials_to_success": (
-                    final_state.get("trial", 0) if final_state.get("success") else None
-                ),
+                "trials_to_success": (final_state.get("trial", 0) if final_state.get("success") else None),
                 "succeeded": final_state.get("success", False),
-                "reflections_recorded_this_run": (
-                    len(self.episodic.episodes) - memory_before
-                ),
-                "reflections_recalled_first_trial": len(
-                    first_trial.get("recalled_reflections", [])
-                ),
+                "reflections_recorded_this_run": (len(self.episodic.episodes) - memory_before),
+                "reflections_recalled_first_trial": len(first_trial.get("recalled_reflections", [])),
                 "total_reflections_in_memory": len(self.episodic.episodes),
                 "max_trials": self.max_trials,
                 "evaluator_features": final_state.get("evaluator_features", {}),

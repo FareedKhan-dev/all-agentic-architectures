@@ -73,8 +73,7 @@ class _AgentBid(BaseModel):
     )
     one_line_preview: str = Field(
         description=(
-            "One sentence preview of WHAT you would contribute. "
-            "If will_contribute=False, write '(nothing to add)'."
+            "One sentence preview of WHAT you would contribute. If will_contribute=False, write '(nothing to add)'."
         )
     )
 
@@ -127,10 +126,7 @@ class Blackboard(Architecture):
     def _format_blackboard(entries: list[dict[str, Any]]) -> str:
         if not entries:
             return "(empty — be the first to contribute)"
-        return "\n".join(
-            f"  [round {e['round']}] {e['agent'].upper()}: {e['content']}"
-            for e in entries
-        )
+        return "\n".join(f"  [round {e['round']}] {e['agent'].upper()}: {e['content']}" for e in entries)
 
     def _bidding_round(self, state: BlackboardState) -> dict[str, Any]:
         round_num = state.get("round", 0)
@@ -139,10 +135,7 @@ class Blackboard(Architecture):
 
         blackboard_str = self._format_blackboard(state.get("blackboard", []))
         invocation_counts = _count_invocations(state.get("blackboard", []))
-        counts_str = (
-            ", ".join(f"{a}={c}" for a, c in invocation_counts.items())
-            or "(no one has contributed yet)"
-        )
+        counts_str = ", ".join(f"{a}={c}" for a, c in invocation_counts.items()) or "(no one has contributed yet)"
         bids: dict[str, dict[str, Any]] = {}
 
         for name, sys_prompt in self.knowledge_sources.items():
@@ -170,10 +163,7 @@ class Blackboard(Architecture):
             bids[name] = bid.model_dump()
 
         # Pick winner: highest-confidence willing bidder above min_confidence.
-        eligible = [
-            (n, b) for n, b in bids.items()
-            if b["will_contribute"] and b["confidence"] >= self.min_confidence
-        ]
+        eligible = [(n, b) for n, b in bids.items() if b["will_contribute"] and b["confidence"] >= self.min_confidence]
         if not eligible:
             return {"next_agent": "FINISH", "last_bids": bids}
 
@@ -211,13 +201,8 @@ class Blackboard(Architecture):
     def _synthesize(self, state: BlackboardState) -> dict[str, Any]:
         entries = state.get("blackboard", [])
         if not entries:
-            return {
-                "final_synthesis": "(no agent had anything to contribute — nothing to synthesize)"
-            }
-        bb = "\n".join(
-            f"### Round {e['round']} — {e['agent'].title()}\n{e['content']}"
-            for e in entries
-        )
+            return {"final_synthesis": "(no agent had anything to contribute — nothing to synthesize)"}
+        bb = "\n".join(f"### Round {e['round']} — {e['agent'].title()}\n{e['content']}" for e in entries)
         prompt = (
             f"## Question\n{state['task']}\n\n"
             f"## Blackboard contents\n{bb}\n\n"
@@ -246,9 +231,7 @@ class Blackboard(Architecture):
         g.add_node("synthesize", self._synthesize)
 
         g.add_edge(START, "bidding")
-        g.add_conditional_edges(
-            "bidding", self._route, {"act": "act", "synthesize": "synthesize"}
-        )
+        g.add_conditional_edges("bidding", self._route, {"act": "act", "synthesize": "synthesize"})
         g.add_edge("act", "bidding")
         g.add_edge("synthesize", END)
         return g.compile()

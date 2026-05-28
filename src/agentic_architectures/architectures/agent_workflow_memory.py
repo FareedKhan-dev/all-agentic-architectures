@@ -31,9 +31,9 @@ class _Workflow(BaseModel):
 
     task_type: str = Field(description="A short label for the kind of task this recipe solves.")
     steps: list[str] = Field(
-        description="3-6 high-level recipe steps. Each generalisable — "
-                    "no task-specific entities, just the strategy.",
-        min_length=2, max_length=8,
+        description="3-6 high-level recipe steps. Each generalisable — no task-specific entities, just the strategy.",
+        min_length=2,
+        max_length=8,
     )
 
 
@@ -89,7 +89,7 @@ class AgentWorkflowMemory(Architecture):
     def _answer(self, state: AWMState) -> dict[str, Any]:
         wf = state.get("retrieved_workflow")
         if wf:
-            steps_block = "\n".join(f"  {i+1}. {s}" for i, s in enumerate(wf["steps"]))
+            steps_block = "\n".join(f"  {i + 1}. {s}" for i, s in enumerate(wf["steps"]))
             prompt = (
                 f"# Task\n{state['task']}\n\n"
                 f"# Reusable workflow recipe (from your library, type='{wf['task_type']}')\n"
@@ -121,13 +121,19 @@ class AgentWorkflowMemory(Architecture):
             )
             workflow = {"task_type": wf.task_type, "steps": list(wf.steps)}
             self.workflows.append(workflow)
-            self._index.add([
-                Document(page_content=workflow["task_type"] + " — " + "; ".join(workflow["steps"]),
-                         metadata={"task_type": workflow["task_type"]})
-            ])
+            self._index.add(
+                [
+                    Document(
+                        page_content=workflow["task_type"] + " — " + "; ".join(workflow["steps"]),
+                        metadata={"task_type": workflow["task_type"]},
+                    )
+                ]
+            )
             return {
                 "extracted_workflow": workflow,
-                "history": [{"stage": "extract", "task_type": workflow["task_type"], "library_size_after": len(self.workflows)}],
+                "history": [
+                    {"stage": "extract", "task_type": workflow["task_type"], "library_size_after": len(self.workflows)}
+                ],
             }
         except Exception as e:
             return {"extracted_workflow": None, "history": [{"stage": "extract", "error": str(e)}]}

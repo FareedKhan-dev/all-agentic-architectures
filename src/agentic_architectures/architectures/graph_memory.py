@@ -34,7 +34,9 @@ from agentic_architectures.memory import SemanticMemory
 # ---------------------------------------------------------------------------
 class _IngestionTriple(BaseModel):
     subject: str = Field(description="A specific named entity (capitalised).")
-    predicate: str = Field(description="A short relation verb in snake_case (e.g. founded_by, headquartered_in, ceo_is).")
+    predicate: str = Field(
+        description="A short relation verb in snake_case (e.g. founded_by, headquartered_in, ceo_is)."
+    )
     object: str = Field(description="A specific named entity OR a short literal value.")
 
 
@@ -128,10 +130,7 @@ class GraphMemoryAgent(Architecture):
                     facts.append(f)
         if not facts:
             return "(no relevant facts in graph)", []
-        block = "\n".join(
-            f"  - ({f.get('subject')}, {f.get('predicate')}, {f.get('object')})"
-            for f in facts
-        )
+        block = "\n".join(f"  - ({f.get('subject')}, {f.get('predicate')}, {f.get('object')})" for f in facts)
         return block, facts
 
     # ------------------------------------------------------------------ #

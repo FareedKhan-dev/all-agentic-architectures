@@ -38,9 +38,9 @@ class _DocGrade(BaseModel):
 
     relevance: Literal["relevant", "ambiguous", "irrelevant"] = Field(
         description="Categorical assessment of this doc's relevance to the question. "
-                    "'relevant' = directly answers part of the question; "
-                    "'ambiguous' = related but doesn't directly answer; "
-                    "'irrelevant' = off-topic or wrong entity."
+        "'relevant' = directly answers part of the question; "
+        "'ambiguous' = related but doesn't directly answer; "
+        "'irrelevant' = off-topic or wrong entity."
     )
     rationale: str = Field(description="ONE sentence justifying the grade.")
 
@@ -102,6 +102,7 @@ class CorrectiveRAG(Architecture):
             self.memory = VectorMemory(collection_name="corrective_rag_corpus")
             if documents:
                 from langchain_core.documents import Document
+
                 self.memory.add([Document(page_content=d) for d in documents])
         self._grader = self.llm.with_structured_output(_DocGrade)
 
@@ -133,12 +134,14 @@ class CorrectiveRAG(Architecture):
                 grades.append({"relevance": "irrelevant", "rationale": f"(grade error: {e})"})
         return {
             "doc_grades": grades,
-            "history": [{
-                "stage": "grade",
-                "n_relevant": sum(1 for g in grades if g["relevance"] == "relevant"),
-                "n_ambiguous": sum(1 for g in grades if g["relevance"] == "ambiguous"),
-                "n_irrelevant": sum(1 for g in grades if g["relevance"] == "irrelevant"),
-            }],
+            "history": [
+                {
+                    "stage": "grade",
+                    "n_relevant": sum(1 for g in grades if g["relevance"] == "relevant"),
+                    "n_ambiguous": sum(1 for g in grades if g["relevance"] == "ambiguous"),
+                    "n_irrelevant": sum(1 for g in grades if g["relevance"] == "irrelevant"),
+                }
+            ],
         }
 
     def _route(self, state: CorrectiveRAGState) -> dict[str, Any]:
@@ -230,7 +233,8 @@ class CorrectiveRAG(Architecture):
         g.add_edge("retrieve", "grade")
         g.add_edge("grade", "route")
         g.add_conditional_edges(
-            "route", self._next_after_route,
+            "route",
+            self._next_after_route,
             {"web_search": "web_search", "answer": "answer"},
         )
         g.add_edge("web_search", "answer")

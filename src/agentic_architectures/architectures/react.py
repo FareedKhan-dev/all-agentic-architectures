@@ -76,8 +76,7 @@ class ReAct(Architecture):
         super().__init__(**kwargs)
         if not provider_supports_tools():
             raise RuntimeError(
-                "ReAct requires a provider with tool-calling support. "
-                "Switch LLM_PROVIDER to one that does."
+                "ReAct requires a provider with tool-calling support. Switch LLM_PROVIDER to one that does."
             )
 
         if tools is None:

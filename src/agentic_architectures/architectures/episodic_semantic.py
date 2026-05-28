@@ -99,11 +99,7 @@ class EpisodicSemanticAgent(Architecture):
 
     def _retrieve(self, query: str) -> dict[str, Any]:
         # Episodic: vector recall over past episodes
-        episodes = (
-            self.episodic.recall(query, k=self.recall_k_episodes)
-            if self.episodic.episodes
-            else []
-        )
+        episodes = self.episodic.recall(query, k=self.recall_k_episodes) if self.episodic.episodes else []
         # Semantic: brute-force entity-match on stored nodes (small graphs only)
         all_entities = []
         try:
@@ -116,9 +112,7 @@ class EpisodicSemanticAgent(Architecture):
             pass
 
         query_lower = query.lower()
-        relevant_entities = [
-            e for e in all_entities if e.lower() in query_lower or query_lower in e.lower()
-        ]
+        relevant_entities = [e for e in all_entities if e.lower() in query_lower or query_lower in e.lower()]
         # Also include all entities if query is short / generic (e.g. "tell me about me")
         if not relevant_entities and len(query.split()) <= 10:
             relevant_entities = all_entities[:10]
@@ -219,13 +213,14 @@ class EpisodicSemanticAgent(Architecture):
                 "total_entities_stored": self._count_entities(),
             },
             trace=[
-                {"type": "retrieved_episodes", "count": len(episodes_recalled),
-                 "items": [{"role": e.role, "content": e.content[:200]} for e in episodes_recalled]},
-                {"type": "retrieved_facts", "count": len(facts_recalled),
-                 "items": facts_recalled[:10]},
+                {
+                    "type": "retrieved_episodes",
+                    "count": len(episodes_recalled),
+                    "items": [{"role": e.role, "content": e.content[:200]} for e in episodes_recalled],
+                },
+                {"type": "retrieved_facts", "count": len(facts_recalled), "items": facts_recalled[:10]},
                 {"type": "answer", "content": answer},
-                {"type": "extracted_facts", "count": len(new_facts),
-                 "items": [t.model_dump() for t in new_facts]},
+                {"type": "extracted_facts", "count": len(new_facts), "items": [t.model_dump() for t in new_facts]},
             ],
             metadata={
                 "episodes_recalled": len(episodes_recalled),

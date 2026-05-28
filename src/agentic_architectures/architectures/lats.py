@@ -42,8 +42,8 @@ class _ThoughtCandidates(BaseModel):
 
     candidates: list[str] = Field(
         description="K substantively-different next reasoning steps. Each must be a "
-                    "single concrete move (e.g., 'apply 8-6=2; remaining [2,4,12]') — "
-                    "not multi-step or vague.",
+        "single concrete move (e.g., 'apply 8-6=2; remaining [2,4,12]') — "
+        "not multi-step or vague.",
         min_length=2,
     )
 
@@ -51,18 +51,12 @@ class _ThoughtCandidates(BaseModel):
 class _LeafEvaluation(BaseModel):
     """Deterministic-picker reward — LLM commits to objective features only."""
 
-    makes_progress: bool = Field(
-        description="True iff this leaf advances toward the goal vs its parent."
-    )
-    is_complete: bool = Field(
-        description="True iff this leaf represents a COMPLETE solution to the original task."
-    )
+    makes_progress: bool = Field(description="True iff this leaf advances toward the goal vs its parent.")
+    is_complete: bool = Field(description="True iff this leaf represents a COMPLETE solution to the original task.")
     avoids_loops: bool = Field(
         description="True iff this leaf does NOT repeat a state already seen in its ancestor chain."
     )
-    confidence: str = Field(
-        description="One of: 'high', 'medium', 'low'. How confident are you in the above features?"
-    )
+    confidence: str = Field(description="One of: 'high', 'medium', 'low'. How confident are you in the above features?")
     rationale: str = Field(description="ONE sentence explaining the assessment.")
 
 
@@ -72,10 +66,10 @@ class _LeafEvaluation(BaseModel):
 @dataclass
 class _Node:
     id: int
-    thought: str                  # the partial-solution text at this node
+    thought: str  # the partial-solution text at this node
     parent_id: int | None = None
     children_ids: list[int] = field(default_factory=list)
-    value: float = 0.0            # average reward across visits
+    value: float = 0.0  # average reward across visits
     visits: int = 0
     is_terminal: bool = False
     features: dict[str, Any] = field(default_factory=dict)
@@ -89,7 +83,7 @@ class LATSState(TypedDict, total=False):
     iteration: int
     max_iterations: int
     branching: int
-    nodes: dict[int, _Node]       # node_id -> _Node
+    nodes: dict[int, _Node]  # node_id -> _Node
     next_id: int
     root_id: int
     best_leaf_id: int | None
@@ -147,7 +141,7 @@ class LATS(Architecture):
 
     def _ucb1(self, node: _Node, parent_visits: int) -> float:
         if node.visits == 0:
-            return float("inf")     # unvisited nodes are infinitely attractive
+            return float("inf")  # unvisited nodes are infinitely attractive
         exploit = node.value
         explore = self.ucb_c * math.sqrt(math.log(max(parent_visits, 1)) / node.visits)
         return exploit + explore
@@ -280,14 +274,16 @@ class LATS(Architecture):
             "next_id": next_id,
             "iteration": iteration,
             "best_leaf_id": best_leaf.id,
-            "history": [{
-                "stage": "iterate",
-                "iteration": iteration,
-                "selected_leaf_id": leaf_id,
-                "expanded_to": new_child_ids,
-                "best_leaf_value": best_leaf.value,
-                "tree_size": len(nodes),
-            }],
+            "history": [
+                {
+                    "stage": "iterate",
+                    "iteration": iteration,
+                    "selected_leaf_id": leaf_id,
+                    "expanded_to": new_child_ids,
+                    "best_leaf_value": best_leaf.value,
+                    "tree_size": len(nodes),
+                }
+            ],
         }
 
     def _finalize(self, state: LATSState) -> dict[str, Any]:
@@ -323,7 +319,8 @@ class LATS(Architecture):
         g.add_edge(START, "init")
         g.add_edge("init", "iterate")
         g.add_conditional_edges(
-            "iterate", self._should_continue,
+            "iterate",
+            self._should_continue,
             {"iterate": "iterate", "finalize": "finalize"},
         )
         g.add_edge("finalize", END)

@@ -66,9 +66,7 @@ class LLMJudge(Generic[T]):
         """Score the candidate against the rubric and return a populated schema."""
         ctx_block = ""
         if context:
-            ctx_block = "\n\n### Context\n" + "\n".join(
-                f"- **{k}**: {v}" for k, v in context.items()
-            )
+            ctx_block = "\n\n### Context\n" + "\n".join(f"- **{k}**: {v}" for k, v in context.items())
 
         prompt = (
             f"You are an impartial evaluator.\n\n"

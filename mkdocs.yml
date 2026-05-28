@@ -15,7 +15,6 @@ edit_uri: edit/main/docs/
 # ----------------------------------------------------------------------------
 theme:
   name: material
-  custom_dir: docs/_overrides
   language: en
   font:
     text: Inter
