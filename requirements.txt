@@ -1,7 +1,0 @@
-langchain
-langgraph
-langchain-nebius
-rich
-python-dotenv
-langchain-community
-langchain-tavily
