@@ -109,75 +109,75 @@ pytest -q                           # 283 tests pass in ~30s
 <tr>
 <td width="33%" valign="top">
 
-#### Reasoning & Reflection
+#### [Reasoning & Reflection](docs/architectures/index.md#reasoning--reflection)
 Self-critique loops that drive answer quality up through iteration.
 <br><br>
-<sub>Reflection · Reflexion · Chain-of-Verification · Self-Discover · Constitutional AI</sub>
+<sub><a href="notebooks/01_reflection.ipynb">Reflection</a> · <a href="notebooks/18_reflexion.ipynb">Reflexion</a> · <a href="notebooks/20_chain_of_verification.ipynb">Chain-of-Verification</a> · <a href="notebooks/19_self_discover.ipynb">Self-Discover</a> · <a href="notebooks/32_constitutional_ai.ipynb">Constitutional AI</a></sub>
 
 </td>
 <td width="33%" valign="top">
 
-#### Sampling & Search
+#### [Sampling & Search](docs/architectures/index.md#sampling--search)
 Sample many paths or grow a tree with rewards.
 <br><br>
-<sub>Self-Consistency · Tree of Thoughts · LATS · Mental Loop · Ensemble</sub>
+<sub><a href="notebooks/21_self_consistency.ipynb">Self-Consistency</a> · <a href="notebooks/09_tree_of_thoughts.ipynb">Tree of Thoughts</a> · <a href="notebooks/22_lats.ipynb">LATS</a> · <a href="notebooks/10_mental_loop.ipynb">Mental Loop</a> · <a href="notebooks/13_ensemble.ipynb">Ensemble</a></sub>
 
 </td>
 <td width="33%" valign="top">
 
-#### Retrieval (RAG)
+#### [Retrieval (RAG)](docs/architectures/index.md#retrieval-rag)
 Ground every claim — five retrieval shapes.
 <br><br>
-<sub>Agentic RAG · Corrective RAG · Self-RAG · Adaptive RAG · GraphRAG</sub>
+<sub><a href="notebooks/23_agentic_rag.ipynb">Agentic RAG</a> · <a href="notebooks/24_corrective_rag.ipynb">Corrective RAG</a> · <a href="notebooks/25_self_rag.ipynb">Self-RAG</a> · <a href="notebooks/26_adaptive_rag.ipynb">Adaptive RAG</a> · <a href="notebooks/27_graph_rag.ipynb">GraphRAG</a></sub>
 
 </td>
 </tr>
 <tr>
 <td width="33%" valign="top">
 
-#### Memory
+#### [Memory](docs/architectures/index.md#memory)
 Learn across calls — pick the storage shape.
 <br><br>
-<sub>Episodic + Semantic · Graph Memory · MemGPT · Voyager · Agent Workflow Memory</sub>
+<sub><a href="notebooks/08_episodic_semantic_memory.ipynb">Episodic + Semantic</a> · <a href="notebooks/12_graph_memory.ipynb">Graph Memory</a> · <a href="notebooks/31_memgpt.ipynb">MemGPT</a> · <a href="notebooks/29_voyager.ipynb">Voyager</a> · <a href="notebooks/35_agent_workflow_memory.ipynb">Agent Workflow Memory</a></sub>
 
 </td>
 <td width="33%" valign="top">
 
-#### Tools & Actions
+#### [Tools & Actions](docs/architectures/index.md#tools--actions)
 From one search tool to a real Chromium browser.
 <br><br>
-<sub>Tool Use · ReAct · Planning · PEV · SWE-Agent · BrowserAgent</sub>
+<sub><a href="notebooks/02_tool_use.ipynb">Tool Use</a> · <a href="notebooks/03_react.ipynb">ReAct</a> · <a href="notebooks/04_planning.ipynb">Planning</a> · <a href="notebooks/06_pev.ipynb">PEV</a> · <a href="notebooks/33_swe_agent.ipynb">SWE-Agent</a> · <a href="notebooks/34_computer_use.ipynb">BrowserAgent</a></sub>
 
 </td>
 <td width="33%" valign="top">
 
-#### Multi-Agent
+#### [Multi-Agent](docs/architectures/index.md#multi-agent)
 Specialists, debate, multi-perspective research.
 <br><br>
-<sub>Multi-Agent · Blackboard · Debate · STORM · Meta-Controller</sub>
+<sub><a href="notebooks/05_multi_agent.ipynb">Multi-Agent</a> · <a href="notebooks/07_blackboard.ipynb">Blackboard</a> · <a href="notebooks/28_debate.ipynb">Debate</a> · <a href="notebooks/30_storm.ipynb">STORM</a> · <a href="notebooks/11_meta_controller.ipynb">Meta-Controller</a></sub>
 
 </td>
 </tr>
 <tr>
 <td width="33%" valign="top">
 
-#### Safety & Routing
+#### [Safety & Routing](docs/architectures/index.md#safety--routing)
 Categorical actions through deterministic Python gates.
 <br><br>
-<sub>Dry-Run · Reflexive Metacognitive · Computer Use</sub>
+<sub><a href="notebooks/14_dry_run.ipynb">Dry-Run</a> · <a href="notebooks/17_reflexive_metacognitive.ipynb">Reflexive Metacognitive</a> · <a href="notebooks/34_computer_use.ipynb">Computer Use</a></sub>
 
 </td>
 <td width="33%" valign="top">
 
-#### Specialty
+#### [Specialty](docs/architectures/index.md#specialty)
 Patterns with a unique shape.
 <br><br>
-<sub>RLHF Self-Improvement · Cellular Automata</sub>
+<sub><a href="notebooks/15_rlhf_self_improvement.ipynb">RLHF Self-Improvement</a> · <a href="notebooks/16_cellular_automata.ipynb">Cellular Automata</a></sub>
 
 </td>
 <td width="33%" valign="top">
 
-#### Cross-cutting
+#### [Cross-cutting](docs/architectures/index.md#cross-cutting)
 Patterns that appear across families.
 <br><br>
 <sub><a href="docs/tutorials/deterministic-picker.md">Deterministic-picker</a> · <a href="docs/tutorials/memory.md">Memory variants</a></sub>
