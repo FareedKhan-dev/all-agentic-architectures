@@ -7,7 +7,7 @@ build-backend = "hatchling.build"
 # ============================================================================
 [project]
 name = "agentic-architectures"
-version = "0.2.0"
+version = "0.3.0"
 description = "35+ production-grade agentic AI architectures (Reflection, ReAct, Planning, RAG variants, Reflexion, LATS, GraphRAG, Voyager, MemGPT, ...) implemented with LangGraph and runnable against any LLM provider (Nebius, OpenAI, Anthropic, Groq, Ollama, ...)."
 readme = "README.md"
 license = { text = "MIT" }

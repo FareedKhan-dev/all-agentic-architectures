@@ -4,6 +4,47 @@ All notable changes to this project will be documented in this file. From `0.2.0
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/) and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [0.3.0](https://github.com/FareedKhan-dev/all-agentic-architectures/compare/v0.2.0...v0.3.0) (2026-05-28)
+
+
+### Features
+
+* 17 foundational architecture patterns ([c09a801](https://github.com/FareedKhan-dev/all-agentic-architectures/commit/c09a8012854069efe6a7d8f6b4a276be0056ca5d))
+* 18 advanced architecture patterns ([af34630](https://github.com/FareedKhan-dev/all-agentic-architectures/commit/af3463027095ea114aa30775e86d6f6a4e63e9f9))
+* **benchmarks:** 17-task suite + run_benchmark.py + leaderboard ([ad3fd8d](https://github.com/FareedKhan-dev/all-agentic-architectures/commit/ad3fd8d6a74e364dc4a6602e2f92e08da0165e9e))
+* **core:** Architecture ABC + factories + memory/tools/ui scaffolding ([7626a5f](https://github.com/FareedKhan-dev/all-agentic-architectures/commit/7626a5f7bcee31354fe836bbf1bbc095604fd550))
+* **data:** Stardust sample corpus for the RAG-family notebooks ([79e27bf](https://github.com/FareedKhan-dev/all-agentic-architectures/commit/79e27bf8ac2e9c7e1469b3b1d81785f1cb58d978))
+* **scripts:** execute_notebooks.py driver ([bd54cbe](https://github.com/FareedKhan-dev/all-agentic-architectures/commit/bd54cbefb51d6b8cf54ea8be29bfba6b210d1f17))
+* **scripts:** notebook_builder helper for the canonical 11-section template ([5828d91](https://github.com/FareedKhan-dev/all-agentic-architectures/commit/5828d91da5169ac6791031d64a25a30141056124))
+
+
+### Bug Fixes
+
+* **ci:** relax over-strict ruff config and fix the few real lint hits ([890913f](https://github.com/FareedKhan-dev/all-agentic-architectures/commit/890913f0e7371c263496ad6f3924faba22c19f08))
+* **ci:** ruff-format whole tree, remove missing mkdocs custom_dir, give pytest dummy keys ([15e6112](https://github.com/FareedKhan-dev/all-agentic-architectures/commit/15e611237379844910ca41d7441ca426d9c95a23))
+* **readme:** make architecture-family bento clickable end-to-end ([2f80758](https://github.com/FareedKhan-dev/all-agentic-architectures/commit/2f80758f9d1d2871454249d2c4c942bd1e7767a9))
+* **readme:** use relative MD paths so links work on GitHub immediately ([57e948b](https://github.com/FareedKhan-dev/all-agentic-architectures/commit/57e948bab9dadbcdf86e2124197ef1c62a5dc034))
+* **tests:** stub get_embeddings() so unit tests never call a real API ([fad1e23](https://github.com/FareedKhan-dev/all-agentic-architectures/commit/fad1e23a858f9153ae7ec05b686863438790f4d1))
+
+
+### Documentation
+
+* MkDocs Material site with bespoke dark-only aesthetic ([f4bab7a](https://github.com/FareedKhan-dev/all-agentic-architectures/commit/f4bab7aa92d2c69707b47f832d67f52b31d7b7f9))
+* **readme:** modern emoji-free README rewrite ([576957b](https://github.com/FareedKhan-dev/all-agentic-architectures/commit/576957b81080597e341346d05c5b1af4a7a4f189))
+* **readme:** premium hero, badge row, stats block, star-history chart ([f50cae1](https://github.com/FareedKhan-dev/all-agentic-architectures/commit/f50cae196ba4afc452c81e0286e4c48259f5e690))
+* **scripts:** orient visitors who click into scripts/ ([e4b82fb](https://github.com/FareedKhan-dev/all-agentic-architectures/commit/e4b82fb221680d626f5723f7f6eea79d6eb15cc1))
+
+
+### Tests
+
+* 320 tests covering all 35 architectures + notebooks + helpers ([35cfeff](https://github.com/FareedKhan-dev/all-agentic-architectures/commit/35cfeff6b1ac5bde6e132d2cff7d1d76072d7a8b))
+
+
+### Chores
+
+* pre-commit + community docs (CONTRIBUTING, COC, SECURITY, CHANGELOG) ([0c94ba8](https://github.com/FareedKhan-dev/all-agentic-architectures/commit/0c94ba84d32b35b8e4f2b3349b69eb7b83b10eb8))
+* remove pre-rebuild notebooks and obsolete requirements.txt ([67dacf6](https://github.com/FareedKhan-dev/all-agentic-architectures/commit/67dacf689ec89bde2bc3b91d1e0dcda9657a2e88))
+
 ## [0.2.0] — 2026-05-28
 
 ### Features
