@@ -1,0 +1,58 @@
+{
+  "// Project-level VS Code settings (committed; safe defaults for anyone opening the repo)": "",
+
+  "python.defaultInterpreterPath": "${workspaceFolder}/.venv/Scripts/python.exe",
+  "python.envFile": "${workspaceFolder}/.env",
+  "python.testing.pytestEnabled": true,
+  "python.testing.unittestEnabled": false,
+  "python.testing.pytestArgs": ["tests"],
+
+  "jupyter.notebookFileRoot": "${workspaceFolder}",
+  "jupyter.kernels.filter": [
+    { "path": "${workspaceFolder}/.venv/Scripts/python.exe", "type": "pythonEnvironment" }
+  ],
+
+  "[python]": {
+    "editor.defaultFormatter": "charliermarsh.ruff",
+    "editor.formatOnSave": true,
+    "editor.codeActionsOnSave": {
+      "source.fixAll.ruff": "explicit",
+      "source.organizeImports.ruff": "explicit"
+    }
+  },
+
+  "[markdown]": {
+    "editor.wordWrap": "on",
+    "files.trimTrailingWhitespace": false
+  },
+
+  "[yaml]": {
+    "editor.tabSize": 2,
+    "editor.insertSpaces": true
+  },
+
+  "ruff.lint.run": "onType",
+  "ruff.organizeImports": true,
+
+  "files.exclude": {
+    "**/__pycache__":         true,
+    "**/.pytest_cache":       true,
+    "**/.mypy_cache":         true,
+    "**/.ruff_cache":         true,
+    "**/.ipynb_checkpoints":  true,
+    "**/*.egg-info":          true,
+    "**/site":                true
+  },
+
+  "search.exclude": {
+    "**/site":                true,
+    "**/.venv":               true,
+    "**/notebooks/.ipynb_checkpoints": true
+  },
+
+  "files.watcherExclude": {
+    "**/site/**":             true,
+    "**/.venv/**":            true,
+    "**/node_modules/**":     true
+  }
+}

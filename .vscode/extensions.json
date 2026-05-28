@@ -1,0 +1,16 @@
+{
+  "// Recommended extensions for contributors. VS Code prompts to install these on first open.": "",
+  "recommendations": [
+    "ms-python.python",
+    "charliermarsh.ruff",
+    "ms-toolsai.jupyter",
+    "ms-toolsai.jupyter-renderers",
+    "ms-toolsai.jupyter-keymap",
+    "ms-python.mypy-type-checker",
+    "redhat.vscode-yaml",
+    "tamasfe.even-better-toml",
+    "github.vscode-github-actions",
+    "yzhang.markdown-all-in-one"
+  ],
+  "unwantedRecommendations": []
+}

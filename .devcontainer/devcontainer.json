@@ -1,0 +1,72 @@
+{
+  "$schema": "https://raw.githubusercontent.com/devcontainers/spec/main/schemas/devContainer.schema.json",
+  "name": "Agentic Architectures",
+
+  // Use the docker-compose stack so Neo4j / Qdrant / Ollama come up alongside the app.
+  "dockerComposeFile": ["../docker/docker-compose.yml"],
+  "service": "app",
+  "workspaceFolder": "/workspace",
+
+  // Pull the app + the optional services. Comment any you don't need.
+  "runServices": ["app", "neo4j", "qdrant"],
+  "shutdownAction": "stopCompose",
+
+  // After the container builds, install editable + register the kernel + playwright.
+  // (Dockerfile already does these for a standalone build; postCreate covers fresh mounts.)
+  "postCreateCommand": "pip install -e '.[dev,test,docs,nebius,faiss,tavily,networkx]' && python -m ipykernel install --user --name python3 --display-name 'Python 3' && playwright install chromium || true",
+
+  "forwardPorts": [8000, 8888, 7474, 7687, 6333, 11434],
+  "portsAttributes": {
+    "8000":  { "label": "MkDocs",   "onAutoForward": "openBrowser" },
+    "8888":  { "label": "Jupyter",  "onAutoForward": "silent" },
+    "7474":  { "label": "Neo4j UI", "onAutoForward": "silent" },
+    "7687":  { "label": "Neo4j Bolt" },
+    "6333":  { "label": "Qdrant",   "onAutoForward": "silent" },
+    "11434": { "label": "Ollama",   "onAutoForward": "silent" }
+  },
+
+  "remoteUser": "root",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-python.python",
+        "charliermarsh.ruff",
+        "ms-toolsai.jupyter",
+        "ms-toolsai.jupyter-renderers",
+        "ms-toolsai.jupyter-keymap",
+        "ms-python.mypy-type-checker",
+        "redhat.vscode-yaml",
+        "tamasfe.even-better-toml",
+        "github.vscode-github-actions",
+        "yzhang.markdown-all-in-one"
+      ],
+      "settings": {
+        "python.defaultInterpreterPath": "/usr/local/bin/python",
+        "jupyter.kernels.filter": [
+          { "path": "/usr/local/bin/python", "type": "pythonEnvironment" }
+        ],
+        "[python]": {
+          "editor.defaultFormatter": "charliermarsh.ruff",
+          "editor.formatOnSave": true,
+          "editor.codeActionsOnSave": {
+            "source.fixAll.ruff":     "explicit",
+            "source.organizeImports.ruff": "explicit"
+          }
+        },
+        "ruff.lint.run": "onType",
+        "files.exclude": {
+          "**/.pytest_cache":  true,
+          "**/.mypy_cache":    true,
+          "**/.ruff_cache":    true,
+          "**/__pycache__":    true,
+          "**/.ipynb_checkpoints": true
+        }
+      }
+    }
+  },
+
+  "features": {
+    "ghcr.io/devcontainers/features/git:1": {}
+  }
+}

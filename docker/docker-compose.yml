@@ -1,0 +1,115 @@
+# Docker Compose for agentic-architectures.
+#
+# Brings up:
+#   - app     : the Python dev container (mounts the host repo at /workspace)
+#   - neo4j   : optional graph backend (used by nb 08, 12, 27 when GRAPH_BACKEND=neo4j)
+#   - qdrant  : optional vector backend (used when faiss isn't enough)
+#   - ollama  : optional fully-local LLM serving (set LLM_PROVIDER=ollama)
+#
+# Usage:
+#   cp .env.example .env       # then fill in NEBIUS_API_KEY, TAVILY_API_KEY, etc.
+#   docker compose -f docker/docker-compose.yml up -d
+#   docker compose -f docker/docker-compose.yml exec app bash
+#
+# Inside the app shell:
+#   pytest                     # unit tests
+#   python -m mkdocs serve --dev-addr 0.0.0.0:8000
+#   python -m papermill notebooks/18_reflexion.ipynb /tmp/out.ipynb --kernel python3
+#
+# Only `app` is required. Bring up just it with:
+#   docker compose -f docker/docker-compose.yml up -d app
+#
+# Stop everything:
+#   docker compose -f docker/docker-compose.yml down
+
+services:
+  app:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    image: agentic-arch:dev
+    container_name: agentic_app
+    working_dir: /workspace
+    volumes:
+      - ..:/workspace:cached      # live source mount — edits on host reflect in container
+      - pip_cache:/root/.cache/pip
+      # NOTE: do NOT mount a volume over /root/.cache/ms-playwright — it would
+      # mask the Chromium binaries the Dockerfile installed. If you need to
+      # persist Chromium across image rebuilds, rebuild the image instead.
+    ports:
+      - "8000:8000"               # mkdocs serve
+      - "8888:8888"               # jupyter (if you run it)
+    env_file:
+      - path: ../.env             # secrets pass through from host .env
+        required: false           # OK if .env doesn't exist yet (fresh clone)
+    environment:
+      - PYTHONIOENCODING=utf-8
+      # Point at the in-network services
+      - NEO4J_URI=bolt://neo4j:7687
+      - NEO4J_USERNAME=neo4j
+      - QDRANT_HOST=qdrant
+      - QDRANT_PORT=6333
+      - OLLAMA_BASE_URL=http://ollama:11434
+    depends_on:
+      neo4j:
+        condition: service_healthy
+      qdrant:
+        condition: service_started
+      ollama:
+        condition: service_started
+    networks: [aa_net]
+    tty: true
+    stdin_open: true
+    command: ["bash"]
+
+  neo4j:
+    image: neo4j:5-community
+    container_name: agentic_neo4j
+    ports:
+      - "7474:7474"               # HTTP UI → http://localhost:7474
+      - "7687:7687"               # Bolt protocol
+    environment:
+      # Reads NEO4J_PASSWORD from .env; falls back to a dev default. Change it in prod.
+      - NEO4J_AUTH=neo4j/${NEO4J_PASSWORD:-changeme}
+    volumes:
+      - neo4j_data:/data
+      - neo4j_logs:/logs
+    healthcheck:
+      test: ["CMD-SHELL", "wget -O- -q http://localhost:7474 || exit 1"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 30s
+    networks: [aa_net]
+
+  qdrant:
+    image: qdrant/qdrant:latest
+    container_name: agentic_qdrant
+    ports:
+      - "6333:6333"               # HTTP API → http://localhost:6333/dashboard
+      - "6334:6334"               # gRPC
+    volumes:
+      - qdrant_data:/qdrant/storage
+    networks: [aa_net]
+
+  ollama:
+    image: ollama/ollama:latest
+    container_name: agentic_ollama
+    ports:
+      - "11434:11434"             # Ollama HTTP API
+    volumes:
+      - ollama_data:/root/.ollama
+    networks: [aa_net]
+    # Optional: pre-pull a model on first start
+    # entrypoint: ["/bin/sh", "-c", "ollama serve & sleep 5 && ollama pull llama3.3:70b && wait"]
+
+volumes:
+  neo4j_data:
+  neo4j_logs:
+  qdrant_data:
+  ollama_data:
+  pip_cache:
+
+networks:
+  aa_net:
+    driver: bridge
