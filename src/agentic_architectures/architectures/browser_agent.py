@@ -33,7 +33,6 @@ from pydantic import BaseModel, Field
 
 from agentic_architectures.architectures.base import Architecture, ArchitectureResult
 
-
 DEFAULT_BLOCKED_DOMAINS: list[str] = [
     "evil-phishing.com",
     "malware-site.test",
@@ -120,16 +119,22 @@ class BrowserAgent(Architecture):
     def close(self) -> None:
         """Shut down the Playwright browser. Always call after `run()` is done."""
         if self._page is not None:
-            try: self._page.close()
-            except Exception: pass
+            try:
+                self._page.close()
+            except Exception:
+                pass
             self._page = None
         if self._browser is not None:
-            try: self._browser.close()
-            except Exception: pass
+            try:
+                self._browser.close()
+            except Exception:
+                pass
             self._browser = None
         if self._pw is not None:
-            try: self._pw.stop()
-            except Exception: pass
+            try:
+                self._pw.stop()
+            except Exception:
+                pass
             self._pw = None
 
     def __enter__(self) -> "BrowserAgent":

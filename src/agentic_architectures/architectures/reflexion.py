@@ -33,7 +33,8 @@ from __future__ import annotations
 
 import operator
 import re
-from typing import TYPE_CHECKING, Annotated, Any, Callable, TypedDict
+from collections.abc import Callable
+from typing import TYPE_CHECKING, Annotated, Any, TypedDict
 
 from langgraph.graph import END, START, StateGraph
 from pydantic import BaseModel, Field

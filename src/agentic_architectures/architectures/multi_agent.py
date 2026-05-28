@@ -33,7 +33,6 @@ from pydantic import BaseModel, Field, create_model
 
 from agentic_architectures.architectures.base import Architecture, ArchitectureResult
 
-
 # ---------------------------------------------------------------------------
 # Default specialist roster — easily overridden via constructor
 # ---------------------------------------------------------------------------

@@ -10,12 +10,12 @@ Provides:
 from __future__ import annotations
 
 import os
-from typing import Any, Callable
+from collections.abc import Callable
+from typing import Any
 
 import pytest
 from langchain_core.language_models.fake_chat_models import FakeMessagesListChatModel
 from langchain_core.messages import AIMessage
-
 
 RUN_INTEGRATION = os.environ.get("RUN_INTEGRATION") == "1"
 

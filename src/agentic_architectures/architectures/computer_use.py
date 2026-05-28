@@ -29,7 +29,6 @@ from pydantic import BaseModel, Field
 
 from agentic_architectures.architectures.base import Architecture, ArchitectureResult
 
-
 DEFAULT_SENSITIVE_PATTERNS: list[str] = [
     "password",
     "passwd",

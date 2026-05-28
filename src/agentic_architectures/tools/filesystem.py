@@ -10,7 +10,6 @@ from pathlib import Path
 
 from langchain_core.tools import tool
 
-
 _ROOT: Path = Path.cwd().resolve()
 
 

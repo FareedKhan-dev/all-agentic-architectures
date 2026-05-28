@@ -13,7 +13,6 @@ import pytest
 import agentic_architectures.architectures as A
 from agentic_architectures.architectures.base import Architecture
 
-
 # Architectures that need extra constructor args beyond `llm=` — provide minimal defaults.
 EXTRA_KWARGS: dict[str, dict[str, object]] = {
     "AgenticRAG":         {"documents": ["fact one", "fact two"]},

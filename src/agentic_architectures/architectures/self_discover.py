@@ -33,7 +33,6 @@ from pydantic import BaseModel, Field
 
 from agentic_architectures.architectures.base import Architecture, ArchitectureResult
 
-
 # ---------------------------------------------------------------------------
 # Module library — curated subset of the paper's 39 atomic reasoning modules
 # ---------------------------------------------------------------------------

@@ -22,7 +22,7 @@ from __future__ import annotations
 from typing import Any, Literal, TypedDict
 
 from langgraph.graph import END, START, StateGraph
-from pydantic import BaseModel, Field, create_model
+from pydantic import Field, create_model
 
 from agentic_architectures.architectures.base import Architecture, ArchitectureResult
 

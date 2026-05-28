@@ -25,7 +25,6 @@ from pydantic import BaseModel, Field
 
 from agentic_architectures.architectures.base import Architecture, ArchitectureResult
 
-
 DEFAULT_SELF_MODEL = (
     "You are a general-purpose AI assistant. Your capabilities:\n"
     "  - STRONG: general knowledge questions, coding, writing, summarisation, math.\n"

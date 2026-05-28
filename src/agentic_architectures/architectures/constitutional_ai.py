@@ -24,7 +24,6 @@ from pydantic import BaseModel, Field
 
 from agentic_architectures.architectures.base import Architecture, ArchitectureResult
 
-
 DEFAULT_CONSTITUTION: list[str] = [
     "Don't include personal opinions or political stances unless explicitly asked.",
     "Cite or hedge appropriately when making factual claims; don't state guesses as facts.",

@@ -12,9 +12,9 @@ import pytest
 from agentic_architectures.architectures.constitutional_ai import DEFAULT_CONSTITUTION
 from agentic_architectures.architectures.lats import LATS
 from agentic_architectures.architectures.reflexion import (
-    default_haiku_checker,
     _count_syllables_word,
     _line_syllables,
+    default_haiku_checker,
 )
 from agentic_architectures.architectures.rlhf import RLHFSelfImprovement
 from agentic_architectures.architectures.self_discover import MODULE_LIBRARY

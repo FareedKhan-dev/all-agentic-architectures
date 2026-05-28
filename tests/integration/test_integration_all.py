@@ -22,7 +22,6 @@ import pytest
 
 from tests.conftest import RUN_INTEGRATION
 
-
 pytestmark = [
     pytest.mark.integration,
     pytest.mark.slow,

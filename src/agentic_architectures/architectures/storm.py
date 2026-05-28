@@ -18,7 +18,8 @@ specialists) + [Planning (nb 04)](./04_planning.ipynb) (outline-as-plan).
 from __future__ import annotations
 
 import operator
-from typing import Annotated, Any, Callable, TypedDict
+from collections.abc import Callable
+from typing import Annotated, Any, TypedDict
 
 from langgraph.graph import END, START, StateGraph
 from pydantic import BaseModel, Field

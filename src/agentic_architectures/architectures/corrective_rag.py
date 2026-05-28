@@ -20,7 +20,8 @@ https://arxiv.org/abs/2401.15884
 from __future__ import annotations
 
 import operator
-from typing import Annotated, Any, Callable, Literal, TypedDict
+from collections.abc import Callable
+from typing import Annotated, Any, Literal, TypedDict
 
 from langgraph.graph import END, START, StateGraph
 from pydantic import BaseModel, Field

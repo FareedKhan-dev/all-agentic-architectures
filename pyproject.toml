@@ -151,7 +151,7 @@ include = [
 #  Ruff — lint + format
 # ============================================================================
 [tool.ruff]
-line-length    = 100
+line-length    = 120
 target-version = "py310"
 extend-exclude = ["notebooks", "docs", ".venv"]
 
@@ -162,18 +162,15 @@ select = [
   "B",                  # flake8-bugbear
   "UP",                 # pyupgrade
   "SIM",                # flake8-simplify
-  "RUF",                # ruff-specific
-  "TCH",                # type-checking
-  "PL",                 # pylint subset
 ]
 ignore = [
-  "PLR0913",  # too many arguments — agentic graphs naturally have many
-  "PLR2004",  # magic value used in comparison
+  "E501",     # line-too-long — long assert messages and docstrings are fine
+  "SIM105",   # contextlib.suppress over try/except/pass — try/except is clearer here
+  "UP037",    # quoted annotations — sometimes needed for forward refs
 ]
 
 [tool.ruff.lint.per-file-ignores]
-"tests/**" = ["PLR2004", "S101"]
-"src/agentic_architectures/architectures/**" = ["PLR0915"]  # node-rich graphs
+"tests/**" = ["E501", "F401"]
 
 [tool.ruff.format]
 quote-style    = "double"

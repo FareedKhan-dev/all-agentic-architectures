@@ -158,7 +158,10 @@ class Debate(Architecture):
         if not rounds:
             return {"final_answer": "", "final_tally": {}}
         last = rounds[-1]
-        norm = lambda s: s.strip().lower().rstrip(".")
+
+        def norm(s: str) -> str:
+            return s.strip().lower().rstrip(".")
+
         norm_to_raw: dict[str, str] = {}
         for r in last:
             n = norm(r["answer"])

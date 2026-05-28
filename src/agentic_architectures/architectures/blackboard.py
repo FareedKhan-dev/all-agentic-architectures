@@ -30,7 +30,6 @@ from pydantic import BaseModel, Field
 
 from agentic_architectures.architectures.base import Architecture, ArchitectureResult
 
-
 # ---------------------------------------------------------------------------
 # Default knowledge-source roster — easily overridden
 # ---------------------------------------------------------------------------
