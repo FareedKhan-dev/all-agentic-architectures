@@ -55,7 +55,7 @@ jobs:
           python scripts/execute_notebooks.py --only "${{ inputs.only_notebook }}"
 
       - name: Create pull request with refreshed notebooks
-        uses: peter-evans/create-pull-request@v7
+        uses: peter-evans/create-pull-request@v8
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           commit-message: "chore(notebooks): refresh executed outputs"
