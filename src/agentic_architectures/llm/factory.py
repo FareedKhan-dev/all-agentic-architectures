@@ -31,6 +31,7 @@ _PROVIDER_CAPABILITIES: dict[str, dict[str, bool]] = {
     "fireworks": {"tools": True, "structured_output": True},
     "mistralai": {"tools": True, "structured_output": True},
     "google": {"tools": True, "structured_output": True},
+    "minimax": {"tools": True, "structured_output": True},
     "ollama": {"tools": True, "structured_output": False},
     "huggingface": {"tools": False, "structured_output": False},
 }
@@ -72,6 +73,19 @@ def get_llm(
             model=model,
             temperature=temperature,
             api_key=api_key,
+            **kwargs,
+        )
+
+    if provider == "minimax":
+        try:
+            from langchain_openai import ChatOpenAI
+        except ImportError as e:
+            raise ImportError("MiniMax provider requires `pip install agentic-architectures[openai]`") from e
+        return ChatOpenAI(
+            model=model,
+            temperature=temperature,
+            api_key=api_key,
+            base_url=settings.minimax_base_url,
             **kwargs,
         )
 

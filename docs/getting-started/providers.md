@@ -1,6 +1,6 @@
 # Switching LLM providers
 
-Every architecture in this library is provider-agnostic. The same `Reflection` class works against Nebius Llama, OpenAI GPT-4o, Anthropic Claude, Groq, Ollama, Together, Fireworks, Mistral, or Google Gemini — you change one config setting.
+Every architecture in this library is provider-agnostic. The same `Reflection` class works against Nebius Llama, OpenAI GPT-4o, Anthropic Claude, Groq, Ollama, Together, Fireworks, Mistral, Google Gemini, or MiniMax — you change one config setting.
 
 ## The `get_llm()` factory
 
@@ -13,6 +13,7 @@ llm = get_llm()
 # Override per-call
 llm = get_llm(provider="openai", model="gpt-4o-mini", temperature=0.4)
 llm = get_llm(provider="anthropic", model="claude-haiku-4-5-20251001")
+llm = get_llm(provider="minimax", model="MiniMax-M3")
 llm = get_llm(provider="ollama", model="llama3.3:70b")
 ```
 
@@ -36,6 +37,7 @@ arch = Reflection(llm=llm)
 | **Fireworks** | `[fireworks]` | `FIREWORKS_API_KEY` | Function-calling first-class. |
 | **Mistral** | `[mistral]` | `MISTRAL_API_KEY` | EU-hosted option. |
 | **Google** | `[google]` | `GOOGLE_API_KEY` | Gemini-2.x via Generative AI API. |
+| **MiniMax** | `[openai]` | `MINIMAX_API_KEY` | OpenAI-compatible API with MiniMax-M3 and a 1M-token context window. |
 
 ## Environment configuration
 
@@ -53,7 +55,7 @@ LANGSMITH_API_KEY=ls-...           # optional, for tracing
 LANGSMITH_PROJECT=all-agentic-architectures
 ```
 
-To switch globally, change `LLM_PROVIDER` + the corresponding key. No code changes needed.
+To switch globally, change `LLM_PROVIDER` + the corresponding key. No code changes needed. For MiniMax's China endpoint, also set `MINIMAX_BASE_URL=https://api.minimaxi.com/v1`.
 
 ## When you'd override per-architecture
 

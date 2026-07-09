@@ -15,7 +15,7 @@ requires-python = ">=3.10"
 keywords = [
   "agents", "agentic", "llm", "langchain", "langgraph", "langsmith",
   "rag", "reflexion", "react", "tree-of-thoughts", "lats", "graphrag",
-  "multi-agent", "ai", "openai", "anthropic", "nebius",
+  "multi-agent", "ai", "openai", "anthropic", "nebius", "minimax",
 ]
 authors = [{ name = "Fareed Khan", email = "fareedhassankhan12@gmail.com" }]
 classifiers = [
