@@ -36,6 +36,7 @@ Provider = Literal[
     "fireworks",
     "mistralai",
     "google",
+    "minimax",
     "huggingface",
 ]
 
@@ -60,6 +61,8 @@ class Settings(BaseSettings):
     fireworks_api_key: SecretStr | None = None
     mistral_api_key: SecretStr | None = None
     google_api_key: SecretStr | None = None
+    minimax_api_key: SecretStr | None = None
+    minimax_base_url: str = "https://api.minimax.io/v1"
     huggingfacehub_api_token: SecretStr | None = None
     ollama_base_url: str = "http://localhost:11434"
 
@@ -110,6 +113,7 @@ class Settings(BaseSettings):
             "fireworks": self.fireworks_api_key,
             "mistralai": self.mistral_api_key,
             "google": self.google_api_key,
+            "minimax": self.minimax_api_key,
             "huggingface": self.huggingfacehub_api_token,
             "ollama": None,  # local, no key
         }.get(provider)

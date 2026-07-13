@@ -1,6 +1,6 @@
 # Switching LLM providers
 
-Every architecture in this library is provider-agnostic. The same `Reflection` class works against Nebius Llama, OpenAI GPT-4o, Anthropic Claude, Groq, Ollama, Together, Fireworks, Mistral, or Google Gemini — you change one config setting.
+Every architecture in this library is provider-agnostic. The same `Reflection` class works against Nebius Llama, OpenAI GPT-4o, Anthropic Claude, Groq, Ollama, Together, Fireworks, Mistral, Google Gemini, or MiniMax — you change one config setting.
 
 ## The `get_llm()` factory
 
@@ -13,6 +13,8 @@ llm = get_llm()
 # Override per-call
 llm = get_llm(provider="openai", model="gpt-4o-mini", temperature=0.4)
 llm = get_llm(provider="anthropic", model="claude-haiku-4-5-20251001")
+llm = get_llm(provider="minimax", model="MiniMax-M3")
+llm = get_llm(provider="minimax", model="MiniMax-M2.7")
 llm = get_llm(provider="ollama", model="llama3.3:70b")
 ```
 
@@ -36,6 +38,7 @@ arch = Reflection(llm=llm)
 | **Fireworks** | `[fireworks]` | `FIREWORKS_API_KEY` | Function-calling first-class. |
 | **Mistral** | `[mistral]` | `MISTRAL_API_KEY` | EU-hosted option. |
 | **Google** | `[google]` | `GOOGLE_API_KEY` | Gemini-2.x via Generative AI API. |
+| **MiniMax** | `[minimax]` | `MINIMAX_API_KEY` | MiniMax-M3 and MiniMax-M2.7 through OpenAI- or Anthropic-compatible APIs. |
 
 ## Environment configuration
 
@@ -54,6 +57,37 @@ LANGSMITH_PROJECT=all-agentic-architectures
 ```
 
 To switch globally, change `LLM_PROVIDER` + the corresponding key. No code changes needed.
+
+### MiniMax endpoints and models
+
+`MINIMAX_BASE_URL` selects both the region and protocol. The factory uses the
+Anthropic client when the URL ends in `/anthropic`; all other values use the
+OpenAI client.
+
+| Region | Protocol | `MINIMAX_BASE_URL` |
+|---|---|---|
+| Global | OpenAI | `https://api.minimax.io/v1` |
+| Global | Anthropic | `https://api.minimax.io/anthropic` |
+| China | OpenAI | `https://api.minimaxi.com/v1` |
+| China | Anthropic | `https://api.minimaxi.com/anthropic` |
+
+Keep the Anthropic base URL ending at `/anthropic`; the client appends
+`/v1/messages` when it sends a request.
+
+| Model | Total context window | Input modalities | Thinking |
+|---|---:|---|---|
+| `MiniMax-M3` | 1,000,000 tokens | Text, image, video | `adaptive` or `disabled`; the protocol controls the default |
+| `MiniMax-M2.7` | 204,800 tokens | Text | Always on |
+
+Pay-as-you-go prices below are in USD per million tokens.
+
+| Model and service tier | Input length | Input | Output | Cache read | Cache write |
+|---|---:|---:|---:|---:|---:|
+| `MiniMax-M3` standard | <= 512,000 | $0.30 | $1.20 | $0.06 | N/A |
+| `MiniMax-M3` standard | > 512,000 | $0.60 | $2.40 | $0.12 | N/A |
+| `MiniMax-M3` priority | <= 512,000 | $0.45 | $1.80 | $0.09 | N/A |
+| `MiniMax-M3` priority | > 512,000 | $0.90 | $3.60 | $0.18 | N/A |
+| `MiniMax-M2.7` standard | Any supported length | $0.30 | $1.20 | $0.06 | $0.375 |
 
 ## When you'd override per-architecture
 
