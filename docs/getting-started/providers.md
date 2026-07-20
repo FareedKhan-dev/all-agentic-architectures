@@ -30,6 +30,7 @@ arch = Reflection(llm=llm)
 | **Nebius** (default) | `[nebius]` | `NEBIUS_API_KEY` | Llama-3.3-70B + Qwen3-Thinking. Cheapest for the included demos. |
 | **OpenAI** | `[openai]` | `OPENAI_API_KEY` | All architectures work. Highest quality for reasoning architectures. |
 | **Anthropic** | `[anthropic]` | `ANTHROPIC_API_KEY` | Strong on long context. Required for true Computer-Use (nb 34) production. |
+| **DeepSeek** | `[deepseek]` | `DEEPSEEK_API_KEY` | OpenAI-compatible API. Strong reasoning (`deepseek-chat`, `deepseek-reasoner`). Competitive pricing. |
 | **Groq** | `[groq]` | `GROQ_API_KEY` | Fast inference; good for high-volume Self-Consistency (nb 21). |
 | **Ollama** | `[ollama]` | — | Fully local; no API key. Tool calling depends on model — Llama-3.3 instruct works. |
 | **Together** | `[together]` | `TOGETHER_API_KEY` | Wide model catalogue. |

@@ -98,6 +98,6 @@ Patterns with a unique shape — keep these in mind for when the standard famili
 
 ### Cross-cutting
 
-- **The [deterministic-picker pattern](../tutorials/deterministic-picker.md)** appears in 13 of 35 architectures — the universal escape from the LLM-as-Scorer flat-band pathology.
+- **The [deterministic-picker pattern](../tutorials/deterministic-picker.md)** appears in 13 of 36 architectures — the universal escape from the LLM-as-Scorer flat-band pathology.
 - **The [memory tutorial](../tutorials/memory.md)** compares all 7 memory variants side by side.
 - **[Adding your own architecture](../tutorials/adding-your-own.md)** follows the 5-step recipe.

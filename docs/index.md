@@ -80,7 +80,7 @@ print(result.output)
 print("score:", result.metadata["final_score"], "/ 10")
 ```
 
-Same `.run(task)` interface across all 35 architectures. Same `ArchitectureResult` shape. Swap the class, swap the pattern — your downstream code doesn't change.
+Same `.run(task)` interface across all 36 architectures. Same `ArchitectureResult` shape. Swap the class, swap the pattern — your downstream code doesn't change.
 
 <div class="aa-cta-card" markdown>
 ## Start building.

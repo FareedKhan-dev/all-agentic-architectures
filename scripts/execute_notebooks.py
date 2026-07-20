@@ -1,7 +1,7 @@
 """Re-execute notebooks via papermill, then tailor §9 commentary.
 
 Usage:
-    python scripts/execute_notebooks.py                    # all 35
+    python scripts/execute_notebooks.py                    # all 36
     python scripts/execute_notebooks.py --only 18,19,20    # specific ids
     python scripts/execute_notebooks.py --skip-build       # don't re-run build_NN_*.py
 

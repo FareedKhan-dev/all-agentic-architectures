@@ -1,6 +1,6 @@
 """Registry sweep — every architecture in the public API must import + build cleanly.
 
-This is a single test that touches all 35 architectures via the package's
+This is a single test that touches all 36 architectures via the package's
 public `__all__`. If any architecture's import is broken, this fails fast.
 """
 
@@ -42,9 +42,9 @@ def _all_architecture_classes() -> list[type[Architecture]]:
 CLASSES = _all_architecture_classes()
 
 
-def test_at_least_thirty_five_architectures() -> None:
-    """Phase 2 (17) + Phase 3 (18) = 35 architectures expected."""
-    assert len(CLASSES) >= 35, f"Expected ≥35 architectures, got {len(CLASSES)}: {[c.__name__ for c in CLASSES]}"
+def test_at_least_thirty_six_architectures() -> None:
+    """Phase 2 (17) + Phase 3 (18) + Phase 4 = 36 architectures expected."""
+    assert len(CLASSES) >= 36, f"Expected ≥36 architectures, got {len(CLASSES)}: {[c.__name__ for c in CLASSES]}"
 
 
 @pytest.mark.parametrize("cls", CLASSES, ids=[c.__name__ for c in CLASSES])
