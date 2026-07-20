@@ -1,6 +1,6 @@
 """Static integrity checks for every notebook in notebooks/.
 
-We do NOT execute the notebooks here — that takes ~30 minutes for all 35.
+We do NOT execute the notebooks here — that takes ~30 minutes for all 36.
 Instead we verify each .ipynb meets the standards from the handoff §5:
   - Has been executed (all code cells have non-None execution_count).
   - No cell contains an error output.
@@ -27,9 +27,9 @@ def _read(p: Path) -> nbformat.NotebookNode:
     return nbformat.read(p, as_version=4)
 
 
-def test_notebooks_directory_has_at_least_thirty_five() -> None:
-    """Phase 2 (17) + Phase 3 (18) = 35 notebooks expected."""
-    assert len(ALL_NB_PATHS) >= 35, f"Expected ≥35 notebooks, got {len(ALL_NB_PATHS)}: {[p.name for p in ALL_NB_PATHS]}"
+def test_notebooks_directory_has_at_least_thirty_six() -> None:
+    """Phase 2 (17) + Phase 3 (19) = 36 notebooks expected."""
+    assert len(ALL_NB_PATHS) >= 36, f"Expected ≥36 notebooks, got {len(ALL_NB_PATHS)}: {[p.name for p in ALL_NB_PATHS]}"
 
 
 @pytest.mark.parametrize("nb_path", ALL_NB_PATHS, ids=[p.stem for p in ALL_NB_PATHS])

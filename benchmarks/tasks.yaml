@@ -1,6 +1,6 @@
 # Comprehensive benchmark task suite.
 #
-# Goal: every one of the 35 architectures appears in at least one task.
+# Goal: every one of the 36 architectures appears in at least one task.
 # Tasks group by *capability* — many architectures share a task; some have a
 # dedicated task because their pattern is unique (CellularAutomata, SWEAgent,
 # BrowserAgent web navigation).
@@ -127,6 +127,7 @@ tasks:
       - RLHFSelfImprovement
       - MultiAgent
       - Blackboard
+      - MixtureOfAgents
 
   # ---------- Stateful / memory ----------
   - id: stateful_recall
@@ -153,6 +154,7 @@ tasks:
     expected_excludes: []
     architectures:
       - STORM
+      - MixtureOfAgents
 
   # ---------- Safety / blocking ----------
   - id: safety_block_destructive
