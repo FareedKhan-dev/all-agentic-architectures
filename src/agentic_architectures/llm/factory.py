@@ -31,6 +31,7 @@ _PROVIDER_CAPABILITIES: dict[str, dict[str, bool]] = {
     "fireworks": {"tools": True, "structured_output": True},
     "mistralai": {"tools": True, "structured_output": True},
     "google": {"tools": True, "structured_output": True},
+    "minimax": {"tools": True, "structured_output": True},
     "ollama": {"tools": True, "structured_output": False},
     "huggingface": {"tools": False, "structured_output": False},
 }
@@ -72,6 +73,35 @@ def get_llm(
             model=model,
             temperature=temperature,
             api_key=api_key,
+            **kwargs,
+        )
+
+    if provider == "minimax":
+        if key is None:
+            raise ValueError("MINIMAX_API_KEY is not configured")
+        base_url = settings.minimax_base_url.rstrip("/")
+        if base_url.endswith("/anthropic"):
+            try:
+                from langchain_anthropic import ChatAnthropic
+            except ImportError as e:
+                raise ImportError("MiniMax provider requires `pip install agentic-architectures[minimax]`") from e
+            return ChatAnthropic(
+                model_name=model,
+                temperature=temperature,
+                api_key=api_key,
+                base_url=base_url,
+                **kwargs,
+            )
+
+        try:
+            from langchain_openai import ChatOpenAI
+        except ImportError as e:
+            raise ImportError("MiniMax provider requires `pip install agentic-architectures[minimax]`") from e
+        return ChatOpenAI(
+            model=model,
+            temperature=temperature,
+            api_key=api_key,
+            base_url=base_url,
             **kwargs,
         )
 

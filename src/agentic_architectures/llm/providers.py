@@ -90,4 +90,15 @@ PROVIDERS: dict[str, ProviderInfo] = {
         docs_url="https://ai.google.dev/gemini-api/docs",
         recommended_model="gemini-2.0-flash",
     ),
+    "minimax": ProviderInfo(
+        id="minimax",
+        name="MiniMax",
+        signup_url="https://platform.minimax.io",
+        docs_url="https://platform.minimax.io/docs/api-reference/api-overview",
+        recommended_model="MiniMax-M3",
+        notes=(
+            "MiniMax-M3 (1,000,000-token context) and MiniMax-M2.7 "
+            "(204,800-token context) through OpenAI- or Anthropic-compatible APIs."
+        ),
+    ),
 }

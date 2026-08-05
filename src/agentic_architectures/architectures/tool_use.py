@@ -72,7 +72,7 @@ class ToolUse(Architecture):
             raise RuntimeError(
                 "Tool Use requires a provider with tool-calling support. "
                 "Switch LLM_PROVIDER to one of: nebius, openai, anthropic, groq, "
-                "together, fireworks, mistralai, google, ollama."
+                "together, fireworks, mistralai, google, minimax, ollama."
             )
 
         if tools is None:

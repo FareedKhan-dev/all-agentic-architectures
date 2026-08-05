@@ -40,9 +40,9 @@ leaderboard that ranks every architecture against every relevant task.
 <table>
 <tr>
 <td align="center" width="140"><h2><kbd>&nbsp; 35 &nbsp;</kbd></h2><sub>ARCHITECTURES</sub></td>
-<td align="center" width="140"><h2><kbd>&nbsp; 283 &nbsp;</kbd></h2><sub>PASSING TESTS</sub></td>
+<td align="center" width="140"><h2><kbd>&nbsp; 289 &nbsp;</kbd></h2><sub>PASSING TESTS</sub></td>
 <td align="center" width="140"><h2><kbd>&nbsp; 17 &nbsp;</kbd></h2><sub>BENCHMARK TASKS</sub></td>
-<td align="center" width="140"><h2><kbd>&nbsp; 9 &nbsp;</kbd></h2><sub>LLM PROVIDERS</sub></td>
+<td align="center" width="140"><h2><kbd>&nbsp; 10 &nbsp;</kbd></h2><sub>LLM PROVIDERS</sub></td>
 <td align="center" width="140"><h2><kbd>&nbsp; 0 &nbsp;</kbd></h2><sub>MOCKED RUNS</sub></td>
 </tr>
 </table>
@@ -55,7 +55,7 @@ leaderboard that ranks every architecture against every relevant task.
 
 ## Overview
 
-A single Python library that packages every major agentic AI pattern from the literature as a runnable `Architecture` class with a uniform contract. Each pattern ships with a fully executed Jupyter notebook whose theory is written *against* the captured run — not synthetic examples. The library is multi-provider (Nebius, OpenAI, Anthropic, Groq, Ollama, Together, Fireworks, Mistral, Google) and built on top of LangGraph state machines.
+A single Python library that packages every major agentic AI pattern from the literature as a runnable `Architecture` class with a uniform contract. Each pattern ships with a fully executed Jupyter notebook whose theory is written *against* the captured run — not synthetic examples. The library is multi-provider (Nebius, OpenAI, Anthropic, Groq, Ollama, Together, Fireworks, Mistral, Google, MiniMax) and built on top of LangGraph state machines.
 
 The central technical discipline of the repository is the **deterministic-picker pattern** — every LLM-as-Scorer surface has the LLM commit to categorical features (booleans, enums) and lets Python compose the deciding signal. This is the universal escape from the LLM-as-Scorer flat-band pathology, applied in 13 of 35 architectures; 9 more are architecturally immune by design.
 
@@ -93,10 +93,10 @@ python -m venv .venv
 .venv\Scripts\activate              # Windows
 source .venv/bin/activate           # macOS / Linux
 
-pip install -e ".[dev,test,docs,nebius,faiss,tavily,networkx]"
+pip install -e ".[dev,test,docs,nebius,minimax,faiss,tavily,networkx]"
 cp .env.example .env                # then fill in NEBIUS_API_KEY etc.
 
-pytest -q                           # 283 tests pass in ~30s
+pytest -q                           # 289 tests pass in ~30s
 ```
 
 </details>
@@ -296,6 +296,7 @@ Patterns that appear across families.
 <tr><td>Fireworks</td><td><code>[fireworks]</code></td><td>Function-calling first-class</td></tr>
 <tr><td>Mistral</td><td><code>[mistral]</code></td><td>EU-hosted option</td></tr>
 <tr><td>Google</td><td><code>[google]</code></td><td>Gemini 2.x via Generative AI API</td></tr>
+<tr><td>MiniMax</td><td><code>[minimax]</code></td><td>MiniMax-M3 and MiniMax-M2.7 via OpenAI- or Anthropic-compatible APIs</td></tr>
 </table>
 
 Switch via `LLM_PROVIDER` + the corresponding key in `.env`. No code changes.
