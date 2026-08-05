@@ -88,7 +88,7 @@ def get_llm(
             return ChatAnthropic(
                 model_name=model,
                 temperature=temperature,
-                api_key=key,
+                api_key=api_key,
                 base_url=base_url,
                 **kwargs,
             )
@@ -100,7 +100,7 @@ def get_llm(
         return ChatOpenAI(
             model=model,
             temperature=temperature,
-            api_key=key,
+            api_key=api_key,
             base_url=base_url,
             **kwargs,
         )

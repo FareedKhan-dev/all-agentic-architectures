@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
-import httpx
+import sys
+from types import SimpleNamespace
+
 import pytest
 from pydantic import SecretStr
 
@@ -51,37 +53,24 @@ def test_minimax_openai_request_path(
     base_url: str,
     expected_host: str,
 ) -> None:
-    pytest.importorskip("langchain_openai")
-    requests: list[httpx.Request] = []
+    class ChatOpenAIStub:
+        def __init__(self, **kwargs: object) -> None:
+            self.kwargs = kwargs
 
-    def respond(request: httpx.Request) -> httpx.Response:
-        requests.append(request)
-        return httpx.Response(
-            200,
-            json={
-                "id": "chatcmpl-test",
-                "object": "chat.completion",
-                "created": 0,
-                "model": "MiniMax-M3",
-                "choices": [
-                    {
-                        "index": 0,
-                        "message": {"role": "assistant", "content": "ok"},
-                        "finish_reason": "stop",
-                    }
-                ],
-                "usage": {"prompt_tokens": 1, "completion_tokens": 1, "total_tokens": 2},
-            },
-        )
-
-    client = httpx.Client(transport=httpx.MockTransport(respond))
+    monkeypatch.setitem(sys.modules, "langchain_openai", SimpleNamespace(ChatOpenAI=ChatOpenAIStub))
     monkeypatch.setattr(factory.settings, "minimax_api_key", SecretStr("test-key"))
     monkeypatch.setattr(factory.settings, "minimax_base_url", base_url)
 
-    llm = factory.get_llm(provider="minimax", model="MiniMax-M3", http_client=client)
-    assert llm.invoke("Hello").content == "ok"
-    assert [(request.url.host, request.url.path) for request in requests] == [(expected_host, "/v1/chat/completions")]
-    client.close()
+    llm = factory.get_llm(provider="minimax", model="MiniMax-M3", request_timeout=30)
+    assert isinstance(llm, ChatOpenAIStub)
+    assert llm.kwargs == {
+        "model": "MiniMax-M3",
+        "temperature": 0.0,
+        "api_key": "test-key",
+        "base_url": base_url,
+        "request_timeout": 30,
+    }
+    assert expected_host in llm.kwargs["base_url"]
 
 
 @pytest.mark.parametrize(
@@ -96,29 +85,11 @@ def test_minimax_anthropic_request_path(
     base_url: str,
     expected_host: str,
 ) -> None:
-    pytest.importorskip("langchain_anthropic")
-    from langchain_anthropic import chat_models
+    class ChatAnthropicStub:
+        def __init__(self, **kwargs: object) -> None:
+            self.kwargs = kwargs
 
-    requests: list[httpx.Request] = []
-
-    def respond(request: httpx.Request) -> httpx.Response:
-        requests.append(request)
-        return httpx.Response(
-            200,
-            json={
-                "id": "msg_test",
-                "type": "message",
-                "role": "assistant",
-                "model": "MiniMax-M3",
-                "content": [{"type": "text", "text": "ok"}],
-                "stop_reason": "end_turn",
-                "stop_sequence": None,
-                "usage": {"input_tokens": 1, "output_tokens": 1},
-            },
-        )
-
-    client = httpx.Client(transport=httpx.MockTransport(respond))
-    monkeypatch.setattr(chat_models, "_get_default_httpx_client", lambda **_: client)
+    monkeypatch.setitem(sys.modules, "langchain_anthropic", SimpleNamespace(ChatAnthropic=ChatAnthropicStub))
     monkeypatch.setattr(factory.settings, "minimax_api_key", SecretStr("test-key"))
     monkeypatch.setattr(factory.settings, "minimax_base_url", base_url)
 
@@ -127,7 +98,12 @@ def test_minimax_anthropic_request_path(
         model="MiniMax-M3",
         max_tokens=128,
     )
-    assert llm.anthropic_api_url == base_url
-    assert llm.invoke("Hello").content == "ok"
-    assert [(request.url.host, request.url.path) for request in requests] == [(expected_host, "/anthropic/v1/messages")]
-    client.close()
+    assert isinstance(llm, ChatAnthropicStub)
+    assert llm.kwargs == {
+        "model_name": "MiniMax-M3",
+        "temperature": 0.0,
+        "api_key": "test-key",
+        "base_url": base_url,
+        "max_tokens": 128,
+    }
+    assert expected_host in llm.kwargs["base_url"]

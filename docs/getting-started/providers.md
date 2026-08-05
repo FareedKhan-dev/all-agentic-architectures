@@ -81,13 +81,10 @@ Keep the Anthropic base URL ending at `/anthropic`; the client appends
 
 Pay-as-you-go prices below are in USD per million tokens.
 
-| Model and service tier | Input length | Input | Output | Cache read | Cache write |
-|---|---:|---:|---:|---:|---:|
-| `MiniMax-M3` standard | <= 512,000 | $0.30 | $1.20 | $0.06 | N/A |
-| `MiniMax-M3` standard | > 512,000 | $0.60 | $2.40 | $0.12 | N/A |
-| `MiniMax-M3` priority | <= 512,000 | $0.45 | $1.80 | $0.09 | N/A |
-| `MiniMax-M3` priority | > 512,000 | $0.90 | $3.60 | $0.18 | N/A |
-| `MiniMax-M2.7` standard | Any supported length | $0.30 | $1.20 | $0.06 | $0.375 |
+| Model | Input | Output | Cache read | Cache write |
+|---|---:|---:|---:|---:|
+| `MiniMax-M3` | $0.60 | $2.40 | $0.12 | N/A |
+| `MiniMax-M2.7` | $0.30 | $1.20 | $0.06 | $0.375 |
 
 ## When you'd override per-architecture
 
