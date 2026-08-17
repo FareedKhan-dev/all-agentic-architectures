@@ -367,11 +367,11 @@ Four curated reading orders, depending on what you're trying to do.
 
 <div align="center">
 
-<a href="https://www.star-history.com/#FareedKhan-dev/all-agentic-architectures&Date">
+<a href="https://star-history.dera.page/#FareedKhan-dev/all-agentic-architectures&type=Date">
   <picture>
-    <source media="(prefers-color-scheme: dark)" srcset="https://api.star-history.com/svg?repos=FareedKhan-dev/all-agentic-architectures&type=Date&theme=dark" />
-    <source media="(prefers-color-scheme: light)" srcset="https://api.star-history.com/svg?repos=FareedKhan-dev/all-agentic-architectures&type=Date" />
-    <img alt="Star History Chart" src="https://api.star-history.com/svg?repos=FareedKhan-dev/all-agentic-architectures&type=Date" width="720" />
+    <source media="(prefers-color-scheme: dark)" srcset="https://star-history.dera.page/svg?repos=FareedKhan-dev/all-agentic-architectures&type=Date&theme=dark" />
+    <source media="(prefers-color-scheme: light)" srcset="https://star-history.dera.page/svg?repos=FareedKhan-dev/all-agentic-architectures&type=Date" />
+    <img alt="Star History Chart" src="https://star-history.dera.page/svg?repos=FareedKhan-dev/all-agentic-architectures&type=Date" width="720" />
   </picture>
 </a>
 
