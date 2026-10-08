@@ -62,7 +62,7 @@ jobs:
       - name: Install package + extras
         run: |
           pip install --upgrade pip
-          pip install -e ".[test,nebius,faiss,tavily,networkx]"
+          pip install -e ".[test,nebius,faiss,tavily,parallel,networkx]"
       - name: Run pytest (unit + notebook integrity)
         run: pytest -q --cov=src/agentic_architectures --cov-report=term-missing
         env:

@@ -3,11 +3,13 @@
 from __future__ import annotations
 
 from agentic_architectures.tools.code_exec import python_repl_tool
+from agentic_architectures.tools.parallel_search import parallel_search_tool
 from agentic_architectures.tools.search import web_search_tool
 from agentic_architectures.tools.simulator import SimulatorTool
 
 __all__ = [
     "SimulatorTool",
+    "parallel_search_tool",
     "python_repl_tool",
     "web_search_tool",
 ]
