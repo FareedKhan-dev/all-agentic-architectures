@@ -65,6 +65,7 @@ huggingface = ["langchain-huggingface>=0.1.0"]
 
 # ----- Tool integrations -----
 tavily = ["langchain-tavily>=0.1.0"]
+parallel = ["mcp>=1.10,<2"]
 
 # ----- Memory backends -----
 faiss  = ["faiss-cpu>=1.8", "langchain-community>=0.3.0"]
