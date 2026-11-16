@@ -15,7 +15,8 @@ Any provider can run the sweep, a local one included:
     RUN_INTEGRATION=1 INTEGRATION_PROVIDER=ollama INTEGRATION_MODEL=qwen3:14b pytest tests/integration
 
 `INTEGRATION_REASONING_MODEL` picks the model of the tests that want a reasoning model
-(the provider's main model if unset). The three web-search tests use Tavily, or any MCP
+(the provider's main model if unset), and `INTEGRATION_LLM_KWARGS` passes extra model
+arguments as JSON, e.g. `'{"reasoning": false}'` to turn off a local model's thinking. The three web-search tests use Tavily, or any MCP
 search server given as `INTEGRATION_SEARCH_MCP=<url>`.
 
 Total runtime at RUN_INTEGRATION=1 with default model: ~15-30 minutes.
@@ -23,6 +24,7 @@ Total runtime at RUN_INTEGRATION=1 with default model: ~15-30 minutes.
 
 from __future__ import annotations
 
+import json
 import os
 import tempfile
 from pathlib import Path
@@ -44,12 +46,13 @@ MODEL = os.environ.get("INTEGRATION_MODEL") or (
 REASONING_MODEL = os.environ.get("INTEGRATION_REASONING_MODEL") or (
     "Qwen/Qwen3-235B-A22B-Thinking-2507-fast" if PROVIDER == "nebius" else MODEL
 )
+LLM_KWARGS = json.loads(os.environ.get("INTEGRATION_LLM_KWARGS") or "{}")
 
 
 def _llm(model: str | None = None, temperature: float = 0.2):
     from agentic_architectures import get_llm
 
-    return get_llm(provider=PROVIDER, model=model or MODEL, temperature=temperature)
+    return get_llm(provider=PROVIDER, model=model or MODEL, temperature=temperature, **LLM_KWARGS)
 
 
 def _qwen():
