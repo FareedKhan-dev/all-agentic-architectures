@@ -72,7 +72,8 @@ PROVIDERS: dict[str, ProviderInfo] = {
         docs_url="https://github.com/ollama/ollama",
         recommended_model="qwen3:8b",
         is_local=True,
-        notes="Fully local. No API key. qwen3:8b fits an 8 GB GPU and calls tools; qwen3:14b is stronger.",
+        notes="Fully local. No API key. Every architecture ran on qwen3:8b (a 5.2 GB download) in the real-model "
+        "sweep; qwen3:14b is stronger.",
     ),
     "together": ProviderInfo(
         id="together",

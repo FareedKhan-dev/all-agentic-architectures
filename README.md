@@ -55,7 +55,7 @@ leaderboard that ranks every architecture against every relevant task.
 
 ## Overview
 
-A single Python library that packages every major agentic AI pattern from the literature as a runnable `Architecture` class with a uniform contract. Each pattern ships with a fully executed Jupyter notebook whose theory is written *against* the captured run — not synthetic examples. The library is multi-provider (Nebius, OpenAI, Anthropic, DeepSeek, Groq, Ollama, Together, Fireworks, Mistral, Google, OpenRouter) and built on top of LangGraph state machines.
+A single Python library that packages every major agentic AI pattern from the literature as a runnable `Architecture` class with a uniform contract. Each pattern ships with a fully executed Jupyter notebook whose theory is written *against* the captured run, not synthetic examples. The library is multi-provider (Nebius, OpenAI, Anthropic, DeepSeek, Groq, Ollama, Together, Fireworks, Mistral, Google, OpenRouter) and built on top of LangGraph state machines.
 
 The central technical discipline of the repository is the **deterministic-picker pattern** — every LLM-as-Scorer surface has the LLM commit to categorical features (booleans, enums) and lets Python compose the deciding signal. This is the universal escape from the LLM-as-Scorer flat-band pathology, applied in 13 of 36 architectures; 9 more are architecturally immune by design.
 
@@ -98,7 +98,7 @@ source .venv/bin/activate           # macOS / Linux
 pip install -e ".[dev,test,docs,nebius,mcp,tavily,faiss,networkx]"
 cp .env.example .env                # then fill in NEBIUS_API_KEY etc.
 
-pytest -q                           # 283 tests pass in ~30s
+pytest -q                           # 310 tests pass in a few seconds
 ```
 
 </details>
@@ -388,7 +388,7 @@ Four curated reading orders, depending on what you're trying to do.
 
 ```
 pytest -q
-283 passed, 37 skipped (env-gated integration), 1 warning in ~30s
+310 passed, 38 skipped (env-gated integration) in a few seconds
 ```
 
 <table>
@@ -396,7 +396,7 @@ pytest -q
 <tr><td><b>Registry sweep</b></td><td>All 36 architectures (metadata + instantiate + build)</td></tr>
 <tr><td><b>Pure-Python helpers</b></td><td>Haiku checker, composite scorers, subprocess executor, safety gate, sandbox path</td></tr>
 <tr><td><b>Notebook integrity</b></td><td>All 36 notebooks executed, no error outputs, §9 commentary tailored from real captured runs</td></tr>
-<tr><td><b>Integration</b> &nbsp;<sub><i>(env-gated)</i></sub></td><td>One real-LLM happy-path per architecture, gated via <code>RUN_INTEGRATION=1</code></td></tr>
+<tr><td><b>Integration</b> &nbsp;<sub><i>(env-gated)</i></sub></td><td>One real-LLM happy-path per architecture, gated via <code>RUN_INTEGRATION=1</code>. For 1.0.0 all 38 ran on LangChain 1.5 and LangGraph 1.2 against local models through Ollama, with no API key, and every one passed on <code>qwen3:8b</code>, the default local model (MetaController on a rerun, after the free MCP search tier's rate limit stopped it).</td></tr>
 </table>
 
 ---
