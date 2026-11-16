@@ -10,7 +10,7 @@ from __future__ import annotations
 import os
 from typing import TYPE_CHECKING, Any
 
-from agentic_architectures.config import Provider, settings
+from agentic_architectures.config import Provider, default_model_for, settings
 
 if TYPE_CHECKING:  # avoid hard import at module load time
     from langchain_core.embeddings import Embeddings
@@ -26,7 +26,6 @@ _PROVIDER_CAPABILITIES: dict[str, dict[str, bool]] = {
     "nebius": {"tools": True, "structured_output": True},
     "openai": {"tools": True, "structured_output": True},
     "anthropic": {"tools": True, "structured_output": True},
-    "deepseek": {"tools": True, "structured_output": True},
     "groq": {"tools": True, "structured_output": True},
     "together": {"tools": True, "structured_output": True},
     "fireworks": {"tools": True, "structured_output": True},
@@ -34,7 +33,15 @@ _PROVIDER_CAPABILITIES: dict[str, dict[str, bool]] = {
     "google": {"tools": True, "structured_output": True},
     "ollama": {"tools": True, "structured_output": False},
     "huggingface": {"tools": False, "structured_output": False},
+    "deepseek": {"tools": True, "structured_output": True},
+    "openrouter": {"tools": True, "structured_output": True},
 }
+
+# Where this library's provider name differs from the one langchain's init_chat_model takes.
+_LANGCHAIN_PROVIDER_NAME: dict[str, str] = {"google": "google_genai"}
+
+# The extra that installs each provider's integration, for the error a missing one raises.
+_PROVIDER_EXTRA: dict[str, str] = {"mistralai": "mistral"}
 
 
 def provider_supports_tools(provider: str | None = None) -> bool:
@@ -53,12 +60,17 @@ def get_llm(
 ) -> BaseChatModel:
     """Return a configured chat model for the given provider.
 
-    Resolution order: explicit args -> .env / Settings -> hard defaults.
+    Resolution order: explicit args -> .env / Settings -> hard defaults. `LLM_MODEL`
+    belongs to `LLM_PROVIDER`, so asking for another provider without a model gets that
+    provider's recommended model, never the configured provider's model name.
     Raises ImportError with a helpful pip-install hint if the provider's
     integration package isn't installed.
     """
     provider = provider or settings.llm_provider
-    model = model or settings.llm_model
+    if not model:
+        model = settings.llm_model if provider == settings.llm_provider else default_model_for(provider)
+    if not model:
+        raise ValueError(f"No model configured for provider {provider!r}: set LLM_MODEL in .env or pass model=")
     temperature = temperature if temperature is not None else settings.llm_temperature
 
     key = settings.api_key_for(provider)
@@ -76,22 +88,6 @@ def get_llm(
             **kwargs,
         )
 
-    # DeepSeek — OpenAI-compatible API, routed through ChatOpenAI with custom base_url.
-    if provider == "deepseek":
-        try:
-            from langchain_openai import ChatOpenAI
-        except ImportError as e:
-            raise ImportError("DeepSeek provider requires `pip install agentic-architectures[deepseek]`") from e
-        _ensure_provider_env("deepseek", api_key)
-        base_url = kwargs.pop("base_url", settings.deepseek_base_url)
-        return ChatOpenAI(
-            model=model,
-            temperature=temperature,
-            api_key=api_key,
-            base_url=base_url,
-            **kwargs,
-        )
-
     # All other providers go through langchain's init_chat_model.
     try:
         from langchain.chat_models import init_chat_model
@@ -101,13 +97,19 @@ def get_llm(
     # init_chat_model reads API keys from process env, so push the configured
     # key in (without persisting to disk).
     _ensure_provider_env(provider, api_key)
+    if provider == "ollama":
+        kwargs.setdefault("base_url", settings.ollama_base_url)  # OLLAMA_BASE_URL, as for embeddings
 
-    return init_chat_model(
-        model=model,
-        model_provider=provider,
-        temperature=temperature,
-        **kwargs,
-    )
+    try:
+        return init_chat_model(
+            model=model,
+            model_provider=_LANGCHAIN_PROVIDER_NAME.get(provider, provider),
+            temperature=temperature,
+            **kwargs,
+        )
+    except ImportError as e:
+        extra = _PROVIDER_EXTRA.get(provider, provider)
+        raise ImportError(f"The {provider} provider requires `pip install agentic-architectures[{extra}]`") from e
 
 
 def _ensure_provider_env(provider: str, api_key: str | None) -> None:
@@ -117,13 +119,14 @@ def _ensure_provider_env(provider: str, api_key: str | None) -> None:
     env_var = {
         "openai": "OPENAI_API_KEY",
         "anthropic": "ANTHROPIC_API_KEY",
-        "deepseek": "DEEPSEEK_API_KEY",
         "groq": "GROQ_API_KEY",
         "together": "TOGETHER_API_KEY",
         "fireworks": "FIREWORKS_API_KEY",
         "mistralai": "MISTRAL_API_KEY",
         "google": "GOOGLE_API_KEY",
         "huggingface": "HUGGINGFACEHUB_API_TOKEN",
+        "deepseek": "DEEPSEEK_API_KEY",
+        "openrouter": "OPENROUTER_API_KEY",
     }.get(provider)
     if env_var and not os.environ.get(env_var):
         os.environ[env_var] = api_key
@@ -147,12 +150,16 @@ def get_embeddings(
     model: str | None = None,
     **kwargs: Any,
 ) -> Embeddings:
-    """Return an embeddings model. Defaults inherit from `LLM_PROVIDER`."""
-    provider = provider or settings.embeddings_provider or settings.llm_provider
-    default_prov, default_model = _DEFAULT_EMBEDDINGS_BY_PROVIDER.get(
-        provider, ("huggingface", "sentence-transformers/all-MiniLM-L6-v2")
-    )
-    provider = default_prov if provider == "" else provider
+    """Return an embeddings model. Defaults inherit from `LLM_PROVIDER`.
+
+    An LLM provider without an embeddings model (Anthropic, Groq, DeepSeek, ...) falls back
+    to a free local sentence-transformers model, unless a provider was asked for by name.
+    """
+    explicit = provider or settings.embeddings_provider
+    provider = explicit or settings.llm_provider
+    if not explicit and provider not in _DEFAULT_EMBEDDINGS_BY_PROVIDER:
+        provider = "huggingface"
+    default_model = _DEFAULT_EMBEDDINGS_BY_PROVIDER.get(provider, ("", ""))[1]
     model = model or settings.embeddings_model or default_model
 
     if provider == "nebius":
@@ -175,7 +182,14 @@ def get_embeddings(
         )
         return OpenAIEmbeddings(model=model, **kwargs)
     if provider == "huggingface":
-        from langchain_huggingface import HuggingFaceEmbeddings
+        try:
+            from langchain_huggingface import HuggingFaceEmbeddings
+        except ImportError as e:
+            why = "" if explicit else f" ({settings.llm_provider} has no embeddings model, so a local one is used)"
+            raise ImportError(
+                f"Embeddings need `pip install agentic-architectures[huggingface] sentence-transformers`{why}, "
+                "or set EMBEDDINGS_PROVIDER to one of: " + ", ".join(_DEFAULT_EMBEDDINGS_BY_PROVIDER)
+            ) from e
 
         return HuggingFaceEmbeddings(model_name=model, **kwargs)
     if provider == "ollama":

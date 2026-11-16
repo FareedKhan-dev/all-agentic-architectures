@@ -31,6 +31,16 @@ def get_vector_store(
 
         embeddings = get_embeddings()
 
+    if backend == "memory":
+        # langchain-core's own store: exact cosine search, no extra package, no index to
+        # build. Plenty for the notebook-scale corpora here; FAISS or Qdrant scale further.
+        from langchain_core.vectorstores import InMemoryVectorStore
+
+        store = InMemoryVectorStore(embedding=embeddings, **kwargs)
+        if documents:
+            store.add_documents(documents)
+        return store
+
     if backend == "faiss":
         try:
             from langchain_community.vectorstores import FAISS

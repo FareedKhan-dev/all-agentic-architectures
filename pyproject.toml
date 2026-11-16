@@ -34,10 +34,11 @@ classifiers = [
 
 # ---- Core runtime dependencies (kept minimal — see [project.optional-dependencies]) ----
 dependencies = [
-  "langchain-core>=0.3.0",
-  "langchain>=0.3.0",
-  "langgraph>=0.2.50",
-  "langsmith>=0.1.130",
+  # 1.x is what this release is verified on; 2.x may change the APIs again.
+  "langchain-core>=1.0,<2",
+  "langchain>=1.0,<2",
+  "langgraph>=1.0,<2",
+  "langsmith>=0.4",
   "pydantic>=2.7",
   "pydantic-settings>=2.5",
   "python-dotenv>=1.0",
@@ -62,10 +63,12 @@ fireworks   = ["langchain-fireworks>=0.2.0"]
 mistral     = ["langchain-mistralai>=0.2.0"]
 google      = ["langchain-google-genai>=2.0.0"]
 huggingface = ["langchain-huggingface>=0.1.0"]
-deepseek    = ["langchain-openai>=0.2.0"]
+deepseek    = ["langchain-deepseek>=1.0"]
+openrouter  = ["langchain-openrouter>=0.2"]
 
 # ----- Tool integrations -----
 tavily = ["langchain-tavily>=0.1.0"]
+mcp    = ["langchain-mcp-adapters>=0.2"]   # tools from any MCP server, tools/mcp.py
 
 # ----- Memory backends -----
 faiss  = ["faiss-cpu>=1.8", "langchain-community>=0.3.0"]
@@ -86,7 +89,8 @@ all-providers = [
   "langchain-ollama>=0.2.0",
   "langchain-together>=0.2.0",
   "langchain-google-genai>=2.0.0",
-  "langchain-openai>=0.2.0",  # deepseek
+  "langchain-deepseek>=1.0",
+  "langchain-openrouter>=0.2",
 ]
 all-memory = [
   "faiss-cpu>=1.8",
@@ -100,7 +104,7 @@ all-memory = [
   "networkx>=3.3",
 ]
 all = [
-  "agentic-architectures[all-providers,all-memory,tavily,science]",
+  "agentic-architectures[all-providers,all-memory,tavily,mcp,science]",
 ]
 
 # ----- Development tooling -----

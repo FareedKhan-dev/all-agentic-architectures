@@ -10,11 +10,20 @@ non-empty + has the expected shape. We do NOT assert correctness here —
 that's what the benchmark suite does. This is a "did it execute end-to-end
 without exceptions" sweep.
 
+Any provider can run the sweep, a local one included:
+
+    RUN_INTEGRATION=1 INTEGRATION_PROVIDER=ollama INTEGRATION_MODEL=qwen3:14b pytest tests/integration
+
+`INTEGRATION_REASONING_MODEL` picks the model of the tests that want a reasoning model
+(the provider's main model if unset). The three web-search tests use Tavily, or any MCP
+search server given as `INTEGRATION_SEARCH_MCP=<url>`.
+
 Total runtime at RUN_INTEGRATION=1 with default model: ~15-30 minutes.
 """
 
 from __future__ import annotations
 
+import os
 import tempfile
 from pathlib import Path
 
@@ -28,15 +37,35 @@ pytestmark = [
     pytest.mark.skipif(not RUN_INTEGRATION, reason="set RUN_INTEGRATION=1 to enable"),
 ]
 
+PROVIDER = os.environ.get("INTEGRATION_PROVIDER", "nebius")
+MODEL = os.environ.get("INTEGRATION_MODEL") or (
+    "meta-llama/Llama-3.3-70B-Instruct" if PROVIDER == "nebius" else None
+)
+REASONING_MODEL = os.environ.get("INTEGRATION_REASONING_MODEL") or (
+    "Qwen/Qwen3-235B-A22B-Thinking-2507-fast" if PROVIDER == "nebius" else MODEL
+)
 
-def _llm(model: str = "meta-llama/Llama-3.3-70B-Instruct", temperature: float = 0.2):
+
+def _llm(model: str | None = None, temperature: float = 0.2):
     from agentic_architectures import get_llm
 
-    return get_llm(provider="nebius", model=model, temperature=temperature)
+    return get_llm(provider=PROVIDER, model=model or MODEL, temperature=temperature)
 
 
 def _qwen():
-    return _llm(model="Qwen/Qwen3-235B-A22B-Thinking-2507-fast", temperature=0.4)
+    return _llm(model=REASONING_MODEL, temperature=0.4)
+
+
+def web_search_tool(max_results: int = 3):
+    """Tavily by default; any MCP search server when INTEGRATION_SEARCH_MCP is set."""
+    url = os.environ.get("INTEGRATION_SEARCH_MCP")
+    if url:
+        from agentic_architectures.tools import mcp_tools
+
+        return mcp_tools(url)[0]
+    from agentic_architectures.tools import web_search_tool as tavily
+
+    return tavily(max_results=max_results)
 
 
 # ========================================================================== #
@@ -54,7 +83,6 @@ def test_reflection_real() -> None:
 
 def test_tool_use_real() -> None:
     from agentic_architectures.architectures import ToolUse
-    from agentic_architectures.tools import web_search_tool
 
     arch = ToolUse(llm=_llm(), tools=[web_search_tool(max_results=3)], max_rounds=3)
     r = arch.run("What is the current price of Apple stock?")
@@ -63,7 +91,6 @@ def test_tool_use_real() -> None:
 
 def test_react_real() -> None:
     from agentic_architectures.architectures import ReAct
-    from agentic_architectures.tools import web_search_tool
 
     arch = ReAct(llm=_llm(), tools=[web_search_tool(max_results=2)])
     r = arch.run("Who is the current CEO of Microsoft?")
@@ -129,7 +156,6 @@ def test_mental_loop_real() -> None:
 
 def test_meta_controller_real() -> None:
     from agentic_architectures.architectures import MetaController, Reflection, ToolUse
-    from agentic_architectures.tools import web_search_tool
 
     arch = MetaController(
         llm=_llm(),
