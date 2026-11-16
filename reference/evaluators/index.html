@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="35 production-grade agentic AI architectures with LangGraph — every one fully runnable end-to-end, multi-provider (Nebius / OpenAI / Anthropic / Groq / Ollama), with real LLM outputs, deterministic-picker discipline, and a comparative benchmark leaderboard.
+        <meta name="description" content="36 production-grade agentic AI architectures with LangGraph, every one fully runnable end-to-end, multi-provider (Nebius / OpenAI / Anthropic / Groq / Ollama / ...), with real LLM outputs, deterministic-picker discipline, and a comparative benchmark leaderboard.
 ">
       
       
@@ -24,7 +24,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
     
     
       
@@ -32,10 +32,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -1787,6 +1787,8 @@
       
         
       
+        
+      
     
     
     
@@ -1961,6 +1963,34 @@
     
   
     11 meta controller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architectures/36_mixture_of_agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    36 mixture of agents
   
 
     
@@ -2840,63 +2870,63 @@
 
                   <details class="mkdocstrings-source">
                     <summary>Source code in <code>src/agentic_architectures/evaluators/judge.py</code></summary>
-                    <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-35">35</a></span>
-<span class="normal"><a href="#__codelineno-0-36">36</a></span>
-<span class="normal"><a href="#__codelineno-0-37">37</a></span>
-<span class="normal"><a href="#__codelineno-0-38">38</a></span>
-<span class="normal"><a href="#__codelineno-0-39">39</a></span>
-<span class="normal"><a href="#__codelineno-0-40">40</a></span>
-<span class="normal"><a href="#__codelineno-0-41">41</a></span>
-<span class="normal"><a href="#__codelineno-0-42">42</a></span>
-<span class="normal"><a href="#__codelineno-0-43">43</a></span>
-<span class="normal"><a href="#__codelineno-0-44">44</a></span>
-<span class="normal"><a href="#__codelineno-0-45">45</a></span>
-<span class="normal"><a href="#__codelineno-0-46">46</a></span>
-<span class="normal"><a href="#__codelineno-0-47">47</a></span>
-<span class="normal"><a href="#__codelineno-0-48">48</a></span>
-<span class="normal"><a href="#__codelineno-0-49">49</a></span>
-<span class="normal"><a href="#__codelineno-0-50">50</a></span>
-<span class="normal"><a href="#__codelineno-0-51">51</a></span>
-<span class="normal"><a href="#__codelineno-0-52">52</a></span>
-<span class="normal"><a href="#__codelineno-0-53">53</a></span>
-<span class="normal"><a href="#__codelineno-0-54">54</a></span>
-<span class="normal"><a href="#__codelineno-0-55">55</a></span>
-<span class="normal"><a href="#__codelineno-0-56">56</a></span>
-<span class="normal"><a href="#__codelineno-0-57">57</a></span>
-<span class="normal"><a href="#__codelineno-0-58">58</a></span>
-<span class="normal"><a href="#__codelineno-0-59">59</a></span>
-<span class="normal"><a href="#__codelineno-0-60">60</a></span>
-<span class="normal"><a href="#__codelineno-0-61">61</a></span>
-<span class="normal"><a href="#__codelineno-0-62">62</a></span>
-<span class="normal"><a href="#__codelineno-0-63">63</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35"></a><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
-</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36"></a>    <span class="bp">self</span><span class="p">,</span>
-</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37"></a>    <span class="n">schema</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">T</span><span class="p">],</span>
-</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38"></a>    <span class="n">rubric</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
-</span><span id="__span-0-39"><a id="__codelineno-0-39" name="__codelineno-0-39"></a>    <span class="n">llm</span><span class="p">:</span> <span class="n">BaseChatModel</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
-</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40"></a>    <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
-</span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="__span-0-42"><a id="__codelineno-0-42" name="__codelineno-0-42"></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">agentic_architectures.llm.factory</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
-</span><span id="__span-0-43"><a id="__codelineno-0-43" name="__codelineno-0-43"></a>        <span class="n">get_llm</span><span class="p">,</span>
-</span><span id="__span-0-44"><a id="__codelineno-0-44" name="__codelineno-0-44"></a>        <span class="n">provider_supports_structured_output</span><span class="p">,</span>
-</span><span id="__span-0-45"><a id="__codelineno-0-45" name="__codelineno-0-45"></a>    <span class="p">)</span>
-</span><span id="__span-0-46"><a id="__codelineno-0-46" name="__codelineno-0-46"></a>
-</span><span id="__span-0-47"><a id="__codelineno-0-47" name="__codelineno-0-47"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">schema</span> <span class="o">=</span> <span class="n">schema</span>
-</span><span id="__span-0-48"><a id="__codelineno-0-48" name="__codelineno-0-48"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">rubric</span> <span class="o">=</span> <span class="n">rubric</span>
-</span><span id="__span-0-49"><a id="__codelineno-0-49" name="__codelineno-0-49"></a>    <span class="n">base</span> <span class="o">=</span> <span class="n">llm</span> <span class="k">if</span> <span class="n">llm</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">get_llm</span><span class="p">(</span><span class="n">temperature</span><span class="o">=</span><span class="n">temperature</span><span class="p">)</span>
-</span><span id="__span-0-50"><a id="__codelineno-0-50" name="__codelineno-0-50"></a>
-</span><span id="__span-0-51"><a id="__codelineno-0-51" name="__codelineno-0-51"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">provider_supports_structured_output</span><span class="p">():</span>
-</span><span id="__span-0-52"><a id="__codelineno-0-52" name="__codelineno-0-52"></a>        <span class="c1"># Fall back gracefully — the with_structured_output method still</span>
-</span><span id="__span-0-53"><a id="__codelineno-0-53" name="__codelineno-0-53"></a>        <span class="c1"># exists, but may use JSON-mode rather than a tool-call. The</span>
-</span><span id="__span-0-54"><a id="__codelineno-0-54" name="__codelineno-0-54"></a>        <span class="c1"># judge still works; the downstream user just gets a warning.</span>
-</span><span id="__span-0-55"><a id="__codelineno-0-55" name="__codelineno-0-55"></a>        <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
-</span><span id="__span-0-56"><a id="__codelineno-0-56" name="__codelineno-0-56"></a>
-</span><span id="__span-0-57"><a id="__codelineno-0-57" name="__codelineno-0-57"></a>        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
-</span><span id="__span-0-58"><a id="__codelineno-0-58" name="__codelineno-0-58"></a>            <span class="s2">&quot;Current provider does not advertise reliable structured output. &quot;</span>
-</span><span id="__span-0-59"><a id="__codelineno-0-59" name="__codelineno-0-59"></a>            <span class="s2">&quot;Judge results may be lower-quality JSON parses.&quot;</span><span class="p">,</span>
-</span><span id="__span-0-60"><a id="__codelineno-0-60" name="__codelineno-0-60"></a>            <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
-</span><span id="__span-0-61"><a id="__codelineno-0-61" name="__codelineno-0-61"></a>        <span class="p">)</span>
-</span><span id="__span-0-62"><a id="__codelineno-0-62" name="__codelineno-0-62"></a>
-</span><span id="__span-0-63"><a id="__codelineno-0-63" name="__codelineno-0-63"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">_judge_llm</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">with_structured_output</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
+                    <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-35">35</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-36">36</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-37">37</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-38">38</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-39">39</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-40">40</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-41">41</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-42">42</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-43">43</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-44">44</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-45">45</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-46">46</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-47">47</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-48">48</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-49">49</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-50">50</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-51">51</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-52">52</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-53">53</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-54">54</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-55">55</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-56">56</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-57">57</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-58">58</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-59">59</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-60">60</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-61">61</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-62">62</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-63">63</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="agentic_architectures.evaluators.judge.LLMJudge--source--__span-0-35"><a id="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-35" name="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-35"></a><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge--source--__span-0-36"><a id="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-36" name="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-36"></a>    <span class="bp">self</span><span class="p">,</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge--source--__span-0-37"><a id="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-37" name="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-37"></a>    <span class="n">schema</span><span class="p">:</span> <span class="nb">type</span><span class="p">[</span><span class="n">T</span><span class="p">],</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge--source--__span-0-38"><a id="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-38" name="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-38"></a>    <span class="n">rubric</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge--source--__span-0-39"><a id="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-39" name="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-39"></a>    <span class="n">llm</span><span class="p">:</span> <span class="n">BaseChatModel</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge--source--__span-0-40"><a id="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-40" name="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-40"></a>    <span class="n">temperature</span><span class="p">:</span> <span class="nb">float</span> <span class="o">=</span> <span class="mf">0.0</span><span class="p">,</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge--source--__span-0-41"><a id="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-41" name="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-41"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge--source--__span-0-42"><a id="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-42" name="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-42"></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">agentic_architectures.llm.factory</span><span class="w"> </span><span class="kn">import</span> <span class="p">(</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge--source--__span-0-43"><a id="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-43" name="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-43"></a>        <span class="n">get_llm</span><span class="p">,</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge--source--__span-0-44"><a id="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-44" name="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-44"></a>        <span class="n">provider_supports_structured_output</span><span class="p">,</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge--source--__span-0-45"><a id="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-45" name="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-45"></a>    <span class="p">)</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge--source--__span-0-46"><a id="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-46" name="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-46"></a>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge--source--__span-0-47"><a id="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-47" name="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-47"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">schema</span> <span class="o">=</span> <span class="n">schema</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge--source--__span-0-48"><a id="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-48" name="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-48"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">rubric</span> <span class="o">=</span> <span class="n">rubric</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge--source--__span-0-49"><a id="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-49" name="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-49"></a>    <span class="n">base</span> <span class="o">=</span> <span class="n">llm</span> <span class="k">if</span> <span class="n">llm</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">get_llm</span><span class="p">(</span><span class="n">temperature</span><span class="o">=</span><span class="n">temperature</span><span class="p">)</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge--source--__span-0-50"><a id="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-50" name="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-50"></a>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge--source--__span-0-51"><a id="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-51" name="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-51"></a>    <span class="k">if</span> <span class="ow">not</span> <span class="n">provider_supports_structured_output</span><span class="p">():</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge--source--__span-0-52"><a id="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-52" name="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-52"></a>        <span class="c1"># Fall back gracefully — the with_structured_output method still</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge--source--__span-0-53"><a id="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-53" name="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-53"></a>        <span class="c1"># exists, but may use JSON-mode rather than a tool-call. The</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge--source--__span-0-54"><a id="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-54" name="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-54"></a>        <span class="c1"># judge still works; the downstream user just gets a warning.</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge--source--__span-0-55"><a id="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-55" name="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-55"></a>        <span class="kn">import</span><span class="w"> </span><span class="nn">warnings</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge--source--__span-0-56"><a id="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-56" name="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-56"></a>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge--source--__span-0-57"><a id="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-57" name="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-57"></a>        <span class="n">warnings</span><span class="o">.</span><span class="n">warn</span><span class="p">(</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge--source--__span-0-58"><a id="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-58" name="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-58"></a>            <span class="s2">"Current provider does not advertise reliable structured output. "</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge--source--__span-0-59"><a id="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-59" name="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-59"></a>            <span class="s2">"Judge results may be lower-quality JSON parses."</span><span class="p">,</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge--source--__span-0-60"><a id="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-60" name="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-60"></a>            <span class="n">stacklevel</span><span class="o">=</span><span class="mi">2</span><span class="p">,</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge--source--__span-0-61"><a id="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-61" name="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-61"></a>        <span class="p">)</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge--source--__span-0-62"><a id="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-62" name="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-62"></a>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge--source--__span-0-63"><a id="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-63" name="agentic_architectures.evaluators.judge.LLMJudge--source--__codelineno-0-63"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">_judge_llm</span> <span class="o">=</span> <span class="n">base</span><span class="o">.</span><span class="n">with_structured_output</span><span class="p">(</span><span class="n">schema</span><span class="p">)</span>
 </span></code></pre></div></td></tr></table></div>
                   </details>
 
@@ -2931,35 +2961,35 @@
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/agentic_architectures/evaluators/judge.py</code></summary>
-              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-65">65</a></span>
-<span class="normal"><a href="#__codelineno-0-66">66</a></span>
-<span class="normal"><a href="#__codelineno-0-67">67</a></span>
-<span class="normal"><a href="#__codelineno-0-68">68</a></span>
-<span class="normal"><a href="#__codelineno-0-69">69</a></span>
-<span class="normal"><a href="#__codelineno-0-70">70</a></span>
-<span class="normal"><a href="#__codelineno-0-71">71</a></span>
-<span class="normal"><a href="#__codelineno-0-72">72</a></span>
-<span class="normal"><a href="#__codelineno-0-73">73</a></span>
-<span class="normal"><a href="#__codelineno-0-74">74</a></span>
-<span class="normal"><a href="#__codelineno-0-75">75</a></span>
-<span class="normal"><a href="#__codelineno-0-76">76</a></span>
-<span class="normal"><a href="#__codelineno-0-77">77</a></span>
-<span class="normal"><a href="#__codelineno-0-78">78</a></span>
-<span class="normal"><a href="#__codelineno-0-79">79</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-65"><a id="__codelineno-0-65" name="__codelineno-0-65"></a><span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">candidate</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
-</span><span id="__span-0-66"><a id="__codelineno-0-66" name="__codelineno-0-66"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Score the candidate against the rubric and return a populated schema.&quot;&quot;&quot;</span>
-</span><span id="__span-0-67"><a id="__codelineno-0-67" name="__codelineno-0-67"></a>    <span class="n">ctx_block</span> <span class="o">=</span> <span class="s2">&quot;&quot;</span>
-</span><span id="__span-0-68"><a id="__codelineno-0-68" name="__codelineno-0-68"></a>    <span class="k">if</span> <span class="n">context</span><span class="p">:</span>
-</span><span id="__span-0-69"><a id="__codelineno-0-69" name="__codelineno-0-69"></a>        <span class="n">ctx_block</span> <span class="o">=</span> <span class="s2">&quot;</span><span class="se">\n\n</span><span class="s2">### Context</span><span class="se">\n</span><span class="s2">&quot;</span> <span class="o">+</span> <span class="s2">&quot;</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">&quot;- **</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">**: </span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">&quot;</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">context</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
-</span><span id="__span-0-70"><a id="__codelineno-0-70" name="__codelineno-0-70"></a>
-</span><span id="__span-0-71"><a id="__codelineno-0-71" name="__codelineno-0-71"></a>    <span class="n">prompt</span> <span class="o">=</span> <span class="p">(</span>
-</span><span id="__span-0-72"><a id="__codelineno-0-72" name="__codelineno-0-72"></a>        <span class="sa">f</span><span class="s2">&quot;You are an impartial evaluator.</span><span class="se">\n\n</span><span class="s2">&quot;</span>
-</span><span id="__span-0-73"><a id="__codelineno-0-73" name="__codelineno-0-73"></a>        <span class="sa">f</span><span class="s2">&quot;### Rubric</span><span class="se">\n</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">rubric</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">ctx_block</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">&quot;</span>
-</span><span id="__span-0-74"><a id="__codelineno-0-74" name="__codelineno-0-74"></a>        <span class="sa">f</span><span class="s2">&quot;### Candidate</span><span class="se">\n</span><span class="si">{</span><span class="n">candidate</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">&quot;</span>
-</span><span id="__span-0-75"><a id="__codelineno-0-75" name="__codelineno-0-75"></a>        <span class="sa">f</span><span class="s2">&quot;Return your evaluation in the requested structured format.&quot;</span>
-</span><span id="__span-0-76"><a id="__codelineno-0-76" name="__codelineno-0-76"></a>    <span class="p">)</span>
-</span><span id="__span-0-77"><a id="__codelineno-0-77" name="__codelineno-0-77"></a>    <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_judge_llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
-</span><span id="__span-0-78"><a id="__codelineno-0-78" name="__codelineno-0-78"></a>    <span class="c1"># `with_structured_output` returns the schema instance directly.</span>
-</span><span id="__span-0-79"><a id="__codelineno-0-79" name="__codelineno-0-79"></a>    <span class="k">return</span> <span class="n">result</span>  <span class="c1"># type: ignore[return-value]</span>
+              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-65">65</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-66">66</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-67">67</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-68">68</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-69">69</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-70">70</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-71">71</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-72">72</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-73">73</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-74">74</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-75">75</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-76">76</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-77">77</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-78">78</a></span>
+<span class="normal"><a href="#agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-79">79</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__span-0-65"><a id="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-65" name="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-65"></a><span class="k">def</span><span class="w"> </span><span class="nf">evaluate</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">candidate</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="n">context</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">str</span><span class="p">]</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">T</span><span class="p">:</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__span-0-66"><a id="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-66" name="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-66"></a><span class="w">    </span><span class="sd">"""Score the candidate against the rubric and return a populated schema."""</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__span-0-67"><a id="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-67" name="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-67"></a>    <span class="n">ctx_block</span> <span class="o">=</span> <span class="s2">""</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__span-0-68"><a id="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-68" name="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-68"></a>    <span class="k">if</span> <span class="n">context</span><span class="p">:</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__span-0-69"><a id="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-69" name="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-69"></a>        <span class="n">ctx_block</span> <span class="o">=</span> <span class="s2">"</span><span class="se">\n\n</span><span class="s2">### Context</span><span class="se">\n</span><span class="s2">"</span> <span class="o">+</span> <span class="s2">"</span><span class="se">\n</span><span class="s2">"</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="sa">f</span><span class="s2">"- **</span><span class="si">{</span><span class="n">k</span><span class="si">}</span><span class="s2">**: </span><span class="si">{</span><span class="n">v</span><span class="si">}</span><span class="s2">"</span> <span class="k">for</span> <span class="n">k</span><span class="p">,</span> <span class="n">v</span> <span class="ow">in</span> <span class="n">context</span><span class="o">.</span><span class="n">items</span><span class="p">())</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__span-0-70"><a id="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-70" name="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-70"></a>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__span-0-71"><a id="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-71" name="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-71"></a>    <span class="n">prompt</span> <span class="o">=</span> <span class="p">(</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__span-0-72"><a id="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-72" name="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-72"></a>        <span class="sa">f</span><span class="s2">"You are an impartial evaluator.</span><span class="se">\n\n</span><span class="s2">"</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__span-0-73"><a id="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-73" name="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-73"></a>        <span class="sa">f</span><span class="s2">"### Rubric</span><span class="se">\n</span><span class="si">{</span><span class="bp">self</span><span class="o">.</span><span class="n">rubric</span><span class="si">}</span><span class="se">\n</span><span class="si">{</span><span class="n">ctx_block</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">"</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__span-0-74"><a id="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-74" name="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-74"></a>        <span class="sa">f</span><span class="s2">"### Candidate</span><span class="se">\n</span><span class="si">{</span><span class="n">candidate</span><span class="si">}</span><span class="se">\n\n</span><span class="s2">"</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__span-0-75"><a id="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-75" name="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-75"></a>        <span class="sa">f</span><span class="s2">"Return your evaluation in the requested structured format."</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__span-0-76"><a id="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-76" name="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-76"></a>    <span class="p">)</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__span-0-77"><a id="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-77" name="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-77"></a>    <span class="n">result</span> <span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">_judge_llm</span><span class="o">.</span><span class="n">invoke</span><span class="p">(</span><span class="n">prompt</span><span class="p">)</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__span-0-78"><a id="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-78" name="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-78"></a>    <span class="c1"># `with_structured_output` returns the schema instance directly.</span>
+</span><span id="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__span-0-79"><a id="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-79" name="agentic_architectures.evaluators.judge.LLMJudge.evaluate--source--__codelineno-0-79"></a>    <span class="k">return</span> <span class="n">result</span>  <span class="c1"># type: ignore[return-value]</span>
 </span></code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -3070,10 +3100,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.tracking", "navigation.footer", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.tracking", "navigation.footer", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
     
   </body>

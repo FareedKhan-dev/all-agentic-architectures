@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="35 production-grade agentic AI architectures with LangGraph — every one fully runnable end-to-end, multi-provider (Nebius / OpenAI / Anthropic / Groq / Ollama), with real LLM outputs, deterministic-picker discipline, and a comparative benchmark leaderboard.
+        <meta name="description" content="36 production-grade agentic AI architectures with LangGraph, every one fully runnable end-to-end, multi-provider (Nebius / OpenAI / Anthropic / Groq / Ollama / ...), with real LLM outputs, deterministic-picker discipline, and a comparative benchmark leaderboard.
 ">
       
       
@@ -26,7 +26,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
     
     
       
@@ -34,10 +34,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -1883,6 +1883,8 @@
       
         
       
+        
+      
     
     
     
@@ -2057,6 +2059,34 @@
     
   
     11 meta controller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architectures/36_mixture_of_agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    36 mixture of agents
   
 
     
@@ -2849,27 +2879,27 @@
 <div class="tabbed-set tabbed-alternate" data-tabs="1:5"><input checked="checked" id="__tabbed_1_1" name="__tabbed_1" type="radio" /><input id="__tabbed_1_2" name="__tabbed_1" type="radio" /><input id="__tabbed_1_3" name="__tabbed_1" type="radio" /><input id="__tabbed_1_4" name="__tabbed_1" type="radio" /><input id="__tabbed_1_5" name="__tabbed_1" type="radio" /><div class="tabbed-labels"><label for="__tabbed_1_1">Nebius (default, recommended)</label><label for="__tabbed_1_2">OpenAI</label><label for="__tabbed_1_3">Anthropic</label><label for="__tabbed_1_4">Ollama (local)</label><label for="__tabbed_1_5">Everything</label></div>
 <div class="tabbed-content">
 <div class="tabbed-block">
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;agentic-architectures[nebius,faiss,tavily]&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"agentic-architectures[nebius,mcp]"</span>
 </span></code></pre></div>
-<p>Then set <code>NEBIUS_API_KEY</code> in <code>.env</code>. Pre-configured to use <code>meta-llama/Llama-3.3-70B-Instruct</code> for general work and <code>Qwen/Qwen3-235B-A22B-Thinking-2507-fast</code> for reasoning architectures (nb 19, 20, 21, 22).</p>
+<p>Then set <code>NEBIUS_API_KEY</code> in <code>.env</code>. With <code>LLM_MODEL</code> empty it uses Nebius' recommended model, <code>nvidia/Nemotron-3_5-Lightning</code>; set <code>LLM_REASONING_MODEL</code> to a thinking model for the reasoning notebooks (nb 03, 04, 09, 19, 20, 22).</p>
 </div>
 <div class="tabbed-block">
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;agentic-architectures[openai,faiss,tavily]&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"agentic-architectures[openai,mcp]"</span>
 </span></code></pre></div>
-<p>Set <code>OPENAI_API_KEY</code> and <code>LLM_PROVIDER=openai</code> (with <code>LLM_MODEL=gpt-4o-mini</code> or similar).</p>
+<p>Set <code>OPENAI_API_KEY</code> and <code>LLM_PROVIDER=openai</code>. With <code>LLM_MODEL</code> empty it uses <code>gpt-6-luna</code>.</p>
 </div>
 <div class="tabbed-block">
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;agentic-architectures[anthropic,faiss,tavily]&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"agentic-architectures[anthropic,mcp]"</span>
 </span></code></pre></div>
 <p>Set <code>ANTHROPIC_API_KEY</code> and <code>LLM_PROVIDER=anthropic</code>.</p>
 </div>
 <div class="tabbed-block">
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;agentic-architectures[ollama,faiss,tavily]&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"agentic-architectures[ollama,mcp]"</span>
 </span></code></pre></div>
-<p>Run <code>ollama pull llama3.3:70b</code> first. Set <code>LLM_PROVIDER=ollama</code>. No API key needed.</p>
+<p>Run <code>ollama pull qwen3:8b</code> (or <code>qwen3:14b</code> if it fits your GPU) and <code>ollama pull nomic-embed-text</code> first. Set <code>LLM_PROVIDER=ollama</code>. No API key needed.</p>
 </div>
 <div class="tabbed-block">
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">&quot;agentic-architectures[all]&quot;</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"agentic-architectures[all]"</span>
 </span></code></pre></div>
 <p>All provider integrations + all memory backends + all tools. ~1.5 GB.</p>
 </div>
@@ -2886,9 +2916,14 @@
 </thead>
 <tbody>
 <tr>
-<td><code>faiss</code> (recommended)</td>
+<td>(none, the default)</td>
+<td>langchain-core's <code>InMemoryVectorStore</code></td>
+<td>Local in-process vector store, <code>VECTOR_BACKEND=memory</code>. Used by nb 08, 18, 23-26, 29, 31, 35.</td>
+</tr>
+<tr>
+<td><code>faiss</code></td>
 <td>FAISS-CPU + langchain-community</td>
-<td>Local in-process vector store. Used by nb 08, 18, 23-26, 29, 31, 35.</td>
+<td><code>VECTOR_BACKEND=faiss</code>. langchain-community is being sunset by LangChain.</td>
 </tr>
 <tr>
 <td><code>chroma</code></td>
@@ -2903,7 +2938,7 @@
 <tr>
 <td><code>neo4j</code></td>
 <td>langchain-neo4j + neo4j driver</td>
-<td>For nb 08, 12, 27 — graph queries via Cypher.</td>
+<td>For nb 08, 12, 27: graph queries via Cypher.</td>
 </tr>
 <tr>
 <td><code>networkx</code></td>
@@ -2923,19 +2958,23 @@
 <tbody>
 <tr>
 <td><code>tavily</code></td>
-<td>Web search — nb 02, 03, 04, 05, 07, 11, 24, 30</td>
+<td>Web search with a Tavily key: nb 02, 03, 04, 05, 07, 11, 24, 30</td>
+</tr>
+<tr>
+<td><code>mcp</code></td>
+<td>Web search with no key (<code>SEARCH_BACKEND=mcp</code>), and <code>mcp_tools()</code> for any MCP server</td>
 </tr>
 </tbody>
 </table>
 <h2 id="browser-using-architecture-nb-34">Browser-using architecture (nb 34)<a class="headerlink" href="#browser-using-architecture-nb-34" title="Permanent link">&para;</a></h2>
 <p>Notebook 34 (<code>BrowserAgent</code>) drives a real headless Chromium. After the base install:</p>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>pip<span class="w"> </span>install<span class="w"> </span>playwright
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a>pip<span class="w"> </span>install<span class="w"> </span><span class="s2">"agentic-architectures[browser]"</span>
 </span><span id="__span-6-2"><a id="__codelineno-6-2" name="__codelineno-6-2" href="#__codelineno-6-2"></a>playwright<span class="w"> </span>install<span class="w"> </span>chromium
 </span></code></pre></div>
 <p><code>playwright install chromium</code> downloads ~200 MB of browser binaries. Run once per machine.</p>
 <h2 id="verify-your-install">Verify your install<a class="headerlink" href="#verify-your-install" title="Permanent link">&para;</a></h2>
-<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">&quot;from agentic_architectures import get_llm, settings; print(settings.llm_provider, settings.llm_model)&quot;</span>
-</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1"># nebius meta-llama/Llama-3.3-70B-Instruct</span>
+<div class="language-bash highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a>python<span class="w"> </span>-c<span class="w"> </span><span class="s2">"from agentic_architectures import get_llm, settings; print(settings.llm_provider, settings.llm_model)"</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="c1"># nebius nvidia/Nemotron-3_5-Lightning</span>
 </span></code></pre></div>
 <p>If you see your configured provider and model, you're ready. Continue to the <a href="../quickstart/">Quickstart</a>.</p>
 
@@ -3051,10 +3090,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.tracking", "navigation.footer", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.tracking", "navigation.footer", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
     
   </body>

@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="35 production-grade agentic AI architectures with LangGraph — every one fully runnable end-to-end, multi-provider (Nebius / OpenAI / Anthropic / Groq / Ollama), with real LLM outputs, deterministic-picker discipline, and a comparative benchmark leaderboard.
+        <meta name="description" content="36 production-grade agentic AI architectures with LangGraph, every one fully runnable end-to-end, multi-provider (Nebius / OpenAI / Anthropic / Groq / Ollama / ...), with real LLM outputs, deterministic-picker discipline, and a comparative benchmark leaderboard.
 ">
       
       
@@ -26,7 +26,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
     
     
       
@@ -34,10 +34,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -2175,6 +2175,8 @@
       
         
       
+        
+      
     
     
     
@@ -2352,6 +2354,34 @@
     
   
     11 meta controller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../36_mixture_of_agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    36 mixture of agents
   
 
     
@@ -5098,7 +5128,7 @@ provided in the search results, Sam Altman has been the CEO of OpenAI since 2019
 <div class="jp-InputArea jp-Cell-inputArea"><div class="jp-InputPrompt jp-InputArea-prompt">
 </div><div class="jp-RenderedHTMLCommon jp-RenderedMarkdown jp-MarkdownOutput" data-mime-type="text/markdown">
 <h2 id="10-try-other-providers-also-a-reasoning-model">10 · Try other providers · also: a reasoning model<a class="anchor-link" href="#10-try-other-providers-also-a-reasoning-model">¶</a></h2><p>ReAct needs <strong>tool-calling</strong>, same as Tool Use. But this is also where ReAct shines with a <em>reasoning</em> model — the model's internal <code>&lt;think&gt;</code> budget produces noticeably richer Thoughts.</p>
-<p>The cell below tries OpenAI/Anthropic/Groq if you have their keys set, AND swaps to <strong><code>Qwen/Qwen3-235B-A22B-Thinking-2507-fast</code></strong> on Nebius (which you already have a key for) to demonstrate the reasoning-model effect.</p>
+<p>The cell below tries OpenAI/Anthropic/Groq if you have their keys set, AND re-runs on the reasoning model in <code>LLM_REASONING_MODEL</code> (set it to a thinking model such as <code>deepseek-v4-pro</code>, or <code>qwen3:14b</code> on Ollama) to demonstrate the reasoning-model effect.</p>
 </div>
 </div>
 </div>
@@ -5140,11 +5170,10 @@ provided in the search results, Sam Altman has been the CEO of OpenAI since 2019
     <span class="nb">print</span><span class="p">(</span><span class="sa">f</span><span class="s2">"  thoughts: </span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">'thought_count'</span><span class="p">]</span><span class="si">}</span><span class="s2">, tool_calls: </span><span class="si">{</span><span class="n">r</span><span class="o">.</span><span class="n">metadata</span><span class="p">[</span><span class="s1">'tool_calls'</span><span class="p">]</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">()</span>
 
-<span class="c1"># (b) Swap to a Nebius reasoning model — same key, just a different model name.</span>
-<span class="n">print_header</span><span class="p">(</span><span class="s2">"Re-running on Nebius Qwen3-Thinking (reasoning model)"</span><span class="p">)</span>
+<span class="c1"># (b) Swap to the reasoning model in LLM_REASONING_MODEL (your main model if unset).</span>
+<span class="n">print_header</span><span class="p">(</span><span class="sa">f</span><span class="s2">"Re-running on the reasoning model (</span><span class="si">{</span><span class="n">settings</span><span class="o">.</span><span class="n">llm_reasoning_model</span><span class="si">}</span><span class="s2">)"</span><span class="p">)</span>
 <span class="n">thinking_llm</span> <span class="o">=</span> <span class="n">get_llm</span><span class="p">(</span>
-    <span class="n">provider</span><span class="o">=</span><span class="s2">"nebius"</span><span class="p">,</span>
-    <span class="n">model</span><span class="o">=</span><span class="s2">"Qwen/Qwen3-235B-A22B-Thinking-2507-fast"</span><span class="p">,</span>
+    <span class="n">model</span><span class="o">=</span><span class="n">settings</span><span class="o">.</span><span class="n">llm_reasoning_model</span><span class="p">,</span>
     <span class="n">temperature</span><span class="o">=</span><span class="mf">0.0</span><span class="p">,</span>
 <span class="p">)</span>
 <span class="n">thinking_arch</span> <span class="o">=</span> <span class="n">ReAct</span><span class="p">(</span><span class="n">llm</span><span class="o">=</span><span class="n">thinking_llm</span><span class="p">,</span> <span class="n">max_rounds</span><span class="o">=</span><span class="mi">2</span><span class="p">)</span>
@@ -5156,7 +5185,7 @@ provided in the search results, Sam Altman has been the CEO of OpenAI since 2019
 <span class="k">if</span> <span class="n">r</span><span class="o">.</span><span class="n">trace</span><span class="p">:</span>
     <span class="n">first_thought</span> <span class="o">=</span> <span class="nb">next</span><span class="p">((</span><span class="n">t</span><span class="p">[</span><span class="s1">'content'</span><span class="p">]</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">r</span><span class="o">.</span><span class="n">trace</span> <span class="k">if</span> <span class="n">t</span><span class="p">[</span><span class="s1">'type'</span><span class="p">]</span> <span class="o">==</span> <span class="s1">'thought'</span><span class="p">),</span> <span class="s1">''</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">()</span>
-    <span class="nb">print</span><span class="p">(</span><span class="s1">'  First Thought from Qwen3-Thinking (notice the depth vs Llama):'</span><span class="p">)</span>
+    <span class="nb">print</span><span class="p">(</span><span class="s1">'  First Thought from the reasoning model (compare its depth with the run above):'</span><span class="p">)</span>
     <span class="nb">print</span><span class="p">(</span><span class="s1">'  '</span> <span class="o">+</span> <span class="n">first_thought</span><span class="p">[:</span><span class="mi">400</span><span class="p">]</span><span class="o">.</span><span class="n">replace</span><span class="p">(</span><span class="s1">'</span><span class="se">\n</span><span class="s1">'</span><span class="p">,</span> <span class="s1">'</span><span class="se">\n</span><span class="s1">  '</span><span class="p">))</span>
 </pre></div>
 <div class="clipboard-copy-txt" id="cell-6">from agentic_architectures.llm.factory import provider_supports_tools
@@ -5178,11 +5207,10 @@ for p in ["openai", "anthropic", "groq"]:
     print(f"  thoughts: {r.metadata['thought_count']}, tool_calls: {r.metadata['tool_calls']}")
     print()
 
-# (b) Swap to a Nebius reasoning model — same key, just a different model name.
-print_header("Re-running on Nebius Qwen3-Thinking (reasoning model)")
+# (b) Swap to the reasoning model in LLM_REASONING_MODEL (your main model if unset).
+print_header(f"Re-running on the reasoning model ({settings.llm_reasoning_model})")
 thinking_llm = get_llm(
-    provider="nebius",
-    model="Qwen/Qwen3-235B-A22B-Thinking-2507-fast",
+    model=settings.llm_reasoning_model,
     temperature=0.0,
 )
 thinking_arch = ReAct(llm=thinking_llm, max_rounds=2)
@@ -5194,7 +5222,7 @@ print(f"  thoughts: {r.metadata['thought_count']}, tool_calls: {r.metadata['tool
 if r.trace:
     first_thought = next((t['content'] for t in r.trace if t['type'] == 'thought'), '')
     print()
-    print('  First Thought from Qwen3-Thinking (notice the depth vs Llama):')
+    print('  First Thought from the reasoning model (compare its depth with the run above):')
     print('  ' + first_thought[:400].replace('\n', '\n  '))</div>
 </div>
 </div>
@@ -5424,10 +5452,10 @@ Source: [Yahoo Finance - Gold Retreats as Renewed U.S. Attacks on
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.tracking", "navigation.footer", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.tracking", "navigation.footer", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
     
   </body>

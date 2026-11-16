@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="35 production-grade agentic AI architectures with LangGraph — every one fully runnable end-to-end, multi-provider (Nebius / OpenAI / Anthropic / Groq / Ollama), with real LLM outputs, deterministic-picker discipline, and a comparative benchmark leaderboard.
+        <meta name="description" content="36 production-grade agentic AI architectures with LangGraph, every one fully runnable end-to-end, multi-provider (Nebius / OpenAI / Anthropic / Groq / Ollama / ...), with real LLM outputs, deterministic-picker discipline, and a comparative benchmark leaderboard.
 ">
       
       
@@ -26,7 +26,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
     
     
       
@@ -34,10 +34,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -1789,6 +1789,8 @@
       
         
       
+        
+      
     
     
     
@@ -1963,6 +1965,34 @@
     
   
     11 meta controller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architectures/36_mixture_of_agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    36 mixture of agents
   
 
     
@@ -2978,15 +3008,25 @@ and <code>explain()</code> — both have sensible defaults.</p>
 
                   <details class="mkdocstrings-source">
                     <summary>Source code in <code>src/agentic_architectures/architectures/base.py</code></summary>
-                    <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-45">45</a></span>
-<span class="normal"><a href="#__codelineno-0-46">46</a></span>
-<span class="normal"><a href="#__codelineno-0-47">47</a></span>
-<span class="normal"><a href="#__codelineno-0-48">48</a></span>
-<span class="normal"><a href="#__codelineno-0-49">49</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-45"><a id="__codelineno-0-45" name="__codelineno-0-45"></a><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">llm</span><span class="p">:</span> <span class="n">BaseChatModel</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="__span-0-46"><a id="__codelineno-0-46" name="__codelineno-0-46"></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">agentic_architectures.llm.factory</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_llm</span>
-</span><span id="__span-0-47"><a id="__codelineno-0-47" name="__codelineno-0-47"></a>
-</span><span id="__span-0-48"><a id="__codelineno-0-48" name="__codelineno-0-48"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">llm</span> <span class="o">=</span> <span class="n">llm</span> <span class="k">if</span> <span class="n">llm</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">get_llm</span><span class="p">()</span>
-</span><span id="__span-0-49"><a id="__codelineno-0-49" name="__codelineno-0-49"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">config</span> <span class="o">=</span> <span class="n">kwargs</span>
+                    <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#agentic_architectures.architectures.base.Architecture--source--__codelineno-0-45">45</a></span>
+<span class="normal"><a href="#agentic_architectures.architectures.base.Architecture--source--__codelineno-0-46">46</a></span>
+<span class="normal"><a href="#agentic_architectures.architectures.base.Architecture--source--__codelineno-0-47">47</a></span>
+<span class="normal"><a href="#agentic_architectures.architectures.base.Architecture--source--__codelineno-0-48">48</a></span>
+<span class="normal"><a href="#agentic_architectures.architectures.base.Architecture--source--__codelineno-0-49">49</a></span>
+<span class="normal"><a href="#agentic_architectures.architectures.base.Architecture--source--__codelineno-0-50">50</a></span>
+<span class="normal"><a href="#agentic_architectures.architectures.base.Architecture--source--__codelineno-0-51">51</a></span>
+<span class="normal"><a href="#agentic_architectures.architectures.base.Architecture--source--__codelineno-0-52">52</a></span>
+<span class="normal"><a href="#agentic_architectures.architectures.base.Architecture--source--__codelineno-0-53">53</a></span>
+<span class="normal"><a href="#agentic_architectures.architectures.base.Architecture--source--__codelineno-0-54">54</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="agentic_architectures.architectures.base.Architecture--source--__span-0-45"><a id="agentic_architectures.architectures.base.Architecture--source--__codelineno-0-45" name="agentic_architectures.architectures.base.Architecture--source--__codelineno-0-45"></a><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">llm</span><span class="p">:</span> <span class="n">BaseChatModel</span> <span class="o">|</span> <span class="kc">None</span> <span class="o">=</span> <span class="kc">None</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="agentic_architectures.architectures.base.Architecture--source--__span-0-46"><a id="agentic_architectures.architectures.base.Architecture--source--__codelineno-0-46" name="agentic_architectures.architectures.base.Architecture--source--__codelineno-0-46"></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">agentic_architectures.llm.factory</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_llm</span>
+</span><span id="agentic_architectures.architectures.base.Architecture--source--__span-0-47"><a id="agentic_architectures.architectures.base.Architecture--source--__codelineno-0-47" name="agentic_architectures.architectures.base.Architecture--source--__codelineno-0-47"></a>
+</span><span id="agentic_architectures.architectures.base.Architecture--source--__span-0-48"><a id="agentic_architectures.architectures.base.Architecture--source--__codelineno-0-48" name="agentic_architectures.architectures.base.Architecture--source--__codelineno-0-48"></a>    <span class="c1"># Every architecture passes its leftover keywords here. Unknown ones used to be stored</span>
+</span><span id="agentic_architectures.architectures.base.Architecture--source--__span-0-49"><a id="agentic_architectures.architectures.base.Architecture--source--__codelineno-0-49" name="agentic_architectures.architectures.base.Architecture--source--__codelineno-0-49"></a>    <span class="c1"># and ignored, so a misspelled option (grid_size for height/width) silently ran the</span>
+</span><span id="agentic_architectures.architectures.base.Architecture--source--__span-0-50"><a id="agentic_architectures.architectures.base.Architecture--source--__codelineno-0-50" name="agentic_architectures.architectures.base.Architecture--source--__codelineno-0-50"></a>    <span class="c1"># default; now it is an error that names the option.</span>
+</span><span id="agentic_architectures.architectures.base.Architecture--source--__span-0-51"><a id="agentic_architectures.architectures.base.Architecture--source--__codelineno-0-51" name="agentic_architectures.architectures.base.Architecture--source--__codelineno-0-51"></a>    <span class="k">if</span> <span class="n">kwargs</span><span class="p">:</span>
+</span><span id="agentic_architectures.architectures.base.Architecture--source--__span-0-52"><a id="agentic_architectures.architectures.base.Architecture--source--__codelineno-0-52" name="agentic_architectures.architectures.base.Architecture--source--__codelineno-0-52"></a>        <span class="k">raise</span> <span class="ne">TypeError</span><span class="p">(</span><span class="sa">f</span><span class="s2">"</span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">() got unexpected keyword argument(s): </span><span class="si">{</span><span class="s1">', '</span><span class="o">.</span><span class="n">join</span><span class="p">(</span><span class="nb">sorted</span><span class="p">(</span><span class="n">kwargs</span><span class="p">))</span><span class="si">}</span><span class="s2">"</span><span class="p">)</span>
+</span><span id="agentic_architectures.architectures.base.Architecture--source--__span-0-53"><a id="agentic_architectures.architectures.base.Architecture--source--__codelineno-0-53" name="agentic_architectures.architectures.base.Architecture--source--__codelineno-0-53"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">llm</span> <span class="o">=</span> <span class="n">llm</span> <span class="k">if</span> <span class="n">llm</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="n">get_llm</span><span class="p">()</span>
+</span><span id="agentic_architectures.architectures.base.Architecture--source--__span-0-54"><a id="agentic_architectures.architectures.base.Architecture--source--__codelineno-0-54" name="agentic_architectures.architectures.base.Architecture--source--__codelineno-0-54"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">config</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="n">Any</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
 </span></code></pre></div></td></tr></table></div>
                   </details>
 
@@ -3025,11 +3065,11 @@ and <code>explain()</code> — both have sensible defaults.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/agentic_architectures/architectures/base.py</code></summary>
-              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-55">55</a></span>
-<span class="normal"><a href="#__codelineno-0-56">56</a></span>
-<span class="normal"><a href="#__codelineno-0-57">57</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-55"><a id="__codelineno-0-55" name="__codelineno-0-55"></a><span class="nd">@abstractmethod</span>
-</span><span id="__span-0-56"><a id="__codelineno-0-56" name="__codelineno-0-56"></a><span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CompiledStateGraph</span><span class="p">:</span>
-</span><span id="__span-0-57"><a id="__codelineno-0-57" name="__codelineno-0-57"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Compile and return the LangGraph for this architecture.&quot;&quot;&quot;</span>
+              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#agentic_architectures.architectures.base.Architecture.build--source--__codelineno-0-60">60</a></span>
+<span class="normal"><a href="#agentic_architectures.architectures.base.Architecture.build--source--__codelineno-0-61">61</a></span>
+<span class="normal"><a href="#agentic_architectures.architectures.base.Architecture.build--source--__codelineno-0-62">62</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="agentic_architectures.architectures.base.Architecture.build--source--__span-0-60"><a id="agentic_architectures.architectures.base.Architecture.build--source--__codelineno-0-60" name="agentic_architectures.architectures.base.Architecture.build--source--__codelineno-0-60"></a><span class="nd">@abstractmethod</span>
+</span><span id="agentic_architectures.architectures.base.Architecture.build--source--__span-0-61"><a id="agentic_architectures.architectures.base.Architecture.build--source--__codelineno-0-61" name="agentic_architectures.architectures.base.Architecture.build--source--__codelineno-0-61"></a><span class="k">def</span><span class="w"> </span><span class="nf">build</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">CompiledStateGraph</span><span class="p">:</span>
+</span><span id="agentic_architectures.architectures.base.Architecture.build--source--__span-0-62"><a id="agentic_architectures.architectures.base.Architecture.build--source--__codelineno-0-62" name="agentic_architectures.architectures.base.Architecture.build--source--__codelineno-0-62"></a><span class="w">    </span><span class="sd">"""Compile and return the LangGraph for this architecture."""</span>
 </span></code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -3058,11 +3098,11 @@ and <code>explain()</code> — both have sensible defaults.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/agentic_architectures/architectures/base.py</code></summary>
-              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-59">59</a></span>
-<span class="normal"><a href="#__codelineno-0-60">60</a></span>
-<span class="normal"><a href="#__codelineno-0-61">61</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-59"><a id="__codelineno-0-59" name="__codelineno-0-59"></a><span class="nd">@abstractmethod</span>
-</span><span id="__span-0-60"><a id="__codelineno-0-60" name="__codelineno-0-60"></a><span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ArchitectureResult</span><span class="p">:</span>
-</span><span id="__span-0-61"><a id="__codelineno-0-61" name="__codelineno-0-61"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Execute the architecture on a task and return a standardized result.&quot;&quot;&quot;</span>
+              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#agentic_architectures.architectures.base.Architecture.run--source--__codelineno-0-64">64</a></span>
+<span class="normal"><a href="#agentic_architectures.architectures.base.Architecture.run--source--__codelineno-0-65">65</a></span>
+<span class="normal"><a href="#agentic_architectures.architectures.base.Architecture.run--source--__codelineno-0-66">66</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="agentic_architectures.architectures.base.Architecture.run--source--__span-0-64"><a id="agentic_architectures.architectures.base.Architecture.run--source--__codelineno-0-64" name="agentic_architectures.architectures.base.Architecture.run--source--__codelineno-0-64"></a><span class="nd">@abstractmethod</span>
+</span><span id="agentic_architectures.architectures.base.Architecture.run--source--__span-0-65"><a id="agentic_architectures.architectures.base.Architecture.run--source--__codelineno-0-65" name="agentic_architectures.architectures.base.Architecture.run--source--__codelineno-0-65"></a><span class="k">def</span><span class="w"> </span><span class="nf">run</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">task</span><span class="p">:</span> <span class="nb">str</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">ArchitectureResult</span><span class="p">:</span>
+</span><span id="agentic_architectures.architectures.base.Architecture.run--source--__span-0-66"><a id="agentic_architectures.architectures.base.Architecture.run--source--__codelineno-0-66" name="agentic_architectures.architectures.base.Architecture.run--source--__codelineno-0-66"></a><span class="w">    </span><span class="sd">"""Execute the architecture on a task and return a standardized result."""</span>
 </span></code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -3087,15 +3127,15 @@ and <code>explain()</code> — both have sensible defaults.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/agentic_architectures/architectures/base.py</code></summary>
-              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-67">67</a></span>
-<span class="normal"><a href="#__codelineno-0-68">68</a></span>
-<span class="normal"><a href="#__codelineno-0-69">69</a></span>
-<span class="normal"><a href="#__codelineno-0-70">70</a></span>
-<span class="normal"><a href="#__codelineno-0-71">71</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-67"><a id="__codelineno-0-67" name="__codelineno-0-67"></a><span class="k">def</span><span class="w"> </span><span class="nf">diagram</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="__span-0-68"><a id="__codelineno-0-68" name="__codelineno-0-68"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a Mermaid diagram string for the compiled graph.&quot;&quot;&quot;</span>
-</span><span id="__span-0-69"><a id="__codelineno-0-69" name="__codelineno-0-69"></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">agentic_architectures.ui.diagram</span><span class="w"> </span><span class="kn">import</span> <span class="n">graph_to_mermaid</span>
-</span><span id="__span-0-70"><a id="__codelineno-0-70" name="__codelineno-0-70"></a>
-</span><span id="__span-0-71"><a id="__codelineno-0-71" name="__codelineno-0-71"></a>    <span class="k">return</span> <span class="n">graph_to_mermaid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">build</span><span class="p">())</span>
+              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#agentic_architectures.architectures.base.Architecture.diagram--source--__codelineno-0-72">72</a></span>
+<span class="normal"><a href="#agentic_architectures.architectures.base.Architecture.diagram--source--__codelineno-0-73">73</a></span>
+<span class="normal"><a href="#agentic_architectures.architectures.base.Architecture.diagram--source--__codelineno-0-74">74</a></span>
+<span class="normal"><a href="#agentic_architectures.architectures.base.Architecture.diagram--source--__codelineno-0-75">75</a></span>
+<span class="normal"><a href="#agentic_architectures.architectures.base.Architecture.diagram--source--__codelineno-0-76">76</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="agentic_architectures.architectures.base.Architecture.diagram--source--__span-0-72"><a id="agentic_architectures.architectures.base.Architecture.diagram--source--__codelineno-0-72" name="agentic_architectures.architectures.base.Architecture.diagram--source--__codelineno-0-72"></a><span class="k">def</span><span class="w"> </span><span class="nf">diagram</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="agentic_architectures.architectures.base.Architecture.diagram--source--__span-0-73"><a id="agentic_architectures.architectures.base.Architecture.diagram--source--__codelineno-0-73" name="agentic_architectures.architectures.base.Architecture.diagram--source--__codelineno-0-73"></a><span class="w">    </span><span class="sd">"""Return a Mermaid diagram string for the compiled graph."""</span>
+</span><span id="agentic_architectures.architectures.base.Architecture.diagram--source--__span-0-74"><a id="agentic_architectures.architectures.base.Architecture.diagram--source--__codelineno-0-74" name="agentic_architectures.architectures.base.Architecture.diagram--source--__codelineno-0-74"></a>    <span class="kn">from</span><span class="w"> </span><span class="nn">agentic_architectures.ui.diagram</span><span class="w"> </span><span class="kn">import</span> <span class="n">graph_to_mermaid</span>
+</span><span id="agentic_architectures.architectures.base.Architecture.diagram--source--__span-0-75"><a id="agentic_architectures.architectures.base.Architecture.diagram--source--__codelineno-0-75" name="agentic_architectures.architectures.base.Architecture.diagram--source--__codelineno-0-75"></a>
+</span><span id="agentic_architectures.architectures.base.Architecture.diagram--source--__span-0-76"><a id="agentic_architectures.architectures.base.Architecture.diagram--source--__codelineno-0-76" name="agentic_architectures.architectures.base.Architecture.diagram--source--__codelineno-0-76"></a>    <span class="k">return</span> <span class="n">graph_to_mermaid</span><span class="p">(</span><span class="bp">self</span><span class="o">.</span><span class="n">build</span><span class="p">())</span>
 </span></code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -3120,11 +3160,11 @@ and <code>explain()</code> — both have sensible defaults.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/agentic_architectures/architectures/base.py</code></summary>
-              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-73">73</a></span>
-<span class="normal"><a href="#__codelineno-0-74">74</a></span>
-<span class="normal"><a href="#__codelineno-0-75">75</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-73"><a id="__codelineno-0-73" name="__codelineno-0-73"></a><span class="k">def</span><span class="w"> </span><span class="nf">explain</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="__span-0-74"><a id="__codelineno-0-74" name="__codelineno-0-74"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Return the theory section (markdown) for this architecture.&quot;&quot;&quot;</span>
-</span><span id="__span-0-75"><a id="__codelineno-0-75" name="__codelineno-0-75"></a>    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__doc__</span> <span class="ow">or</span> <span class="s2">&quot;(no description provided)&quot;</span>
+              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#agentic_architectures.architectures.base.Architecture.explain--source--__codelineno-0-78">78</a></span>
+<span class="normal"><a href="#agentic_architectures.architectures.base.Architecture.explain--source--__codelineno-0-79">79</a></span>
+<span class="normal"><a href="#agentic_architectures.architectures.base.Architecture.explain--source--__codelineno-0-80">80</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="agentic_architectures.architectures.base.Architecture.explain--source--__span-0-78"><a id="agentic_architectures.architectures.base.Architecture.explain--source--__codelineno-0-78" name="agentic_architectures.architectures.base.Architecture.explain--source--__codelineno-0-78"></a><span class="k">def</span><span class="w"> </span><span class="nf">explain</span><span class="p">(</span><span class="bp">self</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="agentic_architectures.architectures.base.Architecture.explain--source--__span-0-79"><a id="agentic_architectures.architectures.base.Architecture.explain--source--__codelineno-0-79" name="agentic_architectures.architectures.base.Architecture.explain--source--__codelineno-0-79"></a><span class="w">    </span><span class="sd">"""Return the theory section (markdown) for this architecture."""</span>
+</span><span id="agentic_architectures.architectures.base.Architecture.explain--source--__span-0-80"><a id="agentic_architectures.architectures.base.Architecture.explain--source--__codelineno-0-80" name="agentic_architectures.architectures.base.Architecture.explain--source--__codelineno-0-80"></a>    <span class="k">return</span> <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="ow">or</span> <span class="bp">self</span><span class="o">.</span><span class="vm">__doc__</span> <span class="ow">or</span> <span class="s2">"(no description provided)"</span>
 </span></code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -3304,10 +3344,10 @@ and <code>explain()</code> — both have sensible defaults.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.tracking", "navigation.footer", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.tracking", "navigation.footer", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
     
   </body>

@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="35 production-grade agentic AI architectures with LangGraph — every one fully runnable end-to-end, multi-provider (Nebius / OpenAI / Anthropic / Groq / Ollama), with real LLM outputs, deterministic-picker discipline, and a comparative benchmark leaderboard.
+        <meta name="description" content="36 production-grade agentic AI architectures with LangGraph, every one fully runnable end-to-end, multi-provider (Nebius / OpenAI / Anthropic / Groq / Ollama / ...), with real LLM outputs, deterministic-picker discipline, and a comparative benchmark leaderboard.
 ">
       
       
@@ -26,7 +26,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
     
     
       
@@ -34,10 +34,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -639,6 +639,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Provider compatibility matrix">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#any-openai-compatible-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Any OpenAI-compatible server
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -646,6 +663,17 @@
     <span class="md-ellipsis">
       
         Environment configuration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#web-search-without-a-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Web search without a key
       
     </span>
   </a>
@@ -668,6 +696,17 @@
     <span class="md-ellipsis">
       
         Capability matrix
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#local-models-with-ollama" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Local models with Ollama
       
     </span>
   </a>
@@ -1894,6 +1933,8 @@
       
         
       
+        
+      
     
     
     
@@ -2068,6 +2109,34 @@
     
   
     11 meta controller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architectures/36_mixture_of_agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    36 mixture of agents
   
 
     
@@ -2809,6 +2878,23 @@
     </span>
   </a>
   
+    <nav class="md-nav" aria-label="Provider compatibility matrix">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#any-openai-compatible-server" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Any OpenAI-compatible server
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
 </li>
       
         <li class="md-nav__item">
@@ -2816,6 +2902,17 @@
     <span class="md-ellipsis">
       
         Environment configuration
+      
+    </span>
+  </a>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#web-search-without-a-key" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Web search without a key
       
     </span>
   </a>
@@ -2844,6 +2941,17 @@
   
 </li>
       
+        <li class="md-nav__item">
+  <a href="#local-models-with-ollama" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Local models with Ollama
+      
+    </span>
+  </a>
+  
+</li>
+      
     </ul>
   
 </nav>
@@ -2865,29 +2973,32 @@
 
 
 <h1 id="switching-llm-providers">Switching LLM providers<a class="headerlink" href="#switching-llm-providers" title="Permanent link">&para;</a></h1>
-<p>Every architecture in this library is provider-agnostic. The same <code>Reflection</code> class works against Nebius Llama, OpenAI GPT-4o, Anthropic Claude, Groq, Ollama, Together, Fireworks, Mistral, or Google Gemini — you change one config setting.</p>
+<p>Every architecture in this library is provider-agnostic. The same <code>Reflection</code> class works against Nebius, OpenAI, Anthropic Claude, DeepSeek, Groq, Ollama, Together, Fireworks, Mistral, Google Gemini or OpenRouter: you change one config setting.</p>
 <h2 id="the-get_llm-factory">The <code>get_llm()</code> factory<a class="headerlink" href="#the-get_llm-factory" title="Permanent link">&para;</a></h2>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">agentic_architectures</span><span class="w"> </span><span class="kn">import</span> <span class="n">get_llm</span>
 </span><span id="__span-0-2"><a id="__codelineno-0-2" name="__codelineno-0-2" href="#__codelineno-0-2"></a>
-</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># Use whatever&#39;s in .env / settings</span>
+</span><span id="__span-0-3"><a id="__codelineno-0-3" name="__codelineno-0-3" href="#__codelineno-0-3"></a><span class="c1"># Use whatever's in .env / settings</span>
 </span><span id="__span-0-4"><a id="__codelineno-0-4" name="__codelineno-0-4" href="#__codelineno-0-4"></a><span class="n">llm</span> <span class="o">=</span> <span class="n">get_llm</span><span class="p">()</span>
 </span><span id="__span-0-5"><a id="__codelineno-0-5" name="__codelineno-0-5" href="#__codelineno-0-5"></a>
-</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1"># Override per-call</span>
-</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">llm</span> <span class="o">=</span> <span class="n">get_llm</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;openai&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o-mini&quot;</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
-</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">llm</span> <span class="o">=</span> <span class="n">get_llm</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;anthropic&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;claude-haiku-4-5-20251001&quot;</span><span class="p">)</span>
-</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">llm</span> <span class="o">=</span> <span class="n">get_llm</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;ollama&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;llama3.3:70b&quot;</span><span class="p">)</span>
+</span><span id="__span-0-6"><a id="__codelineno-0-6" name="__codelineno-0-6" href="#__codelineno-0-6"></a><span class="c1"># Override per-call; leave out the model to get that provider's recommended one</span>
+</span><span id="__span-0-7"><a id="__codelineno-0-7" name="__codelineno-0-7" href="#__codelineno-0-7"></a><span class="n">llm</span> <span class="o">=</span> <span class="n">get_llm</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"openai"</span><span class="p">,</span> <span class="n">temperature</span><span class="o">=</span><span class="mf">0.4</span><span class="p">)</span>
+</span><span id="__span-0-8"><a id="__codelineno-0-8" name="__codelineno-0-8" href="#__codelineno-0-8"></a><span class="n">llm</span> <span class="o">=</span> <span class="n">get_llm</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"anthropic"</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"claude-haiku-5-5"</span><span class="p">)</span>
+</span><span id="__span-0-9"><a id="__codelineno-0-9" name="__codelineno-0-9" href="#__codelineno-0-9"></a><span class="n">llm</span> <span class="o">=</span> <span class="n">get_llm</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"ollama"</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"qwen3:14b"</span><span class="p">)</span>
 </span></code></pre></div>
 <p>Pass the returned LLM into any architecture:</p>
 <div class="language-python highlight"><pre><span></span><code><span id="__span-1-1"><a id="__codelineno-1-1" name="__codelineno-1-1" href="#__codelineno-1-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">agentic_architectures.architectures</span><span class="w"> </span><span class="kn">import</span> <span class="n">Reflection</span>
 </span><span id="__span-1-2"><a id="__codelineno-1-2" name="__codelineno-1-2" href="#__codelineno-1-2"></a><span class="n">arch</span> <span class="o">=</span> <span class="n">Reflection</span><span class="p">(</span><span class="n">llm</span><span class="o">=</span><span class="n">llm</span><span class="p">)</span>
 </span></code></pre></div>
+<p><code>LLM_MODEL</code> belongs to <code>LLM_PROVIDER</code>. Asking for another provider without naming a model gives that provider's recommended model, never the configured provider's model name.</p>
 <h2 id="provider-compatibility-matrix">Provider compatibility matrix<a class="headerlink" href="#provider-compatibility-matrix" title="Permanent link">&para;</a></h2>
+<p>The recommended models were checked against each provider's own model and deprecation pages in November 2026.</p>
 <table>
 <thead>
 <tr>
 <th>Provider</th>
 <th>Extra to install</th>
 <th>Env var</th>
+<th>Recommended model</th>
 <th>Notes</th>
 </tr>
 </thead>
@@ -2896,79 +3007,127 @@
 <td><strong>Nebius</strong> (default)</td>
 <td><code>[nebius]</code></td>
 <td><code>NEBIUS_API_KEY</code></td>
-<td>Llama-3.3-70B + Qwen3-Thinking. Cheapest for the included demos.</td>
+<td><code>nvidia/Nemotron-3_5-Lightning</code></td>
+<td>Nebius' replacement for Llama 3.3 70B, which left its serverless API on Aug 31, 2026.</td>
 </tr>
 <tr>
 <td><strong>OpenAI</strong></td>
 <td><code>[openai]</code></td>
 <td><code>OPENAI_API_KEY</code></td>
-<td>All architectures work. Highest quality for reasoning architectures.</td>
+<td><code>gpt-6-luna</code></td>
+<td>Calls tools on Chat Completions only with <code>reasoning_effort="none"</code>, which <code>get_llm()</code> sets for this model.</td>
 </tr>
 <tr>
 <td><strong>Anthropic</strong></td>
 <td><code>[anthropic]</code></td>
 <td><code>ANTHROPIC_API_KEY</code></td>
-<td>Strong on long context. Required for true Computer-Use (nb 34) production.</td>
+<td><code>claude-sonnet-5-5</code></td>
+<td>Strong on long context and tool use. <code>claude-haiku-5-5</code> is the cheaper choice.</td>
+</tr>
+<tr>
+<td><strong>DeepSeek</strong></td>
+<td><code>[deepseek]</code></td>
+<td><code>DEEPSEEK_API_KEY</code></td>
+<td><code>deepseek-flash</code></td>
+<td>Through <code>langchain-deepseek</code>. <code>deepseek-chat</code> and <code>deepseek-reasoner</code> were retired on Jul 24, 2026.</td>
 </tr>
 <tr>
 <td><strong>Groq</strong></td>
 <td><code>[groq]</code></td>
 <td><code>GROQ_API_KEY</code></td>
+<td><code>openai/gpt-oss-120b</code></td>
 <td>Fast inference; good for high-volume Self-Consistency (nb 21).</td>
 </tr>
 <tr>
 <td><strong>Ollama</strong></td>
 <td><code>[ollama]</code></td>
-<td>—</td>
-<td>Fully local; no API key. Tool calling depends on model — Llama-3.3 instruct works.</td>
+<td>none</td>
+<td><code>qwen3:8b</code></td>
+<td>Fully local, no API key. <code>qwen3:14b</code> is stronger if it fits your GPU.</td>
 </tr>
 <tr>
 <td><strong>Together</strong></td>
 <td><code>[together]</code></td>
 <td><code>TOGETHER_API_KEY</code></td>
+<td><code>openai/gpt-oss-120b</code></td>
 <td>Wide model catalogue.</td>
 </tr>
 <tr>
 <td><strong>Fireworks</strong></td>
 <td><code>[fireworks]</code></td>
 <td><code>FIREWORKS_API_KEY</code></td>
-<td>Function-calling first-class.</td>
+<td><code>accounts/fireworks/models/glm-5p3-flash</code></td>
+<td>Function calling first-class.</td>
 </tr>
 <tr>
 <td><strong>Mistral</strong></td>
 <td><code>[mistral]</code></td>
 <td><code>MISTRAL_API_KEY</code></td>
-<td>EU-hosted option.</td>
+<td><code>mistral-large-latest</code></td>
+<td>EU-hosted option. The alias points to Mistral Large 4.</td>
 </tr>
 <tr>
 <td><strong>Google</strong></td>
 <td><code>[google]</code></td>
 <td><code>GOOGLE_API_KEY</code></td>
-<td>Gemini-2.x via Generative AI API.</td>
+<td><code>gemini-3.5-flash-lite</code></td>
+<td>Free tier available.</td>
+</tr>
+<tr>
+<td><strong>OpenRouter</strong></td>
+<td><code>[openrouter]</code></td>
+<td><code>OPENROUTER_API_KEY</code></td>
+<td><code>openai/gpt-oss-120b</code></td>
+<td>One key for hundreds of models, MiniMax (<code>minimax/minimax-m3.1-flash</code>) and Qwen among them.</td>
 </tr>
 </tbody>
 </table>
+<p>Providers retire models often: six of the defaults this library shipped with in May 2026 had been retired or deprecated by November. If a recommended model stops answering, set <code>LLM_MODEL</code> to the replacement the provider's deprecation page names.</p>
+<h3 id="any-openai-compatible-server">Any OpenAI-compatible server<a class="headerlink" href="#any-openai-compatible-server" title="Permanent link">&para;</a></h3>
+<p>vLLM, LM Studio, llama.cpp's server and most hosted APIs speak the OpenAI protocol. Point the <code>openai</code> provider at one with <code>OPENAI_BASE_URL</code>:</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># e.g. a local vLLM server: vllm serve Qwen/Qwen3-14B --enable-auto-tool-choice --tool-call-parser hermes</span>
+</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="na">LLM_PROVIDER</span><span class="o">=</span><span class="s">openai</span>
+</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="na">LLM_MODEL</span><span class="o">=</span><span class="s">Qwen/Qwen3-14B</span>
+</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="na">OPENAI_BASE_URL</span><span class="o">=</span><span class="s">http://localhost:8000/v1</span>
+</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a><span class="na">OPENAI_API_KEY</span><span class="o">=</span><span class="s">unused</span>
+</span></code></pre></div>
+<p>Provider-specific extras, such as replaying a reasoning model's thinking across tool turns, need that provider's own LangChain integration.</p>
 <h2 id="environment-configuration">Environment configuration<a class="headerlink" href="#environment-configuration" title="Permanent link">&para;</a></h2>
-<p>Settings load from <code>.env</code> at the repo root. Minimum:</p>
-<div class="language-ini highlight"><pre><span></span><code><span id="__span-2-1"><a id="__codelineno-2-1" name="__codelineno-2-1" href="#__codelineno-2-1"></a><span class="c1"># .env</span>
-</span><span id="__span-2-2"><a id="__codelineno-2-2" name="__codelineno-2-2" href="#__codelineno-2-2"></a><span class="na">LLM_PROVIDER</span><span class="o">=</span><span class="s">nebius</span>
-</span><span id="__span-2-3"><a id="__codelineno-2-3" name="__codelineno-2-3" href="#__codelineno-2-3"></a><span class="na">LLM_MODEL</span><span class="o">=</span><span class="s">meta-llama/Llama-3.3-70B-Instruct</span>
-</span><span id="__span-2-4"><a id="__codelineno-2-4" name="__codelineno-2-4" href="#__codelineno-2-4"></a><span class="na">LLM_TEMPERATURE</span><span class="o">=</span><span class="s">0.2</span>
-</span><span id="__span-2-5"><a id="__codelineno-2-5" name="__codelineno-2-5" href="#__codelineno-2-5"></a>
-</span><span id="__span-2-6"><a id="__codelineno-2-6" name="__codelineno-2-6" href="#__codelineno-2-6"></a><span class="na">NEBIUS_API_KEY</span><span class="o">=</span><span class="s">sk-...</span>
-</span><span id="__span-2-7"><a id="__codelineno-2-7" name="__codelineno-2-7" href="#__codelineno-2-7"></a><span class="na">TAVILY_API_KEY</span><span class="o">=</span><span class="s">tvly-...</span>
-</span><span id="__span-2-8"><a id="__codelineno-2-8" name="__codelineno-2-8" href="#__codelineno-2-8"></a><span class="na">LANGSMITH_API_KEY</span><span class="o">=</span><span class="s">ls-...</span><span class="w">           </span><span class="c1"># optional, for tracing</span>
-</span><span id="__span-2-9"><a id="__codelineno-2-9" name="__codelineno-2-9" href="#__codelineno-2-9"></a><span class="na">LANGSMITH_PROJECT</span><span class="o">=</span><span class="s">all-agentic-architectures</span>
+<p>Settings load from <code>.env</code> at the repo root (start from <code>.env.example</code>). Minimum:</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="c1"># .env</span>
+</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="na">LLM_PROVIDER</span><span class="o">=</span><span class="s">nebius</span>
+</span><span id="__span-3-3"><a id="__codelineno-3-3" name="__codelineno-3-3" href="#__codelineno-3-3"></a><span class="na">LLM_MODEL</span><span class="o">=</span><span class="w">                         </span><span class="c1"># empty: the provider's recommended model</span>
+</span><span id="__span-3-4"><a id="__codelineno-3-4" name="__codelineno-3-4" href="#__codelineno-3-4"></a><span class="na">LLM_TEMPERATURE</span><span class="o">=</span><span class="s">0.2</span>
+</span><span id="__span-3-5"><a id="__codelineno-3-5" name="__codelineno-3-5" href="#__codelineno-3-5"></a>
+</span><span id="__span-3-6"><a id="__codelineno-3-6" name="__codelineno-3-6" href="#__codelineno-3-6"></a><span class="na">NEBIUS_API_KEY</span><span class="o">=</span><span class="s">...</span>
+</span><span id="__span-3-7"><a id="__codelineno-3-7" name="__codelineno-3-7" href="#__codelineno-3-7"></a><span class="na">SEARCH_BACKEND</span><span class="o">=</span><span class="s">mcp</span><span class="w">                 </span><span class="c1"># web search with no key, see below</span>
+</span><span id="__span-3-8"><a id="__codelineno-3-8" name="__codelineno-3-8" href="#__codelineno-3-8"></a><span class="na">LANGSMITH_API_KEY</span><span class="o">=</span><span class="s">ls-...</span><span class="w">           </span><span class="c1"># optional, for tracing</span>
+</span><span id="__span-3-9"><a id="__codelineno-3-9" name="__codelineno-3-9" href="#__codelineno-3-9"></a><span class="na">LANGSMITH_PROJECT</span><span class="o">=</span><span class="s">all-agentic-architectures</span>
 </span></code></pre></div>
-<p>To switch globally, change <code>LLM_PROVIDER</code> + the corresponding key. No code changes needed.</p>
+<p>To switch globally, change <code>LLM_PROVIDER</code> and the corresponding key. No code changes needed. An empty value in <code>.env</code> means "not set".</p>
+<h2 id="web-search-without-a-key">Web search without a key<a class="headerlink" href="#web-search-without-a-key" title="Permanent link">&para;</a></h2>
+<p>The architectures that search (ToolUse, ReAct, Planning, PEV, Multi-Agent, ...) use Tavily by default, which needs <code>TAVILY_API_KEY</code>. With <code>SEARCH_BACKEND=mcp</code> they use the search tool of the MCP server at <code>SEARCH_MCP_URL</code> instead: Parallel's free, keyless search server by default, so they run without signing up anywhere.</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="na">SEARCH_BACKEND</span><span class="o">=</span><span class="s">mcp</span>
+</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="na">SEARCH_MCP_URL</span><span class="o">=</span><span class="s">https://search.parallel.ai/mcp</span>
+</span><span id="__span-4-3"><a id="__codelineno-4-3" name="__codelineno-4-3" href="#__codelineno-4-3"></a><span class="na">SEARCH_MCP_API_KEY</span><span class="o">=</span><span class="w">                </span><span class="c1"># optional, sent as a bearer token</span>
+</span></code></pre></div>
+<p>The keyless tier is rate-limited: running every search architecture back to back can hit
+the limit, and the run then stops with the server's message. A Parallel key in
+<code>SEARCH_MCP_API_KEY</code> lifts it.</p>
+<p>Any MCP server's tools can be handed to an architecture directly, too:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-5-1"><a id="__codelineno-5-1" name="__codelineno-5-1" href="#__codelineno-5-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">agentic_architectures.architectures</span><span class="w"> </span><span class="kn">import</span> <span class="n">ReAct</span>
+</span><span id="__span-5-2"><a id="__codelineno-5-2" name="__codelineno-5-2" href="#__codelineno-5-2"></a><span class="kn">from</span><span class="w"> </span><span class="nn">agentic_architectures.tools</span><span class="w"> </span><span class="kn">import</span> <span class="n">mcp_tools</span>
+</span><span id="__span-5-3"><a id="__codelineno-5-3" name="__codelineno-5-3" href="#__codelineno-5-3"></a>
+</span><span id="__span-5-4"><a id="__codelineno-5-4" name="__codelineno-5-4" href="#__codelineno-5-4"></a><span class="n">ReAct</span><span class="p">(</span><span class="n">tools</span><span class="o">=</span><span class="n">mcp_tools</span><span class="p">(</span><span class="s2">"https://search.parallel.ai/mcp"</span><span class="p">))</span>
+</span></code></pre></div>
+<p>Both need <code>pip install agentic-architectures[mcp]</code>.</p>
 <h2 id="when-youd-override-per-architecture">When you'd override per-architecture<a class="headerlink" href="#when-youd-override-per-architecture" title="Permanent link">&para;</a></h2>
-<p>Reasoning architectures (nb 19, 20, 21, 22) default to Qwen3-Thinking for higher quality on multi-step structured reasoning. If you want them on a cheaper model:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-3-1"><a id="__codelineno-3-1" name="__codelineno-3-1" href="#__codelineno-3-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">agentic_architectures.architectures</span><span class="w"> </span><span class="kn">import</span> <span class="n">LATS</span>
-</span><span id="__span-3-2"><a id="__codelineno-3-2" name="__codelineno-3-2" href="#__codelineno-3-2"></a><span class="n">arch</span> <span class="o">=</span> <span class="n">LATS</span><span class="p">(</span><span class="n">llm</span><span class="o">=</span><span class="n">get_llm</span><span class="p">(</span><span class="n">model</span><span class="o">=</span><span class="s2">&quot;meta-llama/Llama-3.3-70B-Instruct&quot;</span><span class="p">))</span>
+<p>The reasoning notebooks (nb 03, 04, 09, 19, 20, 22) use <code>LLM_REASONING_MODEL</code> where a reasoning ("thinking") model makes the difference. It defaults to <code>LLM_MODEL</code>; set it to a thinking model to see the contrast:</p>
+<div class="language-ini highlight"><pre><span></span><code><span id="__span-6-1"><a id="__codelineno-6-1" name="__codelineno-6-1" href="#__codelineno-6-1"></a><span class="na">LLM_REASONING_MODEL</span><span class="o">=</span><span class="s">deepseek-v4-pro</span>
 </span></code></pre></div>
-<p>Or the opposite — force a single architecture onto a stronger model:</p>
-<div class="language-python highlight"><pre><span></span><code><span id="__span-4-1"><a id="__codelineno-4-1" name="__codelineno-4-1" href="#__codelineno-4-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">agentic_architectures.architectures</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChainOfVerification</span>
-</span><span id="__span-4-2"><a id="__codelineno-4-2" name="__codelineno-4-2" href="#__codelineno-4-2"></a><span class="n">arch</span> <span class="o">=</span> <span class="n">ChainOfVerification</span><span class="p">(</span><span class="n">llm</span><span class="o">=</span><span class="n">get_llm</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">&quot;openai&quot;</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">&quot;gpt-4o&quot;</span><span class="p">))</span>
+<p>Or force a single architecture onto a different model in code:</p>
+<div class="language-python highlight"><pre><span></span><code><span id="__span-7-1"><a id="__codelineno-7-1" name="__codelineno-7-1" href="#__codelineno-7-1"></a><span class="kn">from</span><span class="w"> </span><span class="nn">agentic_architectures.architectures</span><span class="w"> </span><span class="kn">import</span> <span class="n">ChainOfVerification</span>
+</span><span id="__span-7-2"><a id="__codelineno-7-2" name="__codelineno-7-2" href="#__codelineno-7-2"></a><span class="n">arch</span> <span class="o">=</span> <span class="n">ChainOfVerification</span><span class="p">(</span><span class="n">llm</span><span class="o">=</span><span class="n">get_llm</span><span class="p">(</span><span class="n">provider</span><span class="o">=</span><span class="s2">"anthropic"</span><span class="p">,</span> <span class="n">model</span><span class="o">=</span><span class="s2">"claude-opus-5-5"</span><span class="p">))</span>
 </span></code></pre></div>
 <h2 id="capability-matrix">Capability matrix<a class="headerlink" href="#capability-matrix" title="Permanent link">&para;</a></h2>
 <table>
@@ -2982,13 +3141,13 @@
 <tbody>
 <tr>
 <td><code>with_structured_output(Schema)</code></td>
-<td>nb 04, 06, 09, 10, 13, 15, 17-35</td>
+<td>nb 04, 06, 09, 10, 13, 15, 17-36</td>
 <td>All listed above</td>
 </tr>
 <tr>
 <td><code>bind_tools([...])</code></td>
 <td>nb 02, 03, 05, 11</td>
-<td>All except some Ollama tool-uncapable models</td>
+<td>All except Ollama models without tool support</td>
 </tr>
 <tr>
 <td><code>bind(temperature=...)</code> per-call override</td>
@@ -2997,7 +3156,9 @@
 </tr>
 </tbody>
 </table>
-<p>If an architecture fails on a provider, the failure is usually a missing capability — see the notebook's §10 "Try other providers" cell for graceful-skip patterns.</p>
+<p>If an architecture fails on a provider, the failure is usually a missing capability: see the notebook's §10 "Try other providers" cell for graceful-skip patterns.</p>
+<h2 id="local-models-with-ollama">Local models with Ollama<a class="headerlink" href="#local-models-with-ollama" title="Permanent link">&para;</a></h2>
+<p><code>get_llm(provider="ollama")</code> asks Ollama for a 16,384-token context window. Ollama's own default is 4,096 tokens, and it silently drops the start of a longer prompt, which the RAG and multi-agent prompts here exceed. Pass <code>num_ctx=</code> to choose another size.</p>
 
 
 
@@ -3111,10 +3272,10 @@
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.tracking", "navigation.footer", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.tracking", "navigation.footer", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
     
   </body>

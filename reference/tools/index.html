@@ -6,7 +6,7 @@
       <meta charset="utf-8">
       <meta name="viewport" content="width=device-width,initial-scale=1">
       
-        <meta name="description" content="35 production-grade agentic AI architectures with LangGraph — every one fully runnable end-to-end, multi-provider (Nebius / OpenAI / Anthropic / Groq / Ollama), with real LLM outputs, deterministic-picker discipline, and a comparative benchmark leaderboard.
+        <meta name="description" content="36 production-grade agentic AI architectures with LangGraph, every one fully runnable end-to-end, multi-provider (Nebius / OpenAI / Anthropic / Groq / Ollama / ...), with real LLM outputs, deterministic-picker discipline, and a comparative benchmark leaderboard.
 ">
       
       
@@ -26,7 +26,7 @@
       
       
       <link rel="icon" href="../../assets/images/favicon.png">
-      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.7.6">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
     
     
       
@@ -34,10 +34,10 @@
       
     
     
-      <link rel="stylesheet" href="../../assets/stylesheets/main.484c7ddc.min.css">
+      <link rel="stylesheet" href="../../assets/stylesheets/main.57a0d79d.min.css">
       
         
-        <link rel="stylesheet" href="../../assets/stylesheets/palette.ab4e12ef.min.css">
+        <link rel="stylesheet" href="../../assets/stylesheets/palette.fb2fffe2.min.css">
       
       
 
@@ -1789,6 +1789,8 @@
       
         
       
+        
+      
     
     
     
@@ -1963,6 +1965,34 @@
     
   
     11 meta controller
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+              
+            
+              
+                
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../../architectures/36_mixture_of_agents/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    36 mixture of agents
   
 
     
@@ -2831,61 +2861,123 @@
 
 
 <a href="#agentic_architectures.tools.web_search_tool" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">web_search_tool</span><span class="p">(</span><span class="n">max_results</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">search_depth</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;advanced&#39;</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BaseTool</span>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">web_search_tool</span><span class="p">(</span><span class="n">max_results</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span> <span class="n">search_depth</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'advanced'</span><span class="p">,</span> <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BaseTool</span>
 </span></code></pre></div>
 
     <div class="doc doc-contents first">
 
-        <p>Return a configured Tavily search tool.</p>
+        <p>Return the configured web search tool.</p>
+<p>With SEARCH_BACKEND=mcp, <code>max_results</code> and <code>search_depth</code> do not apply: the MCP
+server decides how much it returns.</p>
+
+
+<p><span class="doc-section-title">Raises:</span></p>
+    <table>
+      <thead>
+        <tr>
+          <th>Type</th>
+          <th>Description</th>
+        </tr>
+      </thead>
+      <tbody>
+          <tr class="doc-section-item">
+            <td>
+                  <code><span title="RuntimeError">RuntimeError</span></code>
+            </td>
+            <td>
+              <div class="doc-md-description">
+                <p>Tavily is selected and TAVILY_API_KEY is not set. Searching nothing
+quietly would let an agent answer from memory while looking like it searched.</p>
+              </div>
+            </td>
+          </tr>
+      </tbody>
+    </table>
 
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/agentic_architectures/tools/search.py</code></summary>
-              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-18">18</a></span>
-<span class="normal"><a href="#__codelineno-0-19">19</a></span>
-<span class="normal"><a href="#__codelineno-0-20">20</a></span>
-<span class="normal"><a href="#__codelineno-0-21">21</a></span>
-<span class="normal"><a href="#__codelineno-0-22">22</a></span>
-<span class="normal"><a href="#__codelineno-0-23">23</a></span>
-<span class="normal"><a href="#__codelineno-0-24">24</a></span>
-<span class="normal"><a href="#__codelineno-0-25">25</a></span>
-<span class="normal"><a href="#__codelineno-0-26">26</a></span>
-<span class="normal"><a href="#__codelineno-0-27">27</a></span>
-<span class="normal"><a href="#__codelineno-0-28">28</a></span>
-<span class="normal"><a href="#__codelineno-0-29">29</a></span>
-<span class="normal"><a href="#__codelineno-0-30">30</a></span>
-<span class="normal"><a href="#__codelineno-0-31">31</a></span>
-<span class="normal"><a href="#__codelineno-0-32">32</a></span>
-<span class="normal"><a href="#__codelineno-0-33">33</a></span>
-<span class="normal"><a href="#__codelineno-0-34">34</a></span>
-<span class="normal"><a href="#__codelineno-0-35">35</a></span>
-<span class="normal"><a href="#__codelineno-0-36">36</a></span>
-<span class="normal"><a href="#__codelineno-0-37">37</a></span>
-<span class="normal"><a href="#__codelineno-0-38">38</a></span>
-<span class="normal"><a href="#__codelineno-0-39">39</a></span>
-<span class="normal"><a href="#__codelineno-0-40">40</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="k">def</span><span class="w"> </span><span class="nf">web_search_tool</span><span class="p">(</span>
-</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19"></a>    <span class="n">max_results</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
-</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20"></a>    <span class="n">search_depth</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;advanced&quot;</span><span class="p">,</span>
-</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21"></a>    <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
-</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BaseTool</span><span class="p">:</span>
-</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Return a configured Tavily search tool.&quot;&quot;&quot;</span>
-</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24"></a>    <span class="k">try</span><span class="p">:</span>
-</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25"></a>        <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_tavily</span><span class="w"> </span><span class="kn">import</span> <span class="n">TavilySearch</span>
-</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26"></a>    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
-</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27"></a>        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">&quot;pip install agentic-architectures[tavily]&quot;</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
-</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28"></a>
-</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29"></a>    <span class="n">key</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">tavily_api_key</span>
-</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30"></a>    <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31"></a>        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
-</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32"></a>            <span class="s2">&quot;TAVILY_API_KEY not set. Sign up free at https://app.tavily.com and add the key to your .env file.&quot;</span>
-</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33"></a>        <span class="p">)</span>
-</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34"></a>
-</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35"></a>    <span class="k">return</span> <span class="n">TavilySearch</span><span class="p">(</span>
-</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36"></a>        <span class="n">max_results</span><span class="o">=</span><span class="n">max_results</span><span class="p">,</span>
-</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37"></a>        <span class="n">search_depth</span><span class="o">=</span><span class="n">search_depth</span><span class="p">,</span>
-</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38"></a>        <span class="n">tavily_api_key</span><span class="o">=</span><span class="n">key</span><span class="o">.</span><span class="n">get_secret_value</span><span class="p">(),</span>
-</span><span id="__span-0-39"><a id="__codelineno-0-39" name="__codelineno-0-39"></a>        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
-</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40"></a>    <span class="p">)</span>
+              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-25">25</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-26">26</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-27">27</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-28">28</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-29">29</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-30">30</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-31">31</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-32">32</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-33">33</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-34">34</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-35">35</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-36">36</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-37">37</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-38">38</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-39">39</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-40">40</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-41">41</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-42">42</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-43">43</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-44">44</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-45">45</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-46">46</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-47">47</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-48">48</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-49">49</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-50">50</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-51">51</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-52">52</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-53">53</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-54">54</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-55">55</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-56">56</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-57">57</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-58">58</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-59">59</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-60">60</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.web_search_tool--source--__codelineno-0-61">61</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="agentic_architectures.tools.web_search_tool--source--__span-0-21"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-21" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-21"></a><span class="k">def</span><span class="w"> </span><span class="nf">web_search_tool</span><span class="p">(</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-22"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-22" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-22"></a>    <span class="n">max_results</span><span class="p">:</span> <span class="nb">int</span> <span class="o">=</span> <span class="mi">5</span><span class="p">,</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-23"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-23" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-23"></a>    <span class="n">search_depth</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"advanced"</span><span class="p">,</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-24"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-24" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-24"></a>    <span class="o">**</span><span class="n">kwargs</span><span class="p">:</span> <span class="n">Any</span><span class="p">,</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-25"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-25" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-25"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="n">BaseTool</span><span class="p">:</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-26"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-26" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-26"></a><span class="w">    </span><span class="sd">"""Return the configured web search tool.</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-27"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-27" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-27"></a>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-28"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-28" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-28"></a><span class="sd">    With SEARCH_BACKEND=mcp, ``max_results`` and ``search_depth`` do not apply: the MCP</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-29"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-29" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-29"></a><span class="sd">    server decides how much it returns.</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-30"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-30" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-30"></a>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-31"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-31" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-31"></a><span class="sd">    Raises:</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-32"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-32" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-32"></a><span class="sd">        RuntimeError: Tavily is selected and TAVILY_API_KEY is not set. Searching nothing</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-33"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-33" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-33"></a><span class="sd">            quietly would let an agent answer from memory while looking like it searched.</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-34"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-34" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-34"></a><span class="sd">    """</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-35"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-35" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-35"></a>    <span class="k">if</span> <span class="n">settings</span><span class="o">.</span><span class="n">search_backend</span> <span class="o">==</span> <span class="s2">"mcp"</span><span class="p">:</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-36"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-36" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-36"></a>        <span class="kn">from</span><span class="w"> </span><span class="nn">agentic_architectures.tools.mcp</span><span class="w"> </span><span class="kn">import</span> <span class="n">mcp_tools</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-37"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-37" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-37"></a>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-38"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-38" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-38"></a>        <span class="n">key</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">search_mcp_api_key</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-39"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-39" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-39"></a>        <span class="n">headers</span> <span class="o">=</span> <span class="p">{</span><span class="s2">"Authorization"</span><span class="p">:</span> <span class="sa">f</span><span class="s2">"Bearer </span><span class="si">{</span><span class="n">key</span><span class="o">.</span><span class="n">get_secret_value</span><span class="p">()</span><span class="si">}</span><span class="s2">"</span><span class="p">}</span> <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="ow">not</span> <span class="kc">None</span> <span class="k">else</span> <span class="kc">None</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-40"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-40" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-40"></a>        <span class="n">tools</span> <span class="o">=</span> <span class="n">mcp_tools</span><span class="p">(</span><span class="n">settings</span><span class="o">.</span><span class="n">search_mcp_url</span><span class="p">,</span> <span class="n">headers</span><span class="o">=</span><span class="n">headers</span><span class="p">)</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-41"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-41" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-41"></a>        <span class="k">return</span> <span class="nb">next</span><span class="p">((</span><span class="n">t</span> <span class="k">for</span> <span class="n">t</span> <span class="ow">in</span> <span class="n">tools</span> <span class="k">if</span> <span class="s2">"search"</span> <span class="ow">in</span> <span class="n">t</span><span class="o">.</span><span class="n">name</span><span class="o">.</span><span class="n">lower</span><span class="p">()),</span> <span class="n">tools</span><span class="p">[</span><span class="mi">0</span><span class="p">])</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-42"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-42" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-42"></a>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-43"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-43" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-43"></a>    <span class="k">try</span><span class="p">:</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-44"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-44" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-44"></a>        <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_tavily</span><span class="w"> </span><span class="kn">import</span> <span class="n">TavilySearch</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-45"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-45" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-45"></a>    <span class="k">except</span> <span class="ne">ImportError</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-46"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-46" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-46"></a>        <span class="k">raise</span> <span class="ne">ImportError</span><span class="p">(</span><span class="s2">"pip install agentic-architectures[tavily]"</span><span class="p">)</span> <span class="kn">from</span><span class="w"> </span><span class="nn">e</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-47"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-47" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-47"></a>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-48"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-48" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-48"></a>    <span class="n">key</span> <span class="o">=</span> <span class="n">settings</span><span class="o">.</span><span class="n">tavily_api_key</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-49"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-49" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-49"></a>    <span class="k">if</span> <span class="n">key</span> <span class="ow">is</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-50"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-50" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-50"></a>        <span class="k">raise</span> <span class="ne">RuntimeError</span><span class="p">(</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-51"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-51" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-51"></a>            <span class="s2">"TAVILY_API_KEY not set. Sign up free at https://app.tavily.com and add the key to your .env file, "</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-52"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-52" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-52"></a>            <span class="s2">"or set SEARCH_BACKEND=mcp to search through a free, keyless MCP server "</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-53"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-53" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-53"></a>            <span class="s2">"(pip install agentic-architectures[mcp])."</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-54"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-54" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-54"></a>        <span class="p">)</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-55"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-55" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-55"></a>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-56"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-56" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-56"></a>    <span class="k">return</span> <span class="n">TavilySearch</span><span class="p">(</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-57"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-57" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-57"></a>        <span class="n">max_results</span><span class="o">=</span><span class="n">max_results</span><span class="p">,</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-58"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-58" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-58"></a>        <span class="n">search_depth</span><span class="o">=</span><span class="n">search_depth</span><span class="p">,</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-59"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-59" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-59"></a>        <span class="n">tavily_api_key</span><span class="o">=</span><span class="n">key</span><span class="o">.</span><span class="n">get_secret_value</span><span class="p">(),</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-60"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-60" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-60"></a>        <span class="o">**</span><span class="n">kwargs</span><span class="p">,</span>
+</span><span id="agentic_architectures.tools.web_search_tool--source--__span-0-61"><a id="agentic_architectures.tools.web_search_tool--source--__codelineno-0-61" name="agentic_architectures.tools.web_search_tool--source--__codelineno-0-61"></a>    <span class="p">)</span>
 </span></code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -2912,57 +3004,57 @@ string manipulation, parsing, simple data transformation.</p>
 
             <details class="mkdocstrings-source">
               <summary>Source code in <code>src/agentic_architectures/tools/code_exec.py</code></summary>
-              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-18">18</a></span>
-<span class="normal"><a href="#__codelineno-0-19">19</a></span>
-<span class="normal"><a href="#__codelineno-0-20">20</a></span>
-<span class="normal"><a href="#__codelineno-0-21">21</a></span>
-<span class="normal"><a href="#__codelineno-0-22">22</a></span>
-<span class="normal"><a href="#__codelineno-0-23">23</a></span>
-<span class="normal"><a href="#__codelineno-0-24">24</a></span>
-<span class="normal"><a href="#__codelineno-0-25">25</a></span>
-<span class="normal"><a href="#__codelineno-0-26">26</a></span>
-<span class="normal"><a href="#__codelineno-0-27">27</a></span>
-<span class="normal"><a href="#__codelineno-0-28">28</a></span>
-<span class="normal"><a href="#__codelineno-0-29">29</a></span>
-<span class="normal"><a href="#__codelineno-0-30">30</a></span>
-<span class="normal"><a href="#__codelineno-0-31">31</a></span>
-<span class="normal"><a href="#__codelineno-0-32">32</a></span>
-<span class="normal"><a href="#__codelineno-0-33">33</a></span>
-<span class="normal"><a href="#__codelineno-0-34">34</a></span>
-<span class="normal"><a href="#__codelineno-0-35">35</a></span>
-<span class="normal"><a href="#__codelineno-0-36">36</a></span>
-<span class="normal"><a href="#__codelineno-0-37">37</a></span>
-<span class="normal"><a href="#__codelineno-0-38">38</a></span>
-<span class="normal"><a href="#__codelineno-0-39">39</a></span>
-<span class="normal"><a href="#__codelineno-0-40">40</a></span>
-<span class="normal"><a href="#__codelineno-0-41">41</a></span>
-<span class="normal"><a href="#__codelineno-0-42">42</a></span>
-<span class="normal"><a href="#__codelineno-0-43">43</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-18"><a id="__codelineno-0-18" name="__codelineno-0-18"></a><span class="nd">@tool</span>
-</span><span id="__span-0-19"><a id="__codelineno-0-19" name="__codelineno-0-19"></a><span class="k">def</span><span class="w"> </span><span class="nf">python_repl_tool</span><span class="p">(</span><span class="n">code</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
-</span><span id="__span-0-20"><a id="__codelineno-0-20" name="__codelineno-0-20"></a><span class="w">    </span><span class="sd">&quot;&quot;&quot;Execute a snippet of Python code and return stdout (or the error).</span>
-</span><span id="__span-0-21"><a id="__codelineno-0-21" name="__codelineno-0-21"></a>
-</span><span id="__span-0-22"><a id="__codelineno-0-22" name="__codelineno-0-22"></a><span class="sd">    Use this when you need to compute something deterministic — math,</span>
-</span><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="sd">    string manipulation, parsing, simple data transformation.</span>
-</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24"></a><span class="sd">    &quot;&quot;&quot;</span>
-</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25"></a>    <span class="k">try</span><span class="p">:</span>
-</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26"></a>        <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_experimental.utilities</span><span class="w"> </span><span class="kn">import</span> <span class="n">PythonREPL</span>
-</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27"></a>    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
-</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28"></a>        <span class="c1"># Fallback to a built-in minimal exec for environments without langchain-experimental.</span>
-</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29"></a>        <span class="kn">import</span><span class="w"> </span><span class="nn">contextlib</span>
-</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30"></a>        <span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
-</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31"></a>
-</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32"></a>        <span class="n">buf</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
-</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33"></a>        <span class="n">local_vars</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">object</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
-</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34"></a>        <span class="k">try</span><span class="p">:</span>
-</span><span id="__span-0-35"><a id="__codelineno-0-35" name="__codelineno-0-35"></a>            <span class="k">with</span> <span class="n">contextlib</span><span class="o">.</span><span class="n">redirect_stdout</span><span class="p">(</span><span class="n">buf</span><span class="p">):</span>
-</span><span id="__span-0-36"><a id="__codelineno-0-36" name="__codelineno-0-36"></a>                <span class="n">exec</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="p">{</span><span class="s2">&quot;__builtins__&quot;</span><span class="p">:</span> <span class="n">__builtins__</span><span class="p">},</span> <span class="n">local_vars</span><span class="p">)</span>  <span class="c1"># noqa: S102</span>
-</span><span id="__span-0-37"><a id="__codelineno-0-37" name="__codelineno-0-37"></a>            <span class="n">out</span> <span class="o">=</span> <span class="n">buf</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
-</span><span id="__span-0-38"><a id="__codelineno-0-38" name="__codelineno-0-38"></a>            <span class="k">return</span> <span class="n">out</span> <span class="k">if</span> <span class="n">out</span> <span class="k">else</span> <span class="nb">repr</span><span class="p">(</span><span class="n">local_vars</span><span class="p">)</span>
-</span><span id="__span-0-39"><a id="__codelineno-0-39" name="__codelineno-0-39"></a>        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># pragma: no cover  (deterministic enough)</span>
-</span><span id="__span-0-40"><a id="__codelineno-0-40" name="__codelineno-0-40"></a>            <span class="k">return</span> <span class="sa">f</span><span class="s2">&quot;ERROR: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">&quot;</span>
-</span><span id="__span-0-41"><a id="__codelineno-0-41" name="__codelineno-0-41"></a>
-</span><span id="__span-0-42"><a id="__codelineno-0-42" name="__codelineno-0-42"></a>    <span class="n">repl</span> <span class="o">=</span> <span class="n">PythonREPL</span><span class="p">()</span>
-</span><span id="__span-0-43"><a id="__codelineno-0-43" name="__codelineno-0-43"></a>    <span class="k">return</span> <span class="n">repl</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
+              <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#agentic_architectures.tools.python_repl_tool--source--__codelineno-0-18">18</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.python_repl_tool--source--__codelineno-0-19">19</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.python_repl_tool--source--__codelineno-0-20">20</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.python_repl_tool--source--__codelineno-0-21">21</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.python_repl_tool--source--__codelineno-0-22">22</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.python_repl_tool--source--__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.python_repl_tool--source--__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.python_repl_tool--source--__codelineno-0-25">25</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.python_repl_tool--source--__codelineno-0-26">26</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.python_repl_tool--source--__codelineno-0-27">27</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.python_repl_tool--source--__codelineno-0-28">28</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.python_repl_tool--source--__codelineno-0-29">29</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.python_repl_tool--source--__codelineno-0-30">30</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.python_repl_tool--source--__codelineno-0-31">31</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.python_repl_tool--source--__codelineno-0-32">32</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.python_repl_tool--source--__codelineno-0-33">33</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.python_repl_tool--source--__codelineno-0-34">34</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.python_repl_tool--source--__codelineno-0-35">35</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.python_repl_tool--source--__codelineno-0-36">36</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.python_repl_tool--source--__codelineno-0-37">37</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.python_repl_tool--source--__codelineno-0-38">38</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.python_repl_tool--source--__codelineno-0-39">39</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.python_repl_tool--source--__codelineno-0-40">40</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.python_repl_tool--source--__codelineno-0-41">41</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.python_repl_tool--source--__codelineno-0-42">42</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.python_repl_tool--source--__codelineno-0-43">43</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="agentic_architectures.tools.python_repl_tool--source--__span-0-18"><a id="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-18" name="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-18"></a><span class="nd">@tool</span>
+</span><span id="agentic_architectures.tools.python_repl_tool--source--__span-0-19"><a id="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-19" name="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-19"></a><span class="k">def</span><span class="w"> </span><span class="nf">python_repl_tool</span><span class="p">(</span><span class="n">code</span><span class="p">:</span> <span class="nb">str</span><span class="p">)</span> <span class="o">-&gt;</span> <span class="nb">str</span><span class="p">:</span>
+</span><span id="agentic_architectures.tools.python_repl_tool--source--__span-0-20"><a id="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-20" name="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-20"></a><span class="w">    </span><span class="sd">"""Execute a snippet of Python code and return stdout (or the error).</span>
+</span><span id="agentic_architectures.tools.python_repl_tool--source--__span-0-21"><a id="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-21" name="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-21"></a>
+</span><span id="agentic_architectures.tools.python_repl_tool--source--__span-0-22"><a id="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-22" name="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-22"></a><span class="sd">    Use this when you need to compute something deterministic — math,</span>
+</span><span id="agentic_architectures.tools.python_repl_tool--source--__span-0-23"><a id="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-23" name="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-23"></a><span class="sd">    string manipulation, parsing, simple data transformation.</span>
+</span><span id="agentic_architectures.tools.python_repl_tool--source--__span-0-24"><a id="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-24" name="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-24"></a><span class="sd">    """</span>
+</span><span id="agentic_architectures.tools.python_repl_tool--source--__span-0-25"><a id="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-25" name="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-25"></a>    <span class="k">try</span><span class="p">:</span>
+</span><span id="agentic_architectures.tools.python_repl_tool--source--__span-0-26"><a id="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-26" name="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-26"></a>        <span class="kn">from</span><span class="w"> </span><span class="nn">langchain_experimental.utilities</span><span class="w"> </span><span class="kn">import</span> <span class="n">PythonREPL</span>
+</span><span id="agentic_architectures.tools.python_repl_tool--source--__span-0-27"><a id="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-27" name="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-27"></a>    <span class="k">except</span> <span class="ne">ImportError</span><span class="p">:</span>
+</span><span id="agentic_architectures.tools.python_repl_tool--source--__span-0-28"><a id="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-28" name="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-28"></a>        <span class="c1"># Fallback to a built-in minimal exec for environments without langchain-experimental.</span>
+</span><span id="agentic_architectures.tools.python_repl_tool--source--__span-0-29"><a id="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-29" name="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-29"></a>        <span class="kn">import</span><span class="w"> </span><span class="nn">contextlib</span>
+</span><span id="agentic_architectures.tools.python_repl_tool--source--__span-0-30"><a id="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-30" name="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-30"></a>        <span class="kn">import</span><span class="w"> </span><span class="nn">io</span>
+</span><span id="agentic_architectures.tools.python_repl_tool--source--__span-0-31"><a id="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-31" name="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-31"></a>
+</span><span id="agentic_architectures.tools.python_repl_tool--source--__span-0-32"><a id="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-32" name="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-32"></a>        <span class="n">buf</span> <span class="o">=</span> <span class="n">io</span><span class="o">.</span><span class="n">StringIO</span><span class="p">()</span>
+</span><span id="agentic_architectures.tools.python_repl_tool--source--__span-0-33"><a id="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-33" name="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-33"></a>        <span class="n">local_vars</span><span class="p">:</span> <span class="nb">dict</span><span class="p">[</span><span class="nb">str</span><span class="p">,</span> <span class="nb">object</span><span class="p">]</span> <span class="o">=</span> <span class="p">{}</span>
+</span><span id="agentic_architectures.tools.python_repl_tool--source--__span-0-34"><a id="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-34" name="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-34"></a>        <span class="k">try</span><span class="p">:</span>
+</span><span id="agentic_architectures.tools.python_repl_tool--source--__span-0-35"><a id="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-35" name="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-35"></a>            <span class="k">with</span> <span class="n">contextlib</span><span class="o">.</span><span class="n">redirect_stdout</span><span class="p">(</span><span class="n">buf</span><span class="p">):</span>
+</span><span id="agentic_architectures.tools.python_repl_tool--source--__span-0-36"><a id="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-36" name="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-36"></a>                <span class="n">exec</span><span class="p">(</span><span class="n">code</span><span class="p">,</span> <span class="p">{</span><span class="s2">"__builtins__"</span><span class="p">:</span> <span class="n">__builtins__</span><span class="p">},</span> <span class="n">local_vars</span><span class="p">)</span>  <span class="c1"># noqa: S102</span>
+</span><span id="agentic_architectures.tools.python_repl_tool--source--__span-0-37"><a id="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-37" name="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-37"></a>            <span class="n">out</span> <span class="o">=</span> <span class="n">buf</span><span class="o">.</span><span class="n">getvalue</span><span class="p">()</span>
+</span><span id="agentic_architectures.tools.python_repl_tool--source--__span-0-38"><a id="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-38" name="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-38"></a>            <span class="k">return</span> <span class="n">out</span> <span class="k">if</span> <span class="n">out</span> <span class="k">else</span> <span class="nb">repr</span><span class="p">(</span><span class="n">local_vars</span><span class="p">)</span>
+</span><span id="agentic_architectures.tools.python_repl_tool--source--__span-0-39"><a id="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-39" name="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-39"></a>        <span class="k">except</span> <span class="ne">Exception</span> <span class="k">as</span> <span class="n">e</span><span class="p">:</span>  <span class="c1"># pragma: no cover  (deterministic enough)</span>
+</span><span id="agentic_architectures.tools.python_repl_tool--source--__span-0-40"><a id="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-40" name="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-40"></a>            <span class="k">return</span> <span class="sa">f</span><span class="s2">"ERROR: </span><span class="si">{</span><span class="nb">type</span><span class="p">(</span><span class="n">e</span><span class="p">)</span><span class="o">.</span><span class="vm">__name__</span><span class="si">}</span><span class="s2">: </span><span class="si">{</span><span class="n">e</span><span class="si">}</span><span class="s2">"</span>
+</span><span id="agentic_architectures.tools.python_repl_tool--source--__span-0-41"><a id="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-41" name="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-41"></a>
+</span><span id="agentic_architectures.tools.python_repl_tool--source--__span-0-42"><a id="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-42" name="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-42"></a>    <span class="n">repl</span> <span class="o">=</span> <span class="n">PythonREPL</span><span class="p">()</span>
+</span><span id="agentic_architectures.tools.python_repl_tool--source--__span-0-43"><a id="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-43" name="agentic_architectures.tools.python_repl_tool--source--__codelineno-0-43"></a>    <span class="k">return</span> <span class="n">repl</span><span class="o">.</span><span class="n">run</span><span class="p">(</span><span class="n">code</span><span class="p">)</span>
 </span></code></pre></div></td></tr></table></div>
             </details>
     </div>
@@ -2978,7 +3070,7 @@ string manipulation, parsing, simple data transformation.</p>
 
 
 <a href="#agentic_architectures.tools.SimulatorTool" class="headerlink" title="Permanent link">&para;</a></h2>
-<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">SimulatorTool</span><span class="p">(</span><span class="n">simulate</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">str</span><span class="p">],</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;simulate_action&#39;</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">&#39;Simulate an action and return the predicted outcome WITHOUT executing it in the real world. Use this to weigh options before committing.&#39;</span><span class="p">)</span>
+<div class="language-python doc-signature highlight"><pre><span></span><code><span id="__span-0-1"><a id="__codelineno-0-1" name="__codelineno-0-1" href="#__codelineno-0-1"></a><span class="nf">SimulatorTool</span><span class="p">(</span><span class="n">simulate</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">str</span><span class="p">],</span> <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'simulate_action'</span><span class="p">,</span> <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s1">'Simulate an action and return the predicted outcome WITHOUT executing it in the real world. Use this to weigh options before committing.'</span><span class="p">)</span>
 </span></code></pre></div>
 
     <div class="doc doc-contents first">
@@ -2996,29 +3088,29 @@ string manipulation, parsing, simple data transformation.</p>
 
                   <details class="mkdocstrings-source">
                     <summary>Source code in <code>src/agentic_architectures/tools/simulator.py</code></summary>
-                    <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#__codelineno-0-23">23</a></span>
-<span class="normal"><a href="#__codelineno-0-24">24</a></span>
-<span class="normal"><a href="#__codelineno-0-25">25</a></span>
-<span class="normal"><a href="#__codelineno-0-26">26</a></span>
-<span class="normal"><a href="#__codelineno-0-27">27</a></span>
-<span class="normal"><a href="#__codelineno-0-28">28</a></span>
-<span class="normal"><a href="#__codelineno-0-29">29</a></span>
-<span class="normal"><a href="#__codelineno-0-30">30</a></span>
-<span class="normal"><a href="#__codelineno-0-31">31</a></span>
-<span class="normal"><a href="#__codelineno-0-32">32</a></span>
-<span class="normal"><a href="#__codelineno-0-33">33</a></span>
-<span class="normal"><a href="#__codelineno-0-34">34</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="__span-0-23"><a id="__codelineno-0-23" name="__codelineno-0-23"></a><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
-</span><span id="__span-0-24"><a id="__codelineno-0-24" name="__codelineno-0-24"></a>    <span class="bp">self</span><span class="p">,</span>
-</span><span id="__span-0-25"><a id="__codelineno-0-25" name="__codelineno-0-25"></a>    <span class="n">simulate</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">str</span><span class="p">],</span>
-</span><span id="__span-0-26"><a id="__codelineno-0-26" name="__codelineno-0-26"></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">&quot;simulate_action&quot;</span><span class="p">,</span>
-</span><span id="__span-0-27"><a id="__codelineno-0-27" name="__codelineno-0-27"></a>    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="p">(</span>
-</span><span id="__span-0-28"><a id="__codelineno-0-28" name="__codelineno-0-28"></a>        <span class="s2">&quot;Simulate an action and return the predicted outcome WITHOUT executing it &quot;</span>
-</span><span id="__span-0-29"><a id="__codelineno-0-29" name="__codelineno-0-29"></a>        <span class="s2">&quot;in the real world. Use this to weigh options before committing.&quot;</span>
-</span><span id="__span-0-30"><a id="__codelineno-0-30" name="__codelineno-0-30"></a>    <span class="p">),</span>
-</span><span id="__span-0-31"><a id="__codelineno-0-31" name="__codelineno-0-31"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
-</span><span id="__span-0-32"><a id="__codelineno-0-32" name="__codelineno-0-32"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">_simulate</span> <span class="o">=</span> <span class="n">simulate</span>
-</span><span id="__span-0-33"><a id="__codelineno-0-33" name="__codelineno-0-33"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
-</span><span id="__span-0-34"><a id="__codelineno-0-34" name="__codelineno-0-34"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
+                    <div class="language-python highlight"><table class="highlighttable"><tr><td class="linenos"><div class="linenodiv"><pre><span></span><span class="normal"><a href="#agentic_architectures.tools.SimulatorTool--source--__codelineno-0-23">23</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.SimulatorTool--source--__codelineno-0-24">24</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.SimulatorTool--source--__codelineno-0-25">25</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.SimulatorTool--source--__codelineno-0-26">26</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.SimulatorTool--source--__codelineno-0-27">27</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.SimulatorTool--source--__codelineno-0-28">28</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.SimulatorTool--source--__codelineno-0-29">29</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.SimulatorTool--source--__codelineno-0-30">30</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.SimulatorTool--source--__codelineno-0-31">31</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.SimulatorTool--source--__codelineno-0-32">32</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.SimulatorTool--source--__codelineno-0-33">33</a></span>
+<span class="normal"><a href="#agentic_architectures.tools.SimulatorTool--source--__codelineno-0-34">34</a></span></pre></div></td><td class="code"><div><pre><span></span><code><span id="agentic_architectures.tools.SimulatorTool--source--__span-0-23"><a id="agentic_architectures.tools.SimulatorTool--source--__codelineno-0-23" name="agentic_architectures.tools.SimulatorTool--source--__codelineno-0-23"></a><span class="k">def</span><span class="w"> </span><span class="fm">__init__</span><span class="p">(</span>
+</span><span id="agentic_architectures.tools.SimulatorTool--source--__span-0-24"><a id="agentic_architectures.tools.SimulatorTool--source--__codelineno-0-24" name="agentic_architectures.tools.SimulatorTool--source--__codelineno-0-24"></a>    <span class="bp">self</span><span class="p">,</span>
+</span><span id="agentic_architectures.tools.SimulatorTool--source--__span-0-25"><a id="agentic_architectures.tools.SimulatorTool--source--__codelineno-0-25" name="agentic_architectures.tools.SimulatorTool--source--__codelineno-0-25"></a>    <span class="n">simulate</span><span class="p">:</span> <span class="n">Callable</span><span class="p">[[</span><span class="nb">str</span><span class="p">],</span> <span class="nb">str</span><span class="p">],</span>
+</span><span id="agentic_architectures.tools.SimulatorTool--source--__span-0-26"><a id="agentic_architectures.tools.SimulatorTool--source--__codelineno-0-26" name="agentic_architectures.tools.SimulatorTool--source--__codelineno-0-26"></a>    <span class="n">name</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="s2">"simulate_action"</span><span class="p">,</span>
+</span><span id="agentic_architectures.tools.SimulatorTool--source--__span-0-27"><a id="agentic_architectures.tools.SimulatorTool--source--__codelineno-0-27" name="agentic_architectures.tools.SimulatorTool--source--__codelineno-0-27"></a>    <span class="n">description</span><span class="p">:</span> <span class="nb">str</span> <span class="o">=</span> <span class="p">(</span>
+</span><span id="agentic_architectures.tools.SimulatorTool--source--__span-0-28"><a id="agentic_architectures.tools.SimulatorTool--source--__codelineno-0-28" name="agentic_architectures.tools.SimulatorTool--source--__codelineno-0-28"></a>        <span class="s2">"Simulate an action and return the predicted outcome WITHOUT executing it "</span>
+</span><span id="agentic_architectures.tools.SimulatorTool--source--__span-0-29"><a id="agentic_architectures.tools.SimulatorTool--source--__codelineno-0-29" name="agentic_architectures.tools.SimulatorTool--source--__codelineno-0-29"></a>        <span class="s2">"in the real world. Use this to weigh options before committing."</span>
+</span><span id="agentic_architectures.tools.SimulatorTool--source--__span-0-30"><a id="agentic_architectures.tools.SimulatorTool--source--__codelineno-0-30" name="agentic_architectures.tools.SimulatorTool--source--__codelineno-0-30"></a>    <span class="p">),</span>
+</span><span id="agentic_architectures.tools.SimulatorTool--source--__span-0-31"><a id="agentic_architectures.tools.SimulatorTool--source--__codelineno-0-31" name="agentic_architectures.tools.SimulatorTool--source--__codelineno-0-31"></a><span class="p">)</span> <span class="o">-&gt;</span> <span class="kc">None</span><span class="p">:</span>
+</span><span id="agentic_architectures.tools.SimulatorTool--source--__span-0-32"><a id="agentic_architectures.tools.SimulatorTool--source--__codelineno-0-32" name="agentic_architectures.tools.SimulatorTool--source--__codelineno-0-32"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">_simulate</span> <span class="o">=</span> <span class="n">simulate</span>
+</span><span id="agentic_architectures.tools.SimulatorTool--source--__span-0-33"><a id="agentic_architectures.tools.SimulatorTool--source--__codelineno-0-33" name="agentic_architectures.tools.SimulatorTool--source--__codelineno-0-33"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">name</span> <span class="o">=</span> <span class="n">name</span>
+</span><span id="agentic_architectures.tools.SimulatorTool--source--__span-0-34"><a id="agentic_architectures.tools.SimulatorTool--source--__codelineno-0-34" name="agentic_architectures.tools.SimulatorTool--source--__codelineno-0-34"></a>    <span class="bp">self</span><span class="o">.</span><span class="n">description</span> <span class="o">=</span> <span class="n">description</span>
 </span></code></pre></div></td></tr></table></div>
                   </details>
 
@@ -3155,10 +3247,10 @@ string manipulation, parsing, simple data transformation.</p>
     
       
       
-      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.tracking", "navigation.footer", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.2c215733.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
+      <script id="__config" type="application/json">{"annotate": null, "base": "../..", "features": ["navigation.tabs", "navigation.tabs.sticky", "navigation.sections", "navigation.expand", "navigation.indexes", "navigation.top", "navigation.tracking", "navigation.footer", "search.suggest", "search.highlight", "search.share", "content.code.copy", "content.code.annotate", "content.tabs.link", "content.tooltips", "toc.follow", "announce.dismiss"], "search": "../../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copied to clipboard", "clipboard.copy": "Copy to clipboard", "search.result.more.one": "1 more on this page", "search.result.more.other": "# more on this page", "search.result.none": "No matching documents", "search.result.one": "1 matching document", "search.result.other": "# matching documents", "search.result.placeholder": "Type to start searching", "search.result.term.missing": "Missing", "select.version": "Select version"}, "version": null}</script>
     
     
-      <script src="../../assets/javascripts/bundle.79ae519e.min.js"></script>
+      <script src="../../assets/javascripts/bundle.a5f9d56c.min.js"></script>
       
     
   </body>
