@@ -130,6 +130,11 @@ class MemGPT(Architecture):
         action = state["last_action"]
         kind = action["action"]
         payload = action["payload"]
+        if kind in ("write_to_archival", "search_archival") and not payload.strip():
+            # An empty write stored an empty document; an empty search returned arbitrary hits.
+            need = "the fact to save" if kind == "write_to_archival" else "a search query"
+            self._push_context(f"[error] {kind} needs {need} in payload")
+            return {"history": [{"stage": "execute", "kind": kind, "error": "empty payload"}]}
         if kind == "write_to_archival":
             self.archival.add([Document(page_content=payload)])
             self.archival_count += 1
@@ -144,8 +149,11 @@ class MemGPT(Architecture):
                 for t in texts:
                     self._push_context(f"[recalled] {t[:200]}")
                 return {"history": [{"stage": "execute", "kind": "search", "n_hits": len(texts)}]}
-            except Exception:
-                return {"history": [{"stage": "execute", "kind": "search", "n_hits": 0}]}
+            except Exception as e:
+                # Visible to the model and in the trace: a broken embeddings setup must not look
+                # like an archive that simply holds nothing relevant.
+                self._push_context(f"[search error] {type(e).__name__}: {e}")
+                return {"history": [{"stage": "execute", "kind": "search", "n_hits": 0, "error": str(e)}]}
         elif kind == "answer":
             return {
                 "final_answer": payload,

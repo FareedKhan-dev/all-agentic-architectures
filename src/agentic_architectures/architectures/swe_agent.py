@@ -127,6 +127,10 @@ class SWEAgent(Architecture):
         kind = a["action"]
         obs = ""
         try:
+            if kind in ("read_file", "write_file", "run_check") and not str(a.get("path", "")).strip():
+                # An empty path resolves to the sandbox itself, and the OS error that follows
+                # ("Is a directory") gives the model nothing to correct.
+                raise ValueError(f"{kind} needs a path: the file inside the sandbox, as list_files shows it")
             if kind == "list_files":
                 files = sorted(p.name for p in self.working_dir.iterdir())
                 obs = f"[list_files] {files}"

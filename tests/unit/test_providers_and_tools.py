@@ -288,3 +288,32 @@ def test_an_unknown_architecture_option_is_an_error(structured_mock) -> None:
     with pytest.raises(TypeError, match="max_iteration"):
         Reflection(llm=llm, max_iteration=2)  # the option is max_iterations
     assert Reflection(llm=llm, max_iterations=2).max_iterations == 2
+
+
+def test_swe_agent_asks_for_a_path_instead_of_failing_on_the_sandbox(structured_mock, tmp_path) -> None:
+    from agentic_architectures.architectures import SWEAgent
+
+    arch = SWEAgent(llm=structured_mock(), working_dir=tmp_path)
+    for kind in ("read_file", "write_file", "run_check"):
+        out = arch._execute({"last_action": {"action": kind, "path": " ", "content": "x", "answer": ""}})
+        assert "needs a path" in out["observations"][0], kind
+    assert list(tmp_path.iterdir()) == []  # nothing was written
+
+
+def test_memgpt_rejects_an_empty_payload_and_shows_search_errors(structured_mock) -> None:
+    from agentic_architectures.architectures import MemGPT
+
+    arch = MemGPT(llm=structured_mock(), context_limit=5)
+    before = arch.archival_count
+    arch._execute_action({"last_action": {"action": "write_to_archival", "payload": ""}})
+    arch._execute_action({"last_action": {"action": "search_archival", "payload": "  "}})
+    assert arch.archival_count == before  # no empty document stored
+    assert sum("needs" in c for c in arch.context_tier) == 2
+
+    def broken(query: str, k: int = 4) -> list:
+        raise RuntimeError("embeddings endpoint unreachable")
+
+    arch.archival.search = broken  # type: ignore[method-assign]
+    out = arch._execute_action({"last_action": {"action": "search_archival", "payload": "comets"}})
+    assert "unreachable" in out["history"][0]["error"]
+    assert any("[search error]" in c for c in arch.context_tier)  # used to be swallowed
