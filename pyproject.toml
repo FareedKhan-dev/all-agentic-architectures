@@ -69,6 +69,7 @@ openrouter  = ["langchain-openrouter>=0.2"]
 # ----- Tool integrations -----
 tavily = ["langchain-tavily>=0.1.0"]
 mcp    = ["langchain-mcp-adapters>=0.2"]   # tools from any MCP server, tools/mcp.py
+browser = ["playwright>=1.45"]             # BrowserAgent / ComputerUse; then: playwright install chromium
 
 # ----- Memory backends -----
 faiss  = ["faiss-cpu>=1.8", "langchain-community>=0.3.0"]
