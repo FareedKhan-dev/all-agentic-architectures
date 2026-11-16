@@ -108,11 +108,17 @@ def mock_llm() -> "StructuredMockLLM":
 
 
 @pytest.fixture(autouse=True)
-def _stub_embeddings(monkeypatch: pytest.MonkeyPatch) -> None:
+def _stub_embeddings(request: pytest.FixtureRequest, monkeypatch: pytest.MonkeyPatch) -> None:
     """Replace `get_embeddings()` with a deterministic fake so VectorMemory /
     FAISS constructors do not try to call a real embeddings API. CI has no
     real keys; locally this keeps unit tests offline regardless of `.env`.
+
+    Not for the integration sweep: its RAG and memory architectures must retrieve with
+    the real embeddings model. Before 1.0.0 this stub applied there too, so every
+    "real" RAG test retrieved with random vectors.
     """
+    if request.node.get_closest_marker("integration") is not None:
+        return
     from langchain_core.embeddings.fake import DeterministicFakeEmbedding
 
     fake = DeterministicFakeEmbedding(size=384)
