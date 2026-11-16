@@ -11,6 +11,7 @@ import os
 from typing import TYPE_CHECKING, Any
 
 from agentic_architectures.config import Provider, default_model_for, settings
+from agentic_architectures.llm.providers import PROVIDERS
 
 if TYPE_CHECKING:  # avoid hard import at module load time
     from langchain_core.embeddings import Embeddings
@@ -71,6 +72,10 @@ def get_llm(
         model = settings.llm_model if provider == settings.llm_provider else default_model_for(provider)
     if not model:
         raise ValueError(f"No model configured for provider {provider!r}: set LLM_MODEL in .env or pass model=")
+    info = PROVIDERS.get(provider)
+    if info is not None and model == info.recommended_model:
+        for key_name, value in info.model_kwargs.items():  # e.g. what gpt-6-luna needs for tool calls
+            kwargs.setdefault(key_name, value)
     temperature = temperature if temperature is not None else settings.llm_temperature
 
     key = settings.api_key_for(provider)
@@ -139,7 +144,7 @@ def _ensure_provider_env(provider: str, api_key: str | None) -> None:
 _DEFAULT_EMBEDDINGS_BY_PROVIDER: dict[str, tuple[str, str]] = {
     "nebius": ("nebius", "Qwen/Qwen3-Embedding-8B"),
     "openai": ("openai", "text-embedding-3-small"),
-    "google": ("google", "models/text-embedding-004"),
+    "google": ("google", "models/gemini-embedding-2"),  # text-embedding-004 was shut down Jan 14, 2026
     "huggingface": ("huggingface", "sentence-transformers/all-MiniLM-L6-v2"),
     "ollama": ("ollama", "nomic-embed-text"),
 }
