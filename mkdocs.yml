@@ -1,7 +1,7 @@
 site_name: Agentic Architectures
 site_description: >
-  35 production-grade agentic AI architectures with LangGraph — every one
-  fully runnable end-to-end, multi-provider (Nebius / OpenAI / Anthropic / Groq / Ollama),
+  36 production-grade agentic AI architectures with LangGraph, every one
+  fully runnable end-to-end, multi-provider (Nebius / OpenAI / Anthropic / Groq / Ollama / ...),
   with real LLM outputs, deterministic-picker discipline, and a comparative benchmark leaderboard.
 site_author: Fareed Khan
 site_url: https://fareedkhan-dev.github.io/all-agentic-architectures/
@@ -165,6 +165,7 @@ nav:
           - architectures/28_debate.ipynb
           - architectures/30_storm.ipynb
           - architectures/11_meta_controller.ipynb
+          - architectures/36_mixture_of_agents.ipynb
       - "Safety & Routing":
           - architectures/14_dry_run.ipynb
           - architectures/17_reflexive_metacognitive.ipynb

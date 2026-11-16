@@ -73,6 +73,7 @@ Coordinate many minds — specialists, adversarial debate, multi-perspective res
 | [Blackboard](07_blackboard.ipynb) | Shared workspace + agents | 5 rounds, 3/4 contributed |
 | [Debate](28_debate.ipynb) | N agents × K rounds | Group-think failure on Sally trick (instructive) |
 | [STORM](30_storm.ipynb) | Multi-perspective research → article | 3 perspectives → 6 web-grounded answers |
+| [Mixture of Agents](36_mixture_of_agents.ipynb) | Layers of proposers, each refining the last, then an aggregator | Each layer reads only the previous one, as in Wang 2024 |
 | [Meta-Controller](11_meta_controller.ipynb) | Router over architectures | 4/4 routes correct |
 
 ## Safety & Routing
