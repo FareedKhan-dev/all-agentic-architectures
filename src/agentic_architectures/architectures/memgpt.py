@@ -31,8 +31,9 @@ class _MemAction(BaseModel):
         description="Choose: write_to_archival (save a new fact), "
         "search_archival (look up info from disk), or answer (commit final response)."
     )
+    # Required, not default "": with a default the field is optional in the JSON schema, and
+    # under constrained decoding a local model left it out, answering with an empty payload.
     payload: str = Field(
-        default="",
         description="For write_to_archival: the fact text. "
         "For search_archival: the search query. "
         "For answer: the final answer text.",

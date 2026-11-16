@@ -34,11 +34,11 @@ class _SWEAction(BaseModel):
     action: Literal["list_files", "read_file", "write_file", "run_check", "answer"] = Field(
         description="Choose ONE: list_files, read_file, write_file, run_check, or answer (commit final response)."
     )
-    path: str = Field(
-        default="", description="Relative path within the sandbox. Required for read_file/write_file/run_check."
-    )
-    content: str = Field(default="", description="File content. Required for write_file (the full new contents).")
-    answer: str = Field(default="", description="Final answer text. Required for action='answer'.")
+    # Required, not default "": a field with a default is optional in the JSON schema, and under
+    # constrained decoding a local model left path and answer out. Irrelevant ones are "".
+    path: str = Field(description='Relative path within the sandbox for read_file/write_file/run_check; else "".')
+    content: str = Field(description='The full new file contents for write_file; else "".')
+    answer: str = Field(description="The final answer text for action='answer'; else \"\".")
     rationale: str = Field(description="ONE sentence: why this action.")
 
 
