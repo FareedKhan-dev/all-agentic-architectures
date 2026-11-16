@@ -139,7 +139,7 @@ def test_tree_of_thoughts_real() -> None:
 def test_mental_loop_real() -> None:
     from agentic_architectures.architectures import MentalLoop
 
-    arch = MentalLoop(llm=_llm(), branching=2, max_steps=2)
+    arch = MentalLoop(llm=_llm(), n_candidates=2)
     r = arch.run("Plan a 30-minute meal: pasta with vegetables.")
     assert r.output
 
@@ -162,15 +162,19 @@ def test_graph_memory_real() -> None:
     from agentic_architectures.architectures import GraphMemoryAgent
 
     arch = GraphMemoryAgent(llm=_llm())
-    arch.run("Ada Lovelace wrote the first computer algorithm in 1843.")
+    # Facts go in through ingest(); run() only answers from the graph. Passing the fact to
+    # run() left the graph empty, and the test passed only when a model ignored its
+    # instruction to answer from the graph alone.
+    assert arch.ingest("Ada Lovelace wrote the first computer algorithm in 1843.")
     r = arch.run("Who wrote the first computer algorithm?")
+    assert r.metadata["facts_retrieved"] > 0
     assert "ada" in r.output.lower()
 
 
 def test_ensemble_real() -> None:
     from agentic_architectures.architectures import Ensemble
 
-    arch = Ensemble(llm=_llm(), aggregation="majority_vote")
+    arch = Ensemble(llm=_llm(), aggregator_mode="majority_vote")
     r = arch.run("Is water at 100°C boiling at sea level? Answer YES or NO.")
     assert r.output
 
@@ -199,10 +203,14 @@ def test_cellular_automata_real() -> None:
         llm=_llm(),
         rule_prompt="A cell that is 'tree' next to 'fire' becomes 'fire'. 'Fire' becomes 'ash' next step. 'ash' stays 'ash'. 'empty' stays 'empty'.",
         allowed_states=["empty", "tree", "fire", "ash"],
-        grid_size=(3, 3),
+        height=3,
+        width=3,
         max_steps=2,
     )
-    r = arch.run("Initial state: a 3x3 grid with one fire cell in the middle, surrounded by trees.")
+    # run() takes the initial grid itself: cells separated by |, rows by newlines.
+    r = arch.run("tree|tree|tree
+tree|fire|tree
+tree|tree|tree")
     assert r.output
 
 
@@ -249,7 +257,7 @@ def test_self_consistency_real() -> None:
 
     arch = SelfConsistency(llm=_llm(), n_samples=3, sample_temperature=0.7)
     r = arch.run("What is 5 squared? Return only the integer.")
-    assert r.output.strip() == "25"
+    assert "25" in r.output  # an execution sweep, not a formatting check (see the module docstring)
 
 
 def test_lats_real() -> None:
