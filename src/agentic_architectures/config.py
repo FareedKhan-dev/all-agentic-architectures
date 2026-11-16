@@ -78,6 +78,8 @@ class Settings(BaseSettings):
     # (Parallel's free, keyless server), which needs no key and no signup.
     search_backend: Literal["tavily", "mcp"] = "tavily"
     search_mcp_url: str = "https://search.parallel.ai/mcp"
+    # Sent as a bearer token. Parallel's keyless tier is rate-limited; a key lifts the limit.
+    search_mcp_api_key: SecretStr | None = None
 
     # ---- LangSmith tracing (accept both new + legacy env-var names) ----
     langsmith_api_key: SecretStr | None = Field(

@@ -84,7 +84,12 @@ The architectures that search (ToolUse, ReAct, Planning, PEV, Multi-Agent, ...) 
 ```ini
 SEARCH_BACKEND=mcp
 SEARCH_MCP_URL=https://search.parallel.ai/mcp
+SEARCH_MCP_API_KEY=                # optional, sent as a bearer token
 ```
+
+The keyless tier is rate-limited: running every search architecture back to back can hit
+the limit, and the run then stops with the server's message. A Parallel key in
+`SEARCH_MCP_API_KEY` lifts it.
 
 Any MCP server's tools can be handed to an architecture directly, too:
 

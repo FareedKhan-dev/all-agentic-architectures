@@ -171,12 +171,19 @@ def test_the_mcp_search_backend_takes_the_servers_search_tool(monkeypatch) -> No
     _settings(monkeypatch, search_backend="mcp", search_mcp_url="https://search.example/mcp")
     from agentic_architectures.tools import search
 
-    def fake_mcp_tools(url: str) -> list[BaseTool]:
+    seen: list[dict[str, str] | None] = []
+
+    def fake_mcp_tools(url: str, headers: dict[str, str] | None = None) -> list[BaseTool]:
         assert url == "https://search.example/mcp"
+        seen.append(headers)
         return [_tool("fetch_page"), _tool("web_search")]
 
     monkeypatch.setattr("agentic_architectures.tools.mcp.mcp_tools", fake_mcp_tools)
     assert search.web_search_tool().name == "web_search"
+    assert seen[-1] is None  # keyless
+    _settings(monkeypatch, search_backend="mcp", search_mcp_url="https://search.example/mcp", search_mcp_api_key="k1")
+    search.web_search_tool()
+    assert seen[-1] == {"Authorization": "Bearer k1"}
 
 
 # ----------------------------------------------------------------- MCP tools

@@ -35,7 +35,9 @@ def web_search_tool(
     if settings.search_backend == "mcp":
         from agentic_architectures.tools.mcp import mcp_tools
 
-        tools = mcp_tools(settings.search_mcp_url)
+        key = settings.search_mcp_api_key
+        headers = {"Authorization": f"Bearer {key.get_secret_value()}"} if key is not None else None
+        tools = mcp_tools(settings.search_mcp_url, headers=headers)
         return next((t for t in tools if "search" in t.name.lower()), tools[0])
 
     try:
