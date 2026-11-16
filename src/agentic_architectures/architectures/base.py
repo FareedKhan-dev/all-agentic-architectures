@@ -45,8 +45,13 @@ class Architecture(ABC):
     def __init__(self, llm: BaseChatModel | None = None, **kwargs: Any) -> None:
         from agentic_architectures.llm.factory import get_llm
 
+        # Every architecture passes its leftover keywords here. Unknown ones used to be stored
+        # and ignored, so a misspelled option (grid_size for height/width) silently ran the
+        # default; now it is an error that names the option.
+        if kwargs:
+            raise TypeError(f"{type(self).__name__}() got unexpected keyword argument(s): {', '.join(sorted(kwargs))}")
         self.llm = llm if llm is not None else get_llm()
-        self.config = kwargs
+        self.config: dict[str, Any] = {}
 
     # ------------------------------------------------------------------ #
     #  Required hooks                                                     #

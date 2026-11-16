@@ -276,3 +276,15 @@ def test_each_moa_layer_reads_only_the_previous_layer(structured_mock) -> None:
     prompts.clear()
     arch._layer_generate({"task": "t", "current_layer": 2, "layer_outputs": layer0 + layer1})
     assert all("L1-0" in p and "L0-0" not in p for p in prompts)  # layer 2 sees layer 1 only
+
+
+def test_an_unknown_architecture_option_is_an_error(structured_mock) -> None:
+    """0.3.0 stored unknown keywords and ignored them, so a misspelled option ran the default."""
+    from agentic_architectures.architectures import CellularAutomata, Reflection
+
+    llm = structured_mock()
+    with pytest.raises(TypeError, match="grid_size"):
+        CellularAutomata(llm=llm, rule_prompt="r", allowed_states=["a"], grid_size=(3, 3))
+    with pytest.raises(TypeError, match="max_iteration"):
+        Reflection(llm=llm, max_iteration=2)  # the option is max_iterations
+    assert Reflection(llm=llm, max_iterations=2).max_iterations == 2
