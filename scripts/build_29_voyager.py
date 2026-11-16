@@ -68,7 +68,7 @@ Reflexion (nb 18) accumulates *verbal lessons* about past failures. Voyager accu
 from agentic_architectures.architectures import Voyager
 from agentic_architectures.ui import print_md, print_header
 enable_langsmith()
-llm = get_llm(provider="nebius", model="meta-llama/Llama-3.3-70B-Instruct", temperature=0.2)
+llm = get_llm(temperature=0.2)
 print_header(f"LLM: {llm.model}")"""
     ),
     md("""## 5 · Library walkthrough"""),

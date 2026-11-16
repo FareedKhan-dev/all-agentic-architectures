@@ -242,7 +242,7 @@ Look at the three counts above:
 
 ReAct needs **tool-calling**, same as Tool Use. But this is also where ReAct shines with a *reasoning* model — the model's internal `<think>` budget produces noticeably richer Thoughts.
 
-The cell below tries OpenAI/Anthropic/Groq if you have their keys set, AND swaps to **`Qwen/Qwen3-235B-A22B-Thinking-2507-fast`** on Nebius (which you already have a key for) to demonstrate the reasoning-model effect."""
+The cell below tries OpenAI/Anthropic/Groq if you have their keys set, AND re-runs on the reasoning model in `LLM_REASONING_MODEL` (set it to a thinking model such as `deepseek-v4-pro`, or `qwen3:14b` on Ollama) to demonstrate the reasoning-model effect."""
     ),
     code(
         """from agentic_architectures.llm.factory import provider_supports_tools
@@ -264,11 +264,10 @@ for p in [\"openai\", \"anthropic\", \"groq\"]:
     print(f\"  thoughts: {r.metadata['thought_count']}, tool_calls: {r.metadata['tool_calls']}\")
     print()
 
-# (b) Swap to a Nebius reasoning model — same key, just a different model name.
-print_header(\"Re-running on Nebius Qwen3-Thinking (reasoning model)\")
+# (b) Swap to the reasoning model in LLM_REASONING_MODEL (your main model if unset).
+print_header(f\"Re-running on the reasoning model ({settings.llm_reasoning_model})\")
 thinking_llm = get_llm(
-    provider=\"nebius\",
-    model=\"Qwen/Qwen3-235B-A22B-Thinking-2507-fast\",
+    model=settings.llm_reasoning_model,
     temperature=0.0,
 )
 thinking_arch = ReAct(llm=thinking_llm, max_rounds=2)
@@ -280,7 +279,7 @@ print(f\"  thoughts: {r.metadata['thought_count']}, tool_calls: {r.metadata['too
 if r.trace:
     first_thought = next((t['content'] for t in r.trace if t['type'] == 'thought'), '')
     print()
-    print('  First Thought from Qwen3-Thinking (notice the depth vs Llama):')
+    print('  First Thought from the reasoning model (compare its depth with the run above):')
     print('  ' + first_thought[:400].replace('\\n', '\\n  '))"""
     ),
     md(

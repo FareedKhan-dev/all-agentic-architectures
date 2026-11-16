@@ -92,7 +92,7 @@ from agentic_architectures.data import STARDUST_CORPUS
 from agentic_architectures.ui import print_md, print_header
 
 enable_langsmith()
-llm = get_llm(provider="nebius", model="meta-llama/Llama-3.3-70B-Instruct", temperature=0.2)
+llm = get_llm(temperature=0.2)
 print_header(f"LLM: {llm.model}  ·  Corpus: {len(STARDUST_CORPUS)} docs")"""
     ),
     md(

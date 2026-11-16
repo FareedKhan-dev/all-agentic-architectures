@@ -36,7 +36,7 @@ from agentic_architectures.architectures import ConstitutionalAI
 from agentic_architectures.architectures.constitutional_ai import DEFAULT_CONSTITUTION
 from agentic_architectures.ui import print_md, print_header
 enable_langsmith()
-llm = get_llm(provider="nebius", model="meta-llama/Llama-3.3-70B-Instruct", temperature=0.4)
+llm = get_llm(temperature=0.4)
 print_header(f"LLM: {llm.model}")
 print()
 print('=== DEFAULT_CONSTITUTION ===')

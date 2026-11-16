@@ -53,6 +53,9 @@ class Settings(BaseSettings):
     # Empty means "the provider's recommended model" (llm/providers.py), filled in below, so
     # switching LLM_PROVIDER alone never sends one provider's model name to another.
     llm_model: str = ""
+    # The model the notebooks use where a reasoning ("thinking") model makes the difference,
+    # e.g. deepseek-v4-pro, or qwen3:14b on Ollama. Empty means the same model as llm_model.
+    llm_reasoning_model: str = ""
     llm_temperature: float = 0.0
 
     # ---- Provider API keys ----
@@ -114,6 +117,8 @@ class Settings(BaseSettings):
     def _default_model_for_provider(self) -> Settings:
         if not self.llm_model:
             self.llm_model = default_model_for(self.llm_provider)
+        if not self.llm_reasoning_model:
+            self.llm_reasoning_model = self.llm_model
         return self
 
     def api_key_for(self, provider: Provider) -> SecretStr | None:

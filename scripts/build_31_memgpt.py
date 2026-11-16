@@ -47,7 +47,7 @@ Demo: multi-turn — ingest a fact (context gets it + archival), ingest more fac
 from agentic_architectures.architectures import MemGPT
 from agentic_architectures.ui import print_md, print_header
 enable_langsmith()
-llm = get_llm(provider="nebius", model="meta-llama/Llama-3.3-70B-Instruct", temperature=0.2)
+llm = get_llm(temperature=0.2)
 print_header(f"LLM: {llm.model}")"""),
     md("""## 7 · Build the graph"""),
     code("""from IPython.display import Image, display

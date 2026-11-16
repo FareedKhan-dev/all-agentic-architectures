@@ -90,7 +90,7 @@ from agentic_architectures.tools import web_search_tool
 from agentic_architectures.ui import print_md, print_header, print_step
 
 enable_langsmith()
-llm = get_llm(provider="nebius", model="meta-llama/Llama-3.3-70B-Instruct", temperature=0.2)
+llm = get_llm(temperature=0.2)
 
 # Wrap Tavily as a simple callable returning list[str] of snippets.
 _tavily = web_search_tool(max_results=3)

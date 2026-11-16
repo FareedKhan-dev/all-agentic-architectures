@@ -77,7 +77,7 @@ For production: add Content-Security-Policy enforcement, VPN-restricted egress, 
 from agentic_architectures.architectures import BrowserAgent
 from agentic_architectures.ui import print_md, print_header
 enable_langsmith()
-llm = get_llm(provider="nebius", model="meta-llama/Llama-3.3-70B-Instruct", temperature=0.2)
+llm = get_llm(temperature=0.2)
 print_header(f"LLM: {llm.model}")
 print()
 print("Prerequisite: `pip install playwright && playwright install chromium` (already done in this venv).")"""),

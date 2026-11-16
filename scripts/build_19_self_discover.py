@@ -104,10 +104,9 @@ from agentic_architectures.ui import print_md, print_header, print_step
 
 enable_langsmith()
 
-# Per handoff §10, nb 19 defaults to Qwen3-Thinking (reasoning model).
+# This notebook uses the reasoning model in LLM_REASONING_MODEL (your main model if unset).
 reasoning_llm = get_llm(
-    provider="nebius",
-    model="Qwen/Qwen3-235B-A22B-Thinking-2507-fast",
+    model=settings.llm_reasoning_model,
     temperature=0.4,
 )
 print_header(f"Reasoning LLM: {reasoning_llm.model}")"""
@@ -231,7 +230,7 @@ for i, out in enumerate(r.metadata['step_outputs'], 1):
 Self-Discover should work with any chat model — but a non-reasoning LLM may pick weaker modules or write a shallower plan. Re-run the same puzzle with Llama-3.3-70B and compare."""
     ),
     code(
-        """plain_llm = get_llm(provider="nebius", model="meta-llama/Llama-3.3-70B-Instruct", temperature=0.4)
+        """plain_llm = get_llm(temperature=0.4)
 arch_llama = SelfDiscover(llm=plain_llm)
 r_llama = arch_llama.run(TASK)
 

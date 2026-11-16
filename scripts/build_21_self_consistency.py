@@ -93,7 +93,7 @@ from agentic_architectures.ui import print_md, print_header, print_step
 enable_langsmith()
 
 # Llama at high temperature for path variance — see § 3.2 for why not Qwen-Thinking.
-llm = get_llm(provider="nebius", model="meta-llama/Llama-3.3-70B-Instruct", temperature=0.4)
+llm = get_llm(temperature=0.4)
 print_header(f"LLM: {llm.model}")"""
     ),
     md(

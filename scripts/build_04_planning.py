@@ -259,11 +259,10 @@ for p in [\"openai\", \"anthropic\"]:
     print(f\"  steps: {r.metadata['steps_executed']}, replans: {r.metadata['replans']}\")
     print()
 
-# Swap to a Nebius reasoning model for a more sophisticated plan.
-print_header(\"Re-running on Nebius Qwen3-Thinking (reasoning model — see if the plan is deeper)\")
+# Swap to the reasoning model in LLM_REASONING_MODEL for a more sophisticated plan.
+print_header(f\"Re-running on the reasoning model ({settings.llm_reasoning_model}): is the plan deeper?\")
 thinking_llm = get_llm(
-    provider=\"nebius\",
-    model=\"Qwen/Qwen3-235B-A22B-Thinking-2507-fast\",
+    model=settings.llm_reasoning_model,
     temperature=0.0,
 )
 thinking_arch = Planning(llm=thinking_llm, max_replans=1, executor_rounds=3)

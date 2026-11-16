@@ -121,10 +121,9 @@ from agentic_architectures.ui import print_md, print_header, print_step
 
 enable_langsmith()
 
-# Per handoff §10, nb 22 defaults to Qwen3-Thinking.
+# This notebook uses the reasoning model in LLM_REASONING_MODEL (your main model if unset).
 reasoning_llm = get_llm(
-    provider="nebius",
-    model="Qwen/Qwen3-235B-A22B-Thinking-2507-fast",
+    model=settings.llm_reasoning_model,
     temperature=0.4,
 )
 print_header(f"Reasoning LLM: {reasoning_llm.model}")"""

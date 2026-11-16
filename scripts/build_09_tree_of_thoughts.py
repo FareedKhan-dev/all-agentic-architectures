@@ -130,7 +130,7 @@ from agentic_architectures.architectures import TreeOfThoughts
 from agentic_architectures.ui import print_md, print_header, print_step
 
 enable_langsmith()
-primary_llm = get_llm(provider=\"nebius\", model=\"meta-llama/Llama-3.3-70B-Instruct\", temperature=0.5)
+primary_llm = get_llm(temperature=0.5)
 print_header(f\"Primary LLM: {primary_llm.model}\")"""
     ),
     md(
@@ -256,10 +256,9 @@ print('⭐ = best-scoring leaf used to synthesise the final answer')"""
 Same task, smaller tree, but using **Qwen3-Thinking** instead of Llama. We use a smaller `(branching=2, max_depth=2)` because reasoning models are slower per call. The expected difference is **score-distribution quality**: Qwen3-Thinking can usually distinguish a winning arithmetic step from a dead-end one even more sharply than Llama, because each evaluation gets an internal `<think>` budget."""
     ),
     code(
-        """print_header(\"Re-running ToT on Qwen3-Thinking (smaller tree, slower per call)\")
+        """print_header(f\"Re-running ToT on the reasoning model ({settings.llm_reasoning_model}), smaller tree\")
 thinking_llm = get_llm(
-    provider=\"nebius\",
-    model=\"Qwen/Qwen3-235B-A22B-Thinking-2507-fast\",
+    model=settings.llm_reasoning_model,
     temperature=0.4,
 )
 thinking_arch = TreeOfThoughts(branching=2, beam_width=1, max_depth=2, llm=thinking_llm)
@@ -269,7 +268,7 @@ thinking_result = thinking_arch.run(
 print(thinking_result.output[:400])
 print()
 score_dist = sorted([t['score'] for t in thinking_result.trace if t['depth'] > 0], reverse=True)
-print(f\"  Score distribution (Qwen3-Thinking, {len(score_dist)} non-root): {score_dist}\")
+print(f\"  Score distribution (reasoning model, {len(score_dist)} non-root): {score_dist}\")
 print(f\"  Note: a healthy ToT run has a SPREAD of scores (1-5). All-5s = lenient evaluator.\")"""
     ),
     md(

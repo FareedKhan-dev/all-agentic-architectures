@@ -47,6 +47,9 @@ def init_calls(monkeypatch: pytest.MonkeyPatch) -> list[dict[str, Any]]:
 def test_each_provider_defaults_to_its_own_model(monkeypatch: pytest.MonkeyPatch) -> None:
     assert _settings(monkeypatch, llm_provider="openai").llm_model == PROVIDERS["openai"].recommended_model
     assert _settings(monkeypatch, llm_provider="openai", llm_model="my-model").llm_model == "my-model"
+    # The reasoning model the notebooks use follows the main model unless set.
+    assert _settings(monkeypatch, llm_provider="openai", llm_model="my-model").llm_reasoning_model == "my-model"
+    assert _settings(monkeypatch, llm_model="m", llm_reasoning_model="thinker").llm_reasoning_model == "thinker"
 
 
 def test_another_provider_never_gets_the_configured_providers_model(monkeypatch, init_calls) -> None:

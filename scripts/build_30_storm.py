@@ -38,7 +38,7 @@ from agentic_architectures.architectures import STORM
 from agentic_architectures.tools import web_search_tool
 from agentic_architectures.ui import print_md, print_header
 enable_langsmith()
-llm = get_llm(provider="nebius", model="meta-llama/Llama-3.3-70B-Instruct", temperature=0.4)
+llm = get_llm(temperature=0.4)
 
 # Real Tavily web search — every question in the ANSWER stage hits the live web.
 _tavily = web_search_tool(max_results=3)
