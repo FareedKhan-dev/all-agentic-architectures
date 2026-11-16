@@ -16,8 +16,9 @@ Any provider can run the sweep, a local one included:
 
 `INTEGRATION_REASONING_MODEL` picks the model of the tests that want a reasoning model
 (the provider's main model if unset), and `INTEGRATION_LLM_KWARGS` passes extra model
-arguments as JSON, e.g. `'{"reasoning": false}'` to turn off a local model's thinking. The three web-search tests use Tavily, or any MCP
-search server given as `INTEGRATION_SEARCH_MCP=<url>`.
+arguments as JSON, e.g. `'{"reasoning": false}'` to turn off a local model's thinking.
+The architectures that search use the library's search setting: Tavily, or
+`SEARCH_BACKEND=mcp` for a free, keyless MCP search server.
 
 Total runtime at RUN_INTEGRATION=1 with default model: ~15-30 minutes.
 """
@@ -31,6 +32,7 @@ from pathlib import Path
 
 import pytest
 
+from agentic_architectures.tools import web_search_tool
 from tests.conftest import RUN_INTEGRATION
 
 pytestmark = [
@@ -55,18 +57,6 @@ def _llm(model: str | None = None, temperature: float = 0.2):
 
 def _qwen():
     return _llm(model=REASONING_MODEL, temperature=0.4)
-
-
-def web_search_tool(max_results: int = 3):
-    """Tavily by default; any MCP search server when INTEGRATION_SEARCH_MCP is set."""
-    url = os.environ.get("INTEGRATION_SEARCH_MCP")
-    if url:
-        from agentic_architectures.tools import mcp_tools
-
-        return mcp_tools(url)[0]
-    from agentic_architectures.tools import web_search_tool as tavily
-
-    return tavily(max_results=max_results)
 
 
 # ========================================================================== #

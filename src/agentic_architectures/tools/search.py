@@ -1,6 +1,9 @@
-"""Web-search tool — wraps `langchain_tavily.TavilySearch` with retry + error handling.
+"""Web-search tool: Tavily, or any MCP search server with no key at all.
 
-Replaces deprecated `TavilySearchResults` import in old notebooks 02/03.
+`web_search_tool()` is the search tool the architectures use when they are not given
+tools of their own. It is Tavily (TAVILY_API_KEY) unless SEARCH_BACKEND=mcp, which takes
+the search tool of the MCP server at SEARCH_MCP_URL instead: Parallel's free, keyless
+search server by default, so the search architectures run without signing up anywhere.
 """
 
 from __future__ import annotations
@@ -20,7 +23,21 @@ def web_search_tool(
     search_depth: str = "advanced",
     **kwargs: Any,
 ) -> BaseTool:
-    """Return a configured Tavily search tool, or a no-op stub if the API key is missing."""
+    """Return the configured web search tool.
+
+    With SEARCH_BACKEND=mcp, ``max_results`` and ``search_depth`` do not apply: the MCP
+    server decides how much it returns.
+
+    Raises:
+        RuntimeError: Tavily is selected and TAVILY_API_KEY is not set. Searching nothing
+            quietly would let an agent answer from memory while looking like it searched.
+    """
+    if settings.search_backend == "mcp":
+        from agentic_architectures.tools.mcp import mcp_tools
+
+        tools = mcp_tools(settings.search_mcp_url)
+        return next((t for t in tools if "search" in t.name.lower()), tools[0])
+
     try:
         from langchain_tavily import TavilySearch
     except ImportError as e:
@@ -28,14 +45,11 @@ def web_search_tool(
 
     key = settings.tavily_api_key
     if key is None:
-        from langchain_core.tools import tool
-
-        @tool("web_search")
-        def _noop_tool(query: str) -> str:
-            """Search the web (no-op — TAVILY_API_KEY not set)."""
-            return f"[web_search unavailable: TAVILY_API_KEY not set] Would search: {query}"
-
-        return _noop_tool  # type: ignore[return-value]
+        raise RuntimeError(
+            "TAVILY_API_KEY not set. Sign up free at https://app.tavily.com and add the key to your .env file, "
+            "or set SEARCH_BACKEND=mcp to search through a free, keyless MCP server "
+            "(pip install agentic-architectures[mcp])."
+        )
 
     return TavilySearch(
         max_results=max_results,
@@ -47,7 +61,7 @@ def web_search_tool(
 
 @retry(stop=stop_after_attempt(3), wait=wait_exponential(min=1, max=8))
 def search_with_retry(query: str, max_results: int = 5) -> list[dict[str, Any]]:
-    """Direct callable form — invoke the tool once with exponential backoff."""
+    """Direct callable form: invoke the Tavily tool once with exponential backoff."""
     tool = web_search_tool(max_results=max_results)
     result = tool.invoke({"query": query})
     # TavilySearch returns dict with "results" key
