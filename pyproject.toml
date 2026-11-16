@@ -197,6 +197,9 @@ disallow_untyped_defs      = true
 ignore_missing_imports     = true
 namespace_packages         = true
 explicit_package_bases     = true
+# With explicit package bases, src/ must be the base: otherwise the package's own imports
+# do not resolve and every class built on Architecture is checked as Any.
+mypy_path                  = "src"
 
 [[tool.mypy.overrides]]
 module = ["tests.*", "notebooks.*"]
@@ -214,6 +217,7 @@ markers = [
   "slow: takes more than ~10 seconds",
 ]
 asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
 
 # ============================================================================
 #  Coverage

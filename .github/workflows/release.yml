@@ -25,7 +25,9 @@ jobs:
 
   publish-pypi:
     needs: release-please
-    if: ${{ needs.release-please.outputs.release_created }}
+    # Off until PyPI trusted publishing is set up for this project; then set the repository
+    # variable PUBLISH_TO_PYPI to true (Settings > Secrets and variables > Actions > Variables).
+    if: ${{ needs.release-please.outputs.release_created && vars.PUBLISH_TO_PYPI == 'true' }}
     runs-on: ubuntu-latest
     environment: pypi             # requires the 'pypi' environment + trusted publisher to be configured
     permissions:

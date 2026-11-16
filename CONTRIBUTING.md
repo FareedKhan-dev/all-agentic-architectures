@@ -102,6 +102,20 @@ test(integration): add real-LLM happy path for AWM
 chore(deps): bump langgraph to 0.2.60
 ```
 
+Releases: every push to `main` lets release-please update its release PR; merging that PR tags the
+version and publishes the GitHub release. Publishing to PyPI is off until trusted publishing is set up
+for `agentic-architectures` on PyPI; then set the repository variable `PUBLISH_TO_PYPI` to `true`.
+
+## Running every architecture against a real model
+
+The unit tests use fake LLMs. The integration sweep runs each architecture once against a real
+model, with no key at all on a local one:
+
+```bash
+ollama pull qwen3:8b && ollama pull nomic-embed-text
+LLM_PROVIDER=ollama EMBEDDINGS_PROVIDER=ollama SEARCH_BACKEND=mcp RUN_INTEGRATION=1   INTEGRATION_PROVIDER=ollama INTEGRATION_LLM_KWARGS='{"reasoning": false, "num_predict": 2048}'   pytest tests/integration -v
+```
+
 ---
 
 ## Code style
