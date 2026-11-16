@@ -106,7 +106,8 @@ class MixtureOfAgents(Architecture):
         task = state["task"]
         num = state.get("num_layers", self.num_layers)
         agents_per = state.get("agents_per_layer", self.agents_per_layer)
-        all_prior = state.get("layer_outputs", [])
+        # Each layer reads only the layer before it, as in the MoA paper (Wang et al., 2024).
+        all_prior = [o for o in state.get("layer_outputs", []) if o["layer"] == current_layer - 1]
 
         layer_results: list[dict[str, Any]] = []
 
@@ -129,8 +130,8 @@ class MixtureOfAgents(Architecture):
             context_parts: list[str] = [f"## Task\n{task}\n"]
             if current_layer > 0 and all_prior:
                 context_parts.append(
-                    "## Outputs from previous layers\n"
-                    "Below are all proposals from earlier layers. "
+                    "## Outputs from the previous layer\n"
+                    "Below are the proposals from the previous layer. "
                     "Use these to INFORM and IMPROVE your own answer — "
                     "do not just repeat them.\n"
                 )
