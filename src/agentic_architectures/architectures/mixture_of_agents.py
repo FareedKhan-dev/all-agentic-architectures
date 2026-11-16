@@ -104,7 +104,6 @@ class MixtureOfAgents(Architecture):
         """Run all agents in the current layer."""
         current_layer = state.get("current_layer", 0)
         task = state["task"]
-        num = state.get("num_layers", self.num_layers)
         agents_per = state.get("agents_per_layer", self.agents_per_layer)
         # Each layer reads only the layer before it, as in the MoA paper (Wang et al., 2024).
         all_prior = [o for o in state.get("layer_outputs", []) if o["layer"] == current_layer - 1]
