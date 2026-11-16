@@ -103,6 +103,16 @@ def test_a_missing_integration_names_its_extra(monkeypatch: pytest.MonkeyPatch) 
         factory.get_llm()
 
 
+def test_an_empty_value_in_env_means_not_set(monkeypatch: pytest.MonkeyPatch) -> None:
+    """`.env.example` has KEY= for every key; empty must not count as a key or a provider."""
+    monkeypatch.setenv("LLM_PROVIDER", "")
+    monkeypatch.setenv("TAVILY_API_KEY", "")
+    monkeypatch.setenv("OPENAI_API_KEY", "")
+    s = Settings(_env_file=None)  # type: ignore[call-arg]
+    assert s.llm_provider == "nebius"
+    assert s.tavily_api_key is None and s.api_key_for("openai") is None
+
+
 def test_every_recommended_model_is_set() -> None:
     for name, info in PROVIDERS.items():
         assert info.recommended_model.strip(), name

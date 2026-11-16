@@ -111,6 +111,9 @@ class Settings(BaseSettings):
         env_file_encoding="utf-8",
         case_sensitive=False,
         extra="ignore",
+        # `.env.example` lists every key with an empty value; an empty value means "not set",
+        # so TAVILY_API_KEY= gives the clear missing-key error, not a 401 at the first call.
+        env_ignore_empty=True,
     )
 
     @model_validator(mode="after")
