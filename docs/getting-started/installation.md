@@ -9,23 +9,23 @@ The base install gets you the `Architecture` base class, every architecture's Py
 === "Nebius (default, recommended)"
 
     ```bash
-    pip install "agentic-architectures[nebius,faiss,tavily]"
+    pip install "agentic-architectures[nebius,mcp]"
     ```
 
-    Then set `NEBIUS_API_KEY` in `.env`. Pre-configured to use `meta-llama/Llama-3.3-70B-Instruct` for general work and `Qwen/Qwen3-235B-A22B-Thinking-2507-fast` for reasoning architectures (nb 19, 20, 21, 22).
+    Then set `NEBIUS_API_KEY` in `.env`. With `LLM_MODEL` empty it uses Nebius' recommended model, `nvidia/Nemotron-3_5-Lightning`; set `LLM_REASONING_MODEL` to a thinking model for the reasoning notebooks (nb 03, 04, 09, 19, 20, 22).
 
 === "OpenAI"
 
     ```bash
-    pip install "agentic-architectures[openai,faiss,tavily]"
+    pip install "agentic-architectures[openai,mcp]"
     ```
 
-    Set `OPENAI_API_KEY` and `LLM_PROVIDER=openai` (with `LLM_MODEL=gpt-4o-mini` or similar).
+    Set `OPENAI_API_KEY` and `LLM_PROVIDER=openai`. With `LLM_MODEL` empty it uses `gpt-6-luna`.
 
 === "Anthropic"
 
     ```bash
-    pip install "agentic-architectures[anthropic,faiss,tavily]"
+    pip install "agentic-architectures[anthropic,mcp]"
     ```
 
     Set `ANTHROPIC_API_KEY` and `LLM_PROVIDER=anthropic`.
@@ -33,10 +33,10 @@ The base install gets you the `Architecture` base class, every architecture's Py
 === "Ollama (local)"
 
     ```bash
-    pip install "agentic-architectures[ollama,faiss,tavily]"
+    pip install "agentic-architectures[ollama,mcp]"
     ```
 
-    Run `ollama pull llama3.3:70b` first. Set `LLM_PROVIDER=ollama`. No API key needed.
+    Run `ollama pull qwen3:8b` (or `qwen3:14b` if it fits your GPU) and `ollama pull nomic-embed-text` first. Set `LLM_PROVIDER=ollama`. No API key needed.
 
 === "Everything"
 
@@ -50,24 +50,26 @@ The base install gets you the `Architecture` base class, every architecture's Py
 
 | Extra | What it gets you | Use when |
 |---|---|---|
-| `faiss` (recommended) | FAISS-CPU + langchain-community | Local in-process vector store. Used by nb 08, 18, 23-26, 29, 31, 35. |
+| (none, the default) | langchain-core's `InMemoryVectorStore` | Local in-process vector store, `VECTOR_BACKEND=memory`. Used by nb 08, 18, 23-26, 29, 31, 35. |
+| `faiss` | FAISS-CPU + langchain-community | `VECTOR_BACKEND=faiss`. langchain-community is being sunset by LangChain. |
 | `chroma` | Chroma + chromadb | When you want persistence and an HTTP server. |
 | `qdrant` | Qdrant + qdrant-client | Production-grade, persistent, multi-tenant. |
-| `neo4j` | langchain-neo4j + neo4j driver | For nb 08, 12, 27 — graph queries via Cypher. |
+| `neo4j` | langchain-neo4j + neo4j driver | For nb 08, 12, 27: graph queries via Cypher. |
 | `networkx` | NetworkX (in-process graph) | Default graph backend; no extra service to run. |
 
 ## Tool extras
 
 | Extra | Used by |
 |---|---|
-| `tavily` | Web search — nb 02, 03, 04, 05, 07, 11, 24, 30 |
+| `tavily` | Web search with a Tavily key: nb 02, 03, 04, 05, 07, 11, 24, 30 |
+| `mcp` | Web search with no key (`SEARCH_BACKEND=mcp`), and `mcp_tools()` for any MCP server |
 
 ## Browser-using architecture (nb 34)
 
 Notebook 34 (`BrowserAgent`) drives a real headless Chromium. After the base install:
 
 ```bash
-pip install playwright
+pip install "agentic-architectures[browser]"
 playwright install chromium
 ```
 
@@ -77,7 +79,7 @@ playwright install chromium
 
 ```bash
 python -c "from agentic_architectures import get_llm, settings; print(settings.llm_provider, settings.llm_model)"
-# nebius meta-llama/Llama-3.3-70B-Instruct
+# nebius nvidia/Nemotron-3_5-Lightning
 ```
 
 If you see your configured provider and model, you're ready. Continue to the [Quickstart](quickstart.md).

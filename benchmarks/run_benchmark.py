@@ -269,7 +269,7 @@ def main() -> None:
     ap.add_argument("--quick", action="store_true", help="Run only 1 arch per task")
     ap.add_argument("--only", default="", help="Comma-separated arch names to include")
     ap.add_argument("--provider", default="nebius")
-    ap.add_argument("--model", default="meta-llama/Llama-3.3-70B-Instruct")
+    ap.add_argument("--model", default=None, help="default: the provider's recommended model")
     args = ap.parse_args()
 
     cfg = yaml.safe_load(TASKS_PATH.read_text(encoding="utf-8"))

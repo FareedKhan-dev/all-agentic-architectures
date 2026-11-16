@@ -17,9 +17,9 @@ on:
         required: false
         default: "nebius"
       use_model:
-        description: "LLM model id"
+        description: "LLM model id (empty: the provider's recommended model)"
         required: false
-        default: "meta-llama/Llama-3.3-70B-Instruct"
+        default: ""
 
 permissions:
   contents: write

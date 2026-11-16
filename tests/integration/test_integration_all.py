@@ -4,7 +4,7 @@ Gated by `RUN_INTEGRATION=1`. Run with:
 
     RUN_INTEGRATION=1 pytest tests/integration -v
 
-Each test instantiates a real LLM (Nebius / Llama by default), invokes the
+Each test instantiates a real LLM (Nebius' recommended model by default), invokes the
 architecture once on a representative input, and asserts the output is
 non-empty + has the expected shape. We do NOT assert correctness here —
 that's what the benchmark suite does. This is a "did it execute end-to-end
@@ -42,10 +42,9 @@ pytestmark = [
 ]
 
 PROVIDER = os.environ.get("INTEGRATION_PROVIDER", "nebius")
-MODEL = os.environ.get("INTEGRATION_MODEL") or ("meta-llama/Llama-3.3-70B-Instruct" if PROVIDER == "nebius" else None)
-REASONING_MODEL = os.environ.get("INTEGRATION_REASONING_MODEL") or (
-    "Qwen/Qwen3-235B-A22B-Thinking-2507-fast" if PROVIDER == "nebius" else MODEL
-)
+# Unset: the provider's recommended model (llm/providers.py) for both.
+MODEL = os.environ.get("INTEGRATION_MODEL") or None
+REASONING_MODEL = os.environ.get("INTEGRATION_REASONING_MODEL") or MODEL
 LLM_KWARGS = json.loads(os.environ.get("INTEGRATION_LLM_KWARGS") or "{}")
 
 

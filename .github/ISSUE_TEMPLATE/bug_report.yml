@@ -49,7 +49,7 @@ body:
     id: provider
     attributes:
       label: LLM provider + model
-      placeholder: "nebius · meta-llama/Llama-3.3-70B-Instruct"
+      placeholder: "nebius · nvidia/Nemotron-3_5-Lightning"
     validations:
       required: true
 

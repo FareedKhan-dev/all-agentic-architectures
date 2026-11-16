@@ -25,9 +25,9 @@ Create `.env` with your provider key (at minimum):
 
 ```ini
 LLM_PROVIDER=nebius
-LLM_MODEL=meta-llama/Llama-3.3-70B-Instruct
+LLM_MODEL=                     # empty: the provider's recommended model
 NEBIUS_API_KEY=sk-...
-TAVILY_API_KEY=tvly-...        # optional, for nb 02/03/05/24/30
+SEARCH_BACKEND=mcp             # web search with no key, for nb 02/03/05/24/30 (or TAVILY_API_KEY=tvly-...)
 LANGSMITH_API_KEY=ls-...       # optional, for tracing
 ```
 
