@@ -69,6 +69,7 @@ def test_ollama_chat_uses_the_configured_base_url(monkeypatch, init_calls) -> No
     _settings(monkeypatch, llm_provider="ollama", ollama_base_url="http://gpu-box:11434")
     factory.get_llm()
     assert init_calls[-1]["base_url"] == "http://gpu-box:11434"
+    assert init_calls[-1]["num_ctx"] == 16384  # Ollama's 4,096 default silently truncates agent prompts
     factory.get_llm(base_url="http://elsewhere:11434")  # an explicit one wins
     assert init_calls[-1]["base_url"] == "http://elsewhere:11434"
 

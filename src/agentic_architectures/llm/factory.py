@@ -104,6 +104,9 @@ def get_llm(
     _ensure_provider_env(provider, api_key)
     if provider == "ollama":
         kwargs.setdefault("base_url", settings.ollama_base_url)  # OLLAMA_BASE_URL, as for embeddings
+        # Ollama's own default window is 4,096 tokens, and it silently drops the start of a longer
+        # prompt; agent prompts (retrieved documents, debate transcripts) run past that easily.
+        kwargs.setdefault("num_ctx", 16384)
 
     try:
         return init_chat_model(
