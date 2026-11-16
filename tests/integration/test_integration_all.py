@@ -40,9 +40,7 @@ pytestmark = [
 ]
 
 PROVIDER = os.environ.get("INTEGRATION_PROVIDER", "nebius")
-MODEL = os.environ.get("INTEGRATION_MODEL") or (
-    "meta-llama/Llama-3.3-70B-Instruct" if PROVIDER == "nebius" else None
-)
+MODEL = os.environ.get("INTEGRATION_MODEL") or ("meta-llama/Llama-3.3-70B-Instruct" if PROVIDER == "nebius" else None)
 REASONING_MODEL = os.environ.get("INTEGRATION_REASONING_MODEL") or (
     "Qwen/Qwen3-235B-A22B-Thinking-2507-fast" if PROVIDER == "nebius" else MODEL
 )
@@ -434,8 +432,6 @@ def test_mixture_of_agents_real() -> None:
     from agentic_architectures.architectures import MixtureOfAgents
 
     arch = MixtureOfAgents(llm=_llm(), num_layers=2, agents_per_layer=2)
-    r = arch.run(
-        "What are the two most important principles for building reliable AI systems?"
-    )
+    r = arch.run("What are the two most important principles for building reliable AI systems?")
     assert r.output
     assert r.metadata["layers_executed"] == 2
