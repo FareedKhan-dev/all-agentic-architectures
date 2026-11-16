@@ -1,4 +1,4 @@
-"""Integration smoke tests — ONE happy-path per architecture (all 35).
+"""Integration smoke tests — ONE happy-path per architecture (all 36).
 
 Gated by `RUN_INTEGRATION=1`. Run with:
 
@@ -200,7 +200,7 @@ def test_reflexive_metacognitive_real() -> None:
 
 
 # ========================================================================== #
-#  Phase 3 architectures (18-35)
+#  Phase 3 architectures (18-36)
 # ========================================================================== #
 
 
@@ -399,3 +399,14 @@ def test_agent_workflow_memory_real() -> None:
     arch.run("Summarise and categorise: 'A new study shows octopus REM sleep states.'")
     r = arch.run("Summarise and categorise: 'Congress passed the infrastructure bill on Tuesday.'")
     assert r.output
+
+
+def test_mixture_of_agents_real() -> None:
+    from agentic_architectures.architectures import MixtureOfAgents
+
+    arch = MixtureOfAgents(llm=_llm(), num_layers=2, agents_per_layer=2)
+    r = arch.run(
+        "What are the two most important principles for building reliable AI systems?"
+    )
+    assert r.output
+    assert r.metadata["layers_executed"] == 2

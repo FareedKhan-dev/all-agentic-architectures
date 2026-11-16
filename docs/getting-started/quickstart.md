@@ -52,7 +52,7 @@ for cls in (Reflection, AgenticRAG, ChainOfVerification):
     print(f"{cls.__name__:25s} → {r.output[:80]}")
 ```
 
-## Run all 35 architectures end-to-end
+## Run all 36 architectures end-to-end
 
 Every notebook is fully runnable. From the repo root:
 
@@ -71,6 +71,6 @@ Or use the build scripts to regenerate them:
 ## Next
 
 - [Switch LLM providers](providers.md) with one config change
-- [Browse all 35 architectures](../architectures/index.md)
+- [Browse all 36 architectures](../architectures/index.md)
 - [See the benchmark leaderboard](../benchmarks.md)
 - [Add your own architecture](../tutorials/adding-your-own.md)

@@ -32,6 +32,7 @@ from agentic_architectures.architectures.lats import LATS
 from agentic_architectures.architectures.memgpt import MemGPT
 from agentic_architectures.architectures.mental_loop import MentalLoop
 from agentic_architectures.architectures.meta_controller import MetaController
+from agentic_architectures.architectures.mixture_of_agents import MixtureOfAgents
 from agentic_architectures.architectures.multi_agent import MultiAgent
 from agentic_architectures.architectures.pev import PEV
 from agentic_architectures.architectures.planning import Planning
@@ -72,6 +73,7 @@ __all__ = [
     "MemGPT",
     "MentalLoop",
     "MetaController",
+    "MixtureOfAgents",
     "MultiAgent",
     "PEV",
     "Planning",

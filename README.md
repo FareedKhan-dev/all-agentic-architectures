@@ -4,7 +4,7 @@
 
 # Agentic Architectures
 
-### Thirty-five production-grade agentic AI patterns. End to end.
+### Thirty-six production-grade agentic AI patterns. End to end.
 
 A library *and* a living textbook — real LLM outputs, provider-agnostic,
 deterministic-picker discipline throughout, and a comparative benchmark
@@ -39,7 +39,7 @@ leaderboard that ranks every architecture against every relevant task.
 
 <table>
 <tr>
-<td align="center" width="140"><h2><kbd>&nbsp; 35 &nbsp;</kbd></h2><sub>ARCHITECTURES</sub></td>
+<td align="center" width="140"><h2><kbd>&nbsp; 36 &nbsp;</kbd></h2><sub>ARCHITECTURES</sub></td>
 <td align="center" width="140"><h2><kbd>&nbsp; 283 &nbsp;</kbd></h2><sub>PASSING TESTS</sub></td>
 <td align="center" width="140"><h2><kbd>&nbsp; 17 &nbsp;</kbd></h2><sub>BENCHMARK TASKS</sub></td>
 <td align="center" width="140"><h2><kbd>&nbsp; 9 &nbsp;</kbd></h2><sub>LLM PROVIDERS</sub></td>
@@ -57,7 +57,7 @@ leaderboard that ranks every architecture against every relevant task.
 
 A single Python library that packages every major agentic AI pattern from the literature as a runnable `Architecture` class with a uniform contract. Each pattern ships with a fully executed Jupyter notebook whose theory is written *against* the captured run — not synthetic examples. The library is multi-provider (Nebius, OpenAI, Anthropic, Groq, Ollama, Together, Fireworks, Mistral, Google) and built on top of LangGraph state machines.
 
-The central technical discipline of the repository is the **deterministic-picker pattern** — every LLM-as-Scorer surface has the LLM commit to categorical features (booleans, enums) and lets Python compose the deciding signal. This is the universal escape from the LLM-as-Scorer flat-band pathology, applied in 13 of 35 architectures; 9 more are architecturally immune by design.
+The central technical discipline of the repository is the **deterministic-picker pattern** — every LLM-as-Scorer surface has the LLM commit to categorical features (booleans, enums) and lets Python compose the deciding signal. This is the universal escape from the LLM-as-Scorer flat-band pathology, applied in 13 of 36 architectures; 9 more are architecturally immune by design.
 
 ---
 
@@ -78,7 +78,7 @@ print(result.output)
 print("score:", result.metadata["final_score"], "/ 10")
 ```
 
-Same `.run(task)` interface across all 35 architectures. Same `ArchitectureResult` return shape. Swap the class, swap the pattern — your downstream code does not change.
+Same `.run(task)` interface across all 36 architectures. Same `ArchitectureResult` return shape. Swap the class, swap the pattern — your downstream code does not change.
 
 <details>
 <summary><b>Set up a virtualenv from a fresh clone</b></summary>
@@ -188,7 +188,7 @@ Patterns that appear across families.
 
 ---
 
-## The 35 architectures
+## The 36 architectures
 
 <details open>
 <summary><b>Reasoning &amp; Reflection</b></summary>
@@ -388,9 +388,9 @@ pytest -q
 
 <table>
 <tr><th width="280">Suite</th><th>Coverage</th></tr>
-<tr><td><b>Registry sweep</b></td><td>All 35 architectures (metadata + instantiate + build)</td></tr>
+<tr><td><b>Registry sweep</b></td><td>All 36 architectures (metadata + instantiate + build)</td></tr>
 <tr><td><b>Pure-Python helpers</b></td><td>Haiku checker, composite scorers, subprocess executor, safety gate, sandbox path</td></tr>
-<tr><td><b>Notebook integrity</b></td><td>All 35 notebooks executed, no error outputs, §9 commentary tailored from real captured runs</td></tr>
+<tr><td><b>Notebook integrity</b></td><td>All 36 notebooks executed, no error outputs, §9 commentary tailored from real captured runs</td></tr>
 <tr><td><b>Integration</b> &nbsp;<sub><i>(env-gated)</i></sub></td><td>One real-LLM happy-path per architecture, gated via <code>RUN_INTEGRATION=1</code></td></tr>
 </table>
 

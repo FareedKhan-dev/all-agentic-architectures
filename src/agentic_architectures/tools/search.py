@@ -20,7 +20,7 @@ def web_search_tool(
     search_depth: str = "advanced",
     **kwargs: Any,
 ) -> BaseTool:
-    """Return a configured Tavily search tool."""
+    """Return a configured Tavily search tool, or a no-op stub if the API key is missing."""
     try:
         from langchain_tavily import TavilySearch
     except ImportError as e:
@@ -28,9 +28,14 @@ def web_search_tool(
 
     key = settings.tavily_api_key
     if key is None:
-        raise RuntimeError(
-            "TAVILY_API_KEY not set. Sign up free at https://app.tavily.com and add the key to your .env file."
-        )
+        from langchain_core.tools import tool
+
+        @tool("web_search")
+        def _noop_tool(query: str) -> str:
+            """Search the web (no-op — TAVILY_API_KEY not set)."""
+            return f"[web_search unavailable: TAVILY_API_KEY not set] Would search: {query}"
+
+        return _noop_tool  # type: ignore[return-value]
 
     return TavilySearch(
         max_results=max_results,

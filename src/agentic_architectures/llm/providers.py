@@ -83,6 +83,14 @@ PROVIDERS: dict[str, ProviderInfo] = {
         docs_url="https://docs.mistral.ai",
         recommended_model="mistral-large-latest",
     ),
+    "deepseek": ProviderInfo(
+        id="deepseek",
+        name="DeepSeek",
+        signup_url="https://platform.deepseek.com",
+        docs_url="https://api-docs.deepseek.com",
+        recommended_model="deepseek-chat",
+        notes="OpenAI-compatible API. Strong reasoning at competitive pricing. Also offers `deepseek-reasoner` for multi-step reasoning tasks.",
+    ),
     "google": ProviderInfo(
         id="google",
         name="Google Gemini",

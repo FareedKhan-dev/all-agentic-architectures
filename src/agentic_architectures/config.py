@@ -30,6 +30,7 @@ Provider = Literal[
     "nebius",
     "openai",
     "anthropic",
+    "deepseek",
     "groq",
     "ollama",
     "together",
@@ -55,6 +56,7 @@ class Settings(BaseSettings):
     nebius_api_key: SecretStr | None = None
     openai_api_key: SecretStr | None = None
     anthropic_api_key: SecretStr | None = None
+    deepseek_api_key: SecretStr | None = None
     groq_api_key: SecretStr | None = None
     together_api_key: SecretStr | None = None
     fireworks_api_key: SecretStr | None = None
@@ -62,6 +64,7 @@ class Settings(BaseSettings):
     google_api_key: SecretStr | None = None
     huggingfacehub_api_token: SecretStr | None = None
     ollama_base_url: str = "http://localhost:11434"
+    deepseek_base_url: str = "https://api.deepseek.com/v1"
 
     # ---- Tools ----
     tavily_api_key: SecretStr | None = None
@@ -105,6 +108,7 @@ class Settings(BaseSettings):
             "nebius": self.nebius_api_key,
             "openai": self.openai_api_key,
             "anthropic": self.anthropic_api_key,
+            "deepseek": self.deepseek_api_key,
             "groq": self.groq_api_key,
             "together": self.together_api_key,
             "fireworks": self.fireworks_api_key,

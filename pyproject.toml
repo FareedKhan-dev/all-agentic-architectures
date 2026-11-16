@@ -15,7 +15,7 @@ requires-python = ">=3.10"
 keywords = [
   "agents", "agentic", "llm", "langchain", "langgraph", "langsmith",
   "rag", "reflexion", "react", "tree-of-thoughts", "lats", "graphrag",
-  "multi-agent", "ai", "openai", "anthropic", "nebius",
+  "multi-agent", "ai", "openai", "anthropic", "nebius", "deepseek",
 ]
 authors = [{ name = "Fareed Khan", email = "fareedhassankhan12@gmail.com" }]
 classifiers = [
@@ -62,6 +62,7 @@ fireworks   = ["langchain-fireworks>=0.2.0"]
 mistral     = ["langchain-mistralai>=0.2.0"]
 google      = ["langchain-google-genai>=2.0.0"]
 huggingface = ["langchain-huggingface>=0.1.0"]
+deepseek    = ["langchain-openai>=0.2.0"]
 
 # ----- Tool integrations -----
 tavily = ["langchain-tavily>=0.1.0"]
@@ -85,6 +86,7 @@ all-providers = [
   "langchain-ollama>=0.2.0",
   "langchain-together>=0.2.0",
   "langchain-google-genai>=2.0.0",
+  "langchain-openai>=0.2.0",  # deepseek
 ]
 all-memory = [
   "faiss-cpu>=1.8",

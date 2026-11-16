@@ -26,6 +26,7 @@ _PROVIDER_CAPABILITIES: dict[str, dict[str, bool]] = {
     "nebius": {"tools": True, "structured_output": True},
     "openai": {"tools": True, "structured_output": True},
     "anthropic": {"tools": True, "structured_output": True},
+    "deepseek": {"tools": True, "structured_output": True},
     "groq": {"tools": True, "structured_output": True},
     "together": {"tools": True, "structured_output": True},
     "fireworks": {"tools": True, "structured_output": True},
@@ -75,6 +76,22 @@ def get_llm(
             **kwargs,
         )
 
+    # DeepSeek — OpenAI-compatible API, routed through ChatOpenAI with custom base_url.
+    if provider == "deepseek":
+        try:
+            from langchain_openai import ChatOpenAI
+        except ImportError as e:
+            raise ImportError("DeepSeek provider requires `pip install agentic-architectures[deepseek]`") from e
+        _ensure_provider_env("deepseek", api_key)
+        base_url = kwargs.pop("base_url", settings.deepseek_base_url)
+        return ChatOpenAI(
+            model=model,
+            temperature=temperature,
+            api_key=api_key,
+            base_url=base_url,
+            **kwargs,
+        )
+
     # All other providers go through langchain's init_chat_model.
     try:
         from langchain.chat_models import init_chat_model
@@ -100,6 +117,7 @@ def _ensure_provider_env(provider: str, api_key: str | None) -> None:
     env_var = {
         "openai": "OPENAI_API_KEY",
         "anthropic": "ANTHROPIC_API_KEY",
+        "deepseek": "DEEPSEEK_API_KEY",
         "groq": "GROQ_API_KEY",
         "together": "TOGETHER_API_KEY",
         "fireworks": "FIREWORKS_API_KEY",
