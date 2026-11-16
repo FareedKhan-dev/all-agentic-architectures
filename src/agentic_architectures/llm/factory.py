@@ -32,7 +32,8 @@ _PROVIDER_CAPABILITIES: dict[str, dict[str, bool]] = {
     "fireworks": {"tools": True, "structured_output": True},
     "mistralai": {"tools": True, "structured_output": True},
     "google": {"tools": True, "structured_output": True},
-    "ollama": {"tools": True, "structured_output": False},
+    # Ollama serves JSON-schema structured output (0.5+); every architecture that uses it ran on qwen3.
+    "ollama": {"tools": True, "structured_output": True},
     "huggingface": {"tools": False, "structured_output": False},
     "deepseek": {"tools": True, "structured_output": True},
     "openrouter": {"tools": True, "structured_output": True},
