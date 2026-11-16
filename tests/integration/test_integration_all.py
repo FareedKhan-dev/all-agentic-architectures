@@ -208,9 +208,7 @@ def test_cellular_automata_real() -> None:
         max_steps=2,
     )
     # run() takes the initial grid itself: cells separated by |, rows by newlines.
-    r = arch.run("tree|tree|tree
-tree|fire|tree
-tree|tree|tree")
+    r = arch.run("tree|tree|tree\ntree|fire|tree\ntree|tree|tree")
     assert r.output
 
 
